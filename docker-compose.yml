@@ -39,8 +39,10 @@ services:
     environment:
       - KYUTAI_STT_URL=ws://stt:8080
       - KYUTAI_TTS_URL=ws://tts:8080
-      - KYUTAI_LLM_URL=http://llm:8000
-      - NEWSAPI_API_KEY=$NEWSAPI_API_KEY
+      - KYUTAI_LLM_URL=https://api.openai.com
+      - KYUTAI_LLM_MODEL=gpt-4o-mini
+      - KYUTAI_LLM_API_KEY=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
+      - NEWSAPI_API_KEY=af0f020086be4d1ca1b7236145ecb91e
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.backend.rule=PathPrefix(`/api`)"
@@ -59,7 +61,7 @@ services:
       context: services/moshi-server
       dockerfile: public.Dockerfile
     environment:
-      - HUGGING_FACE_HUB_TOKEN=$HUGGING_FACE_HUB_TOKEN
+      - HUGGING_FACE_HUB_TOKEN=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
     volumes:
       - ./volumes/hf-cache:/root/.cache/huggingface
       - ./volumes/cargo-registry-tts:/root/.cargo/registry
@@ -82,7 +84,7 @@ services:
       context: services/moshi-server
       dockerfile: public.Dockerfile
     environment:
-      - HUGGING_FACE_HUB_TOKEN=$HUGGING_FACE_HUB_TOKEN
+      - HUGGING_FACE_HUB_TOKEN=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
     volumes:
       - ./volumes/hf-cache:/root/.cache/huggingface
       - ./volumes/cargo-registry-stt:/root/.cargo/registry
@@ -97,34 +99,5 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
-
-  llm:
-    image: vllm/vllm-openai:v0.11.0
-    command:
-      [
-        # NOTE: Change the LLM here if you want.
-        #   You can also use an external LLM provider instead of self-hosting, see README.
-        "--model=google/gemma-3-1b-it",
-        # NOTE: You can adapt this based on your GPU memory.
-        # A higher value takes more memory but supports longer conversations.
-        "--max-model-len=1536",
-        "--dtype=bfloat16",
-        # NOTE: Change this based on your GPU memory.
-        # A higher value can make inference faster.
-        "--gpu-memory-utilization=0.4",
-      ]
-    volumes:
-      - ./volumes/hf-cache:/root/.cache/huggingface
-      - ./volumes/vllm-cache:/root/.cache/vllm
-    environment:
-      - HUGGING_FACE_HUB_TOKEN=$HUGGING_FACE_HUB_TOKEN
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
-
 networks:
   default:
