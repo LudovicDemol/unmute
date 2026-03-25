@@ -6,7 +6,7 @@ cd "$(dirname "$0")/"
 [ -f pyproject.toml ] || wget https://raw.githubusercontent.com/kyutai-labs/moshi/9837ca328d58deef5d7a4fe95a0fb49c902ec0ae/rust/moshi-server/pyproject.toml
 [ -f uv.lock ] || wget https://raw.githubusercontent.com/kyutai-labs/moshi/9837ca328d58deef5d7a4fe95a0fb49c902ec0ae/rust/moshi-server/uv.lock
 
-uv venv
+[ -d .venv ] || uv venv
 source .venv/bin/activate
 
 cd ..

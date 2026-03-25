@@ -1,0 +1,52 @@
+nohup: ignoring input
+++ dirname ./start_stt.sh
++ cd ./..
++ uv venv
+Using CPython 3.12.8
+Creating virtual environment at: .venv
+Activate with: source .venv/bin/activate
++ source .venv/bin/activate
+++ '[' -z '' ']'
+++ '[' -n x ']'
+++ SCRIPT_PATH=.venv/bin/activate
+++ '[' .venv/bin/activate = ./start_stt.sh ']'
+++ deactivate nondestructive
+++ unset -f pydoc
+++ '[' -z '' ']'
+++ '[' -z '' ']'
+++ hash -r
+++ '[' -z '' ']'
+++ unset VIRTUAL_ENV
+++ unset VIRTUAL_ENV_PROMPT
+++ '[' '!' nondestructive = nondestructive ']'
+++ VIRTUAL_ENV=/workspace/unmute/.venv
+++ '[' linux-gnu = cygwin ']'
+++ '[' linux-gnu = msys ']'
+++ export VIRTUAL_ENV
+++ '[' -z '' ']'
+++ unset SCRIPT_PATH
+++ _OLD_VIRTUAL_PATH=/root/.cargo/bin:/venv/main/bin:/opt/miniforge3/condabin:/opt/nvm/versions/node/v24.14.0/bin:/opt/instance-tools/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ PATH=/workspace/unmute/.venv/bin:/root/.cargo/bin:/venv/main/bin:/opt/miniforge3/condabin:/opt/nvm/versions/node/v24.14.0/bin:/opt/instance-tools/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ export PATH
+++ '[' xunmute '!=' x ']'
+++ VIRTUAL_ENV_PROMPT=unmute
+++ export VIRTUAL_ENV_PROMPT
+++ '[' -z '' ']'
+++ '[' -z '' ']'
+++ _OLD_VIRTUAL_PS1=
+++ PS1='(unmute) '
+++ export PS1
+++ alias pydoc
+++ true
+++ hash -r
+++ python -c 'import sysconfig; print(sysconfig.get_config_var("LIBDIR"))'
++ export LD_LIBRARY_PATH=/.uv/python_install/cpython-3.12.8-linux-x86_64-gnu/lib
++ LD_LIBRARY_PATH=/.uv/python_install/cpython-3.12.8-linux-x86_64-gnu/lib
++ export 'CXXFLAGS=-include cstdint'
++ CXXFLAGS='-include cstdint'
++ cargo install --features cuda moshi-server@0.6.4
+     Ignored package `moshi-server v0.6.4` is already installed, use --force to override
++ moshi-server worker --config services/moshi-server/configs/stt.toml --port 8090
+[2m2026-03-25T19:06:58.139105Z[0m [32m INFO[0m [2mmoshi_server[0m[2m:[0m [2m/root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/moshi-server-0.6.4/src/main.rs[0m[2m:[0m[2m475:[0m [3mbuild_info[0m[2m=[0mBuildInfo { build_timestamp: "2026-03-25T18:33:46.461927980Z", build_date: "2026-03-25", git_branch: "VERGEN_IDEMPOTENT_OUTPUT", git_timestamp: "VERGEN_IDEMPOTENT_OUTPUT", git_date: "VERGEN_IDEMPOTENT_OUTPUT", git_hash: "VERGEN_IDEMPOTENT_OUTPUT", git_describe: "VERGEN_IDEMPOTENT_OUTPUT", rustc_host_triple: "x86_64-unknown-linux-gnu", rustc_version: "1.94.0", cargo_target_triple: "x86_64-unknown-linux-gnu" }
+[2m2026-03-25T19:06:58.139129Z[0m [32m INFO[0m [2mmoshi_server[0m[2m:[0m [2m/root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/moshi-server-0.6.4/src/main.rs[0m[2m:[0m[2m549:[0m starting worker [3mnum_workers[0m[2m=[0m5
+Terminated
