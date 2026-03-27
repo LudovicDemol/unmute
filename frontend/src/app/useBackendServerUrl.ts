@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export const useBackendServerUrl = () => {
-  const [backendServerUrl, setBackendServerUrl] = useState<string | null>(null);
+  const [backendServerUrl, setBackendServerUrl] = useState<string | null>();
 
   // Get the backend server URL. This is a bit involved to support different deployment methods.
   useEffect(() => {

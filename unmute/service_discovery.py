@@ -9,7 +9,7 @@ import typing as tp
 from collections import defaultdict
 from collections.abc import Awaitable
 from functools import partial, wraps
-
+from urllib.parse import urlparse
 from unmute import metrics as mt
 from unmute.exceptions import MissingServiceAtCapacity, MissingServiceTimeout
 from unmute.kyutai_constants import LLM_SERVER, STT_SERVER, TTS_SERVER
@@ -57,12 +57,12 @@ async def _resolve(hostname: str) -> list[str]:
 
 async def get_instances(service_name: str) -> list[str]:
     url = SERVICES[service_name]
-    protocol, remaining = url.split("://", 1)
-    hostname, port = remaining.split(":", 1)
-    ips = list(await _resolve(hostname))
-    random.shuffle(ips)
-    return [f"{protocol}://{ip}:{port}" for ip in ips]
-
+    parsed = urlparse(url)  # Parse direct l'URL complète
+    hostname = parsed.hostname
+    port = parsed.port or (443 if parsed.scheme == 'https' else 80)
+    
+    # Retourne L'URL ORIGINALE (tunnel CF intact) - pas de résolution IP !
+    return [url]  # Ou [f"{parsed.scheme}://{hostname}:{port}"] si besoin reformater
 
 class ServiceWithStartup(tp.Protocol):
     async def start_up(self) -> None:

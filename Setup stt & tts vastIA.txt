@@ -1,0 +1,36 @@
+Setup stt & tts
+1x RTX A4000
+Max CUDA: 12.4
+20.6 TFLOPS 
+VRAM 10.7/16.0 GB
+372.5 GB/s
+60go stockage
+
+   1  apt-get update && apt-get install -y git-lfs ffmpeg
+    2  git lfs install
+    3  ssh-keygen -t ed25519 -C "demol.ludovic@yahoo.fr"
+    4  cat /root/.ssh/id_ed25519.pub
+    5  ssh-add ~/.ssh/id_ed25519
+    6  eval "$(ssh-agent -s)"
+    7  ssh-add ~/.ssh/id_ed25519
+    8  git clone git@github.com:LudovicDemol/unmute.git
+   10  cd unmute/
+   17  apt-get install -y git-lfs ffmpeg
+   18  git lfs install
+   19  git lfs pull
+   20  pip install --upgrade pip
+   21  pip install -e . --root-user-action=ignore
+   25  python3 -c "from huggingface_hub import snapshot_download; snapshot_download(repo_id='kyutai/tts-1.6b-en_fr')"
+   26  python3 -m unmute.server.tts --host 0.0.0.0 --port 8000 --dtype float16
+   37  cd dockerless/
+   40  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+   41  source "$HOME/.cargo/env"
+
+   49  pkill -f moshi-server
+
+   56  nohup ./start_tts.sh > tts.log 2>&1 &
+   57  nohup ./start_stt.sh > stt.log 2>&1 &
+   58  pkill -f moshi-server
+   65  tail -f stt.log
+   66  tail -f tts.log
+ 
