@@ -319,13 +319,7 @@ class UnmuteHandler(AsyncStreamHandler):
                 await self._generate_response()
             return
 
-        if (
-            len(self.chatbot.chat_history) == 1
-            # Wait until the instructions are updated. A bit hacky
-            and self.chatbot.get_instructions() is not None
-        ):
-            logger.info("Generating initial response.")
-            await self._generate_response()
+
 
         if self.audio_input_override is not None:
             frame = (frame[0], self.audio_input_override.override(frame[1]))
