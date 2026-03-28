@@ -1,17 +1,21 @@
 #!/bin/bash
-set -ex
+set -e # On enlève le -x pour plus de clarté, mais on garde le -e
+
 cd "$(dirname "$0")/.."
 
-
-# We need libpython because the TTS uses a Python component. STT and TTS have the same executable, so we need
-# to have libpython even if we don't end up using it. For simplicity, we use the same code as for TTS, even though
-# you don't need to install any of these Python packages if you're only using the STT.
+# 1. Préparation de l'environnement Python
 [ -d .venv ] || uv venv
 source .venv/bin/activate
 export LD_LIBRARY_PATH=$(python -c 'import sysconfig; print(sysconfig.get_config_var("LIBDIR"))')
-
-# A fix for building Sentencepiece on GCC 15, see: https://github.com/google/sentencepiece/issues/1108
 export CXXFLAGS="-include cstdint"
 
-cargo install --features cuda moshi-server@0.6.4
+# 2. NETTOYAGE : On libère le port 8090 s'il est occupé
+echo "Nettoyage du port 8090..."
+fuser -k 8090/tcp || echo "Port déjà libre."
+
+# 3. INSTALLATION (Seulement si binaire absent)
+if ! command -v moshi-server &> /dev/null; then
+    echo "Installation de moshi-server..."
+    cargo install --features cuda moshi-server@0.6.4
+fi
 moshi-server worker --config services/moshi-server/configs/stt.toml --port 8090
