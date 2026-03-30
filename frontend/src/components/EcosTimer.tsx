@@ -22,7 +22,6 @@ const BAR_COLORS: Record<TimerStatus, string> = {
 };
 
 export default function EcosTimer({ formatted, status, progressPct }: EcosTimerProps) {
-  if (status === "idle") return null; // invisible avant le démarrage
 
   return (
     <div className="flex flex-col items-center gap-2 w-full max-w-96">

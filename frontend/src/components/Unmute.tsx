@@ -36,7 +36,7 @@ const Unmute = () => {
   const { microphoneAccess, askMicrophoneAccess } = useMicrophoneAccess();
 
   const [shouldConnect, setShouldConnect] = useState(false);
-  const backendServerUrl = "https://marathon-local-alto-intensity.trycloudflare.com"; //useBackendServerUrl();
+  const backendServerUrl = useBackendServerUrl();
   const [webSocketUrl, setWebSocketUrl] = useState<string | null>(null);
   const [healthStatus, setHealthStatus] = useState<HealthStatus | null>(null);
   const [errors, setErrors] = useState<ErrorItem[]>([]);

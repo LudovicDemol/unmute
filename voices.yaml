@@ -81,3 +81,63 @@
     source_type: file
     path_on_server: unmute-prod-website/fabieng-enhanced-v2.wav
     description: Fabieng is voice acted by Neil Zeghidour from Kyutai.
+- name: adam
+  good: true
+  instructions:
+    type: constant
+    text: ""
+  source:
+    source_type: file
+    path_on_server: voix/adam.wav
+    description: Custom voice.
+
+- name: carole
+  good: true
+  instructions:
+    type: constant
+    text: ""
+  source:
+    source_type: file
+    path_on_server: voix/carole.wav
+    description: Custom voice.
+
+- name: celine
+  good: true
+  instructions:
+    type: constant
+    text: ""
+  source:
+    source_type: file
+    path_on_server: voix/celine.wav
+    description: Custom voice.
+
+- name: sarah
+  good: true
+  instructions:
+    type: constant
+    text: ""
+  source:
+    source_type: file
+    path_on_server: voix/sarah.wav
+    description: Custom voice.
+
+- name: sophie
+  good: true
+  instructions:
+    type: constant
+    text: ""
+  source:
+    source_type: file
+    path_on_server: voix/sophie.wav
+    description: Custom voice.
+
+- name: therese
+  good: true
+  instructions:
+    type: constant
+    text: ""
+  source:
+    source_type: file
+    path_on_server: voix/therese.wav
+    description: Custom voice.
+

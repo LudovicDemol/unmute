@@ -4,7 +4,6 @@ import SquareButton from "./SquareButton";
 import Modal from "./Modal";
 import { ArrowUpRight } from "lucide-react";
 import VoiceUpload from "./VoiceUpload";
-// import VoiceUpload from "./VoiceUpload";
 
 export type LanguageCode = "en" | "fr" | "en/fr" | "fr/en";
 

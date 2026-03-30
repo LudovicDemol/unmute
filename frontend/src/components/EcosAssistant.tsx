@@ -8,26 +8,23 @@ import { useAudioProcessor as useAudioProcessor } from "../hooks/useAudioProcess
 import useKeyboardShortcuts from "../hooks/useKeyboardShortcuts";
 import { prettyPrintJson } from "pretty-print-json";
 import PositionedAudioVisualizer from "./PositionedAudioVisualizer";
-import UnmuteConfigurator, {
+import {
   DEFAULT_UNMUTE_CONFIG,
   UnmuteConfig,
 } from "./UnmuteConfigurator";
 import CouldNotConnect, { HealthStatus } from "./CouldNotConnect";
-import UnmuteHeader from "./UnmuteHeader";
 import Subtitles from "./Subtitles";
 import { ChatMessage, compressChatHistory } from "../utils/chatHistory";
 import useWakeLock from "../hooks/useWakeLock";
 import ErrorMessages, { ErrorItem, makeErrorItem } from "./ErrorMessages";
 import { useRecordingCanvas } from "../hooks/useRecordingCanvas";
-import { useGoogleAnalytics } from "../hooks/useGoogleAnalytics";
 import clsx from "clsx";
-import { useBackendServerUrl } from "../hooks/useBackendServerUrl";
 import { RECORDING_CONSENT_STORAGE_KEY } from "./ConsentModal";
 import { useEcosApi } from "@/hooks/useEcosApi";
-import { useEcosSession } from "@/hooks/useEcosSession";
-import { get } from "http";
 import { useEcosTimer } from "@/hooks/useEcosTimer";
 import EcosTimer from "@/components/EcosTimer";
+import ChatPanel from "./ChatPanel";
+import { useBackendServerUrl } from "@/hooks/useBackendServerUrl";
 
 interface EcosAssistantProps {
   id: string;
@@ -37,7 +34,6 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
   const [unmuteConfig, setUnmuteConfig] = useState<UnmuteConfig>(DEFAULT_UNMUTE_CONFIG);
 
   
-  const { isDevMode, showSubtitles } = useKeyboardShortcuts();
   const [debugDict, setDebugDict] = useState<object | null>(null);
 
   const [rawChatHistory, setRawChatHistory] = useState<ChatMessage[]>([]);
@@ -46,7 +42,7 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
   const { microphoneAccess, askMicrophoneAccess } = useMicrophoneAccess();
 
   const [shouldConnect, setShouldConnect] = useState(false);
-  const backendServerUrl = "https://marathon-local-alto-intensity.trycloudflare.com"; //useBackendServerUrl();
+  const backendServerUrl = useBackendServerUrl();
   const [webSocketUrl, setWebSocketUrl] = useState<string | null>(null);
   const [healthStatus, setHealthStatus] = useState<HealthStatus | null>(null);
   const [errors, setErrors] = useState<ErrorItem[]>([]);
@@ -218,6 +214,7 @@ useEffect(() => {
       if (mediaStream) {
         await setupAudio(mediaStream);
         setShouldConnect(true);
+        startTimer(); // ← démarrer le timer au moment où la session commence
       }
     } else {
       setShouldConnect(false);
@@ -359,19 +356,16 @@ useEffect(() => {
   }
 
   return (
-    <div className="w-full">
+    <><div className="w-full">
       <ErrorMessages errors={errors} setErrors={setErrors} />
       {/* The main full-height demo */}
       <div className="relative flex w-full min-h-screen flex-col text-white bg-background items-center">
         {/* z-index on the header to put it in front of the circles */}
-        <header className="static md:absolute max-w-6xl px-3 md:px-8 right-0 flex justify-end z-10">
-          <UnmuteHeader />
-        </header>
         <div
           className={clsx(
             "w-full h-auto min-h-75",
             "flex flex-row-reverse md:flex-row items-center justify-center grow",
-            "-mt-10 md:mt-0 mb-10 md:mb-0 md:-mr-4",
+            "-mt-10 md:mt-0 mb-10 md:mb-0 md:-mr-4"
           )}
         >
           <PositionedAudioVisualizer
@@ -379,31 +373,19 @@ useEffect(() => {
             role={"assistant"}
             analyserNode={audioProcessor.current?.outputAnalyser || null}
             onCircleClick={onConnectButtonPress}
-            isConnected={shouldConnect}
-          />
+            isConnected={shouldConnect} />
           <PositionedAudioVisualizer
             chatHistory={chatHistory}
             role={"user"}
             analyserNode={audioProcessor.current?.inputAnalyser || null}
-            isConnected={shouldConnect}
-          />
+            isConnected={shouldConnect} />
         </div>
-        {showSubtitles && <Subtitles chatHistory={chatHistory} />}
 
         <div className="w-full flex flex-col-reverse md:flex-row items-center justify-center px-3 gap-3 my-6">
           <EcosTimer
             formatted={formatted}
             status={status}
-            progressPct={progressPct}
-          />
-
-          <SlantedButton
-            onClick={onDownloadRecordingButtonPress}
-            kind={recordingAvailable ? "secondary" : "disabled"}
-            extraClasses="w-full max-w-96"
-          >
-            {"download recording"}
-          </SlantedButton>
+            progressPct={progressPct} />
           <SlantedButton
             onClick={onConnectButtonPress}
             kind={shouldConnect ? "secondary" : "primary"}
@@ -422,21 +404,12 @@ useEffect(() => {
         </div>
       </div>
       {/* Debug stuff, not counted into the screen height */}
-      {isDevMode && (
-        <div>
-          <div className="text-xs w-full overflow-auto">
-            <pre
-              className="whitespace-pre-wrap break-words"
-              dangerouslySetInnerHTML={{
-                __html: prettyPrintJson.toHtml(debugDict),
-              }}
-            ></pre>
-          </div>
-          <div>Subtitles: press S. Dev mode: press D.</div>
-        </div>
-      )}
       <canvas ref={recordingCanvasRef} className="hidden" />
     </div>
+    <div className="w-80 xl:w-96 border-l border-white/10 bg-black/30 backdrop-blur-sm flex-shrink-0">
+        <ChatPanel chatHistory={chatHistory} isConnected={shouldConnect} />
+      </div></>
+
   );
 };
 

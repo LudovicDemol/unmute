@@ -15,7 +15,6 @@ VRAM 10.7/16.0 GB
     8  git clone git@github.com:LudovicDemol/unmute.git
    10  cd unmute/
    17  apt-get install -y git-lfs ffmpeg
-   18  git lfs install
    19  git lfs pull
    20  pip install --upgrade pip
    21  pip install -e . --root-user-action=ignore
@@ -33,3 +32,6 @@ pkill -9 python
 pkill -9 moshi-server
 pkill -9 uvicorn
    pour tuer tts et stt = pkill -f moshi-server
+
+
+   fuser -k 8000/tcp
