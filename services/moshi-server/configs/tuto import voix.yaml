@@ -1,0 +1,41 @@
+Setup tts_make_voice.py from scratch
+
+Sur serveur vast.ai 
+1. Cloner le repo
+bash
+git clone https://github.com/kyutai-labs/moshi.git /workspace/moshi
+cd /workspace/moshi
+2. Environnement Python
+bash
+python3 -m venv /venv/main
+/venv/main/bin/pip install -e /workspace/moshi/moshi
+/venv/main/bin/pip install huggingface_hub
+3. Patcher loaders.py
+bash
+sed -i 's/model\.load_state_dict(state)/model.load_state_dict(state, strict=False)/' \
+    /workspace/moshi/moshi/moshi/models/loaders.py
+4. Télécharger les poids
+bash
+huggingface-cli download kyutai/tts-1.6b-en_fr \
+    dsm_tts_1e68beda@240.safetensors \
+    config.json \
+    --local-dir /workspace/moshi/weights/
+
+huggingface-cli download kyutai/moshiko-pytorch-bf16 \
+    tokenizer-e351c8d8-checkpoint125.safetensors \
+    --local-dir /workspace/moshi/weights/mimi_native/
+5. Préparer les fichiers
+bash
+cp /workspace/moshi/weights/mimi_native/tokenizer-e351c8d8-checkpoint125.safetensors \
+   /workspace/moshi/weights/mimi_native/1e68beda_240_mimi_voice.safetensors
+
+cp /workspace/moshi/weights/config.json \
+   /workspace/moshi/weights/mimi_native/config.json
+6. Lancer
+bash
+mkdir -p /workspace/unmute/voix
+
+/venv/main/bin/python scripts/tts_make_voice.py \
+    --model-root /workspace/moshi/weights/mimi_native/ \
+    --loudness-headroom 22 \
+    /workspace/unmute/voix/
