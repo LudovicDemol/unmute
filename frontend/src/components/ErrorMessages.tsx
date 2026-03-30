@@ -49,27 +49,23 @@ export default function ErrorMessages({
   }
 
   return (
-    <div className="fixed top-4 left-0 md:left-4 z-50 space-y-2">
+   <div className="fixed top-6 left-0 md:left-6 z-50 space-y-3">
       {errors.map((error, index) => (
         <div
           key={error.id}
-          className="bg-red-50 p-4 max-w-md"
+          className="max-w-md p-4 rounded-2xl bg-red-900/80 border border-red-500/30 shadow-blue-500/10 backdrop-blur-md flex items-start gap-3 animate-fade-in"
           role="alert"
         >
-          <div className="flex items-start gap-3">
-            <div className="flex-1">
-              <p className="text-red-800 text-sm font-medium">
-                {error.message}
-              </p>
-            </div>
-            <button
-              onClick={() => handleDismiss(index, error.id)}
-              className="flex-shrink-0 text-red-600 hover:text-red-800 transition-colors"
-              aria-label="Dismiss error"
-            >
-              <X size={18} />
-            </button>
+          <div className="flex-1">
+            <span className="text-red-300 font-semibold font-sans text-sm">{error.message}</span>
           </div>
+          <button
+            onClick={() => handleDismiss(index, error.id)}
+            className="text-red-400 hover:text-red-200 rounded-full p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
+            aria-label="Dismiss"
+          >
+            <X size={18} />
+          </button>
         </div>
       ))}
     </div>

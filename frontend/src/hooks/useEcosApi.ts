@@ -7,20 +7,31 @@ import { useCallback } from "react";
 
 const API_BASE = "http://localhost:3001";
 
-export interface Scenario {
+export interface ScenarioListItem {
   id: string;
-  sddNum: number;
   title: string;
+  description: string;
   category: string;
-  difficulty: number;
-  domaineCompetence: string;
+  domain: string;
+  firstname: string;
+  lastname: string;
+  age: number;
+  type: string;
 }
 
-export interface ScenarioDetail extends Scenario {
+export interface ScenarioDetail {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  domain: string;
+  difficulty: number;
   systemPrompt: string;
-  patientProfile: string;
   checklist: ChecklistItem[];
-  rubric: Record<string, unknown>;
+  firstname: string;
+  lastname: string;
+  age: number;
+  type: string;
   voice: string;
 }
 
@@ -41,7 +52,7 @@ export interface SessionStartResponse {
 export interface SessionDetails {
   id: string;
   userId: string;
-  sddNum: number;
+  scenarioId: number;
   title: string;
   startedAt: string;
   duration: number;
@@ -74,17 +85,17 @@ export function useEcosApi() {
   }, []);
 
   // GET /scenarios - List all scenarios
-  const getScenarios = useCallback(async (): Promise<Scenario[]> => {
+  const getScenarios = useCallback(async (): Promise<ScenarioListItem[]> => {
     const response = await fetch(`${API_BASE}/scenarios`);
     return handleError(response, "Failed to fetch scenarios");
   }, [handleError]);
 
   // GET /scenarios/{sddNum} - Get scenario details
   const getScenarioDetail = useCallback(
-    async (sddNum: number): Promise<ScenarioDetail> => {
-      const response = await fetch(`${API_BASE}/scenarios/${sddNum}`);
+    async (id: string): Promise<ScenarioDetail> => {
+      const response = await fetch(`${API_BASE}/scenarios/${id}`);
       console.log(response);
-      return handleError(response, `Failed to fetch scenario ${sddNum}`);
+      return handleError(response, `Failed to fetch scenario ${id}`);
     },
     [handleError]
   );

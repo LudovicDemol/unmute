@@ -1,6 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 
+
 const SquareButton = ({
   onClick = () => {},
   children,
@@ -12,27 +13,27 @@ const SquareButton = ({
   kind?: "primary" | "primaryOff" | "secondary";
   extraClasses?: string;
 }) => {
+  // Palette Night Hospital
   const kindToClass = {
-    primary: "text-green border-green",
-    primaryOff: "text-white border-white",
-    secondary: "text-white border-transparent",
+    primary: "bg-blue-500/90 text-white border-blue-500 shadow-blue-500/10 hover:bg-blue-500 hover:shadow-blue-500/20",
+    primaryOff: "bg-slate-900/70 text-blue-400 border-blue-400 hover:bg-slate-800/80 hover:text-blue-300",
+    secondary: "bg-slate-900/50 text-slate-300 border-slate-700 hover:bg-slate-800/80 hover:text-blue-400",
   };
 
   return (
     <button
       onClick={onClick}
       className={clsx(
-        "px-2 py-2 bg-black text-xs lg:text-sm cursor-pointer transition-colors duration-200",
-        "overflow-hidden text-nowrap border-1 border-dashed",
+        "px-4 py-2 font-sans font-semibold text-sm rounded-2xl transition-all duration-200",
+        "border-2 backdrop-blur-md",
         kindToClass[kind],
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40",
         extraClasses
       )}
-      // Complex drop shadow easier to do outside of Tailwind
       style={{
-        filter: "drop-shadow(0rem 0.2rem 0.15rem var(--darkgray))",
+        filter: "drop-shadow(0 0.2rem 0.15rem rgba(59,130,246,0.10))",
       }}
     >
-      {/* The inner span ensures the content overflows in a centered way */}
       <span className="mx-[-100%] text-center">{children}</span>
     </button>
   );

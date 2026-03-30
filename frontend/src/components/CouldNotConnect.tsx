@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import UnmuteHeader from "./UnmuteHeader";
 
 export type HealthStatus = {
   connected: "no" | "yes_request_ok" | "yes_request_fail";

@@ -93,23 +93,23 @@ export default function ConsentModal() {
 
   // consent is null, meaning it hasn't been given or declined yet
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-gray border-t border-green shadow-lg z-50">
-      <div className="max-w-7xl mx-auto p-4">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex-1 text-sm text-textgray">
-            <p className="text-sm text-textgray mb-2">
-              Can we use cookies according to our{" "}
+    <div className="fixed bottom-0 left-0 right-0 z-50">
+      <div className="max-w-3xl mx-auto my-6 p-6 rounded-3xl bg-slate-900/80 border border-slate-800/70 shadow-blue-500/10 backdrop-blur-md">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div className="flex-1 text-sm text-slate-300">
+            <p className="mb-2">
+              Can we use cookies according to our{' '}
               <a
                 href="https://kyutai.org/privacy-policy"
-                className="underline"
+                className="underline text-blue-400 hover:text-blue-300"
               >
                 Privacy Policy
-              </a>{" "}
-              to improve your experience and analyze site usage?{" "}
+              </a>{' '}
+              to improve your experience and analyze site usage?{' '}
               {!showDetails && (
                 <button
                   onClick={() => setShowDetails(true)}
-                  className="text-green underline"
+                  className="text-emerald-500 underline ml-2"
                 >
                   Learn more
                 </button>
@@ -121,23 +121,20 @@ export default function ConsentModal() {
                 type="checkbox"
                 checked={recordingChecked}
                 onChange={(e) => setRecordingChecked(e.target.checked)}
-                className="mr-2"
+                className="mr-2 accent-blue-500"
               />
-              <label htmlFor="recording-consent-checkbox">
-                Allow us to record the transcript of the conversation (your
-                voice will not be stored) to help our non-profit research
+              <label htmlFor="recording-consent-checkbox" className="text-slate-400">
+                Allow us to record the transcript of the conversation (your voice will not be stored) to help our non-profit research
               </label>
             </div>
             {showDetails && (
-              <div className="mt-3 p-3 bg-darkgray text-sm text-textgray">
+              <div className="mt-3 p-3 bg-slate-800/80 rounded-xl text-sm text-slate-300 border border-blue-500/20">
                 <p className="mb-2">
-                  <strong>Analytics Cookies:</strong> We use Google Analytics to
-                  understand how visitors interact with our website. This helps
-                  us improve our content and user experience.
+                  <strong>Analytics Cookies:</strong> We use Google Analytics to understand how visitors interact with our website. This helps us improve our content and user experience.
                 </p>
                 <button
                   onClick={() => setShowDetails(false)}
-                  className="text-green underline"
+                  className="text-emerald-500 underline"
                 >
                   Learn less
                 </button>
