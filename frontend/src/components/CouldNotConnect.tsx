@@ -51,25 +51,12 @@ const CouldNotConnect = ({ healthStatus }: { healthStatus: HealthStatus }) => {
   if (healthStatus.ok) {
     return null;
   }
+  console.error("Health check failed:", healthStatus);
 
   return (
     <div className="w-full h-full flex flex-col gap-12 items-center justify-center bg-background">
-      <UnmuteHeader />
       <div className="text-center text-xl">
-        <h1 className="text-3xl mb-4">{"Couldn't connect :("}</h1>
-        <p>Service status:</p>
-        {renderServiceStatus(
-          "Backend",
-          humanReadableStatus[healthStatus.connected]
-        )}
-        {renderServiceStatus("STT", healthStatus.stt_up)}
-        {renderServiceStatus("LLM", healthStatus.llm_up)}
-        {renderServiceStatus("TTS", healthStatus.tts_up)}
-        {renderServiceStatus(
-          "Voice cloning",
-          healthStatus.voice_cloning_up,
-          false
-        )}
+        <h1 className="text-3xl mb-4">Désolés nos services sont indisponibles...</h1>
       </div>
     </div>
   );
