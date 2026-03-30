@@ -1,0 +1,932 @@
+nohup: ignoring input
+++ dirname ./start_backend.sh
++ cd ./..
++ uv run uvicorn unmute.main_websocket:app --reload --host 0.0.0.0 --port 8000 --ws-per-message-deflate=false
+INFO:     Will watch for changes in these directories: ['/workspace/unmute']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [853] using WatchFiles
+NEWSAPI_API_KEY is not set. News API functionality will be disabled.
+INFO:     Started server process [857]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'unmute/kyutai_constants.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [857]
+NEWSAPI_API_KEY is not set. News API functionality will be disabled.
+INFO:     Started server process [1026]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET / HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+2026-03-28 11:44:02,234 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff03bb590a0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 11:44:02,236 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 11:44:02,240 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 11:44:02,307 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+2026-03-28 11:45:06,791 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 11:45:06,794 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 11:45:06,795 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff03bb339b0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 11:45:06,932 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+2026-03-28 11:45:14,578 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 11:45:14,581 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 11:45:14,582 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff03bb5bd10>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 11:45:14,672 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     ('2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e', 0) - "WebSocket /v1/realtime" [accepted]
+INFO:     connection open
+2026-03-28 11:45:21,307 - unmute.stt.speech_to_text - INFO - Connecting to STT ws://127.0.0.1:8090...
+2026-03-28 11:45:21,311 - unmute.stt.speech_to_text - INFO - Connected to STT
+2026-03-28 11:45:21,313 - unmute.service_discovery - INFO - [stt] Instance ws://127.0.0.1:8090 took 7.0ms to accept us.
+2026-03-28 11:45:21,314 - unmute.service_discovery - INFO - [stt] Connection to ws://127.0.0.1:8090 took 7.0ms.
+2026-03-28 11:45:21,324 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 11:45:21,325 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff0391875f0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 11:45:21,325 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 11:45:21,399 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+2026-03-28 11:45:24,051 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:45:24,211 - unmute.unmute_handler - INFO - Flushing finished, took 159.0 ms, RTF: 3.1
+2026-03-28 11:45:24,215 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:45:24,217 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 11:45:24,217 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 11:45:24,564 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 11:45:24,598 - unmute.unmute_handler - INFO - Sending first word to TTS: Bonjour
+2026-03-28 11:45:24,993 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 11:45:24,993 - unmute.unmute_handler - INFO - End of VLLM, after 17 words.
+2026-03-28 11:45:24,994 - unmute.tts.text_to_speech - INFO - Time to first token is 396.0 ms
+2026-03-28 11:45:31,156 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:45:33,920 - unmute.main_websocket - INFO - receive_loop() stopped because WebSocket disconnected: e.code=<CloseCode.NO_STATUS_RCVD: 1005> e.reason=''
+INFO:     connection closed
+2026-03-28 11:45:33,921 - unmute.main_websocket - INFO - websocket_route() finished
+2026-03-28 11:45:33,921 - unmute.stt.speech_to_text - INFO - Shutting down STT, receiving last messages
+2026-03-28 11:45:33,923 - unmute.unmute_handler - INFO - STT connection closed while receiving messages.
+2026-03-28 11:45:33,924 - unmute.stt.speech_to_text - INFO - STT shutdown() finished
+2026-03-28 11:45:37,999 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 11:45:38,002 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 11:45:38,004 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff039187320>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 11:45:38,074 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     ('2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e', 0) - "WebSocket /v1/realtime" [accepted]
+INFO:     connection open
+2026-03-28 11:45:41,077 - unmute.stt.speech_to_text - INFO - Connecting to STT ws://127.0.0.1:8090...
+2026-03-28 11:45:41,078 - unmute.stt.speech_to_text - INFO - Connected to STT
+2026-03-28 11:45:41,079 - unmute.service_discovery - INFO - [stt] Instance ws://127.0.0.1:8090 took 2.0ms to accept us.
+2026-03-28 11:45:41,079 - unmute.service_discovery - INFO - [stt] Connection to ws://127.0.0.1:8090 took 4.0ms.
+2026-03-28 11:45:41,084 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 11:45:41,085 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff03bb7bf20>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 11:45:41,085 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 11:45:41,157 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+2026-03-28 11:45:44,362 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:45:44,521 - unmute.unmute_handler - INFO - Flushing finished, took 159.0 ms, RTF: 3.1
+2026-03-28 11:45:44,525 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:45:44,526 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 11:45:44,526 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 3.0ms.
+2026-03-28 11:45:44,743 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 11:45:44,785 - unmute.unmute_handler - INFO - Sending first word to TTS: Bonjour
+2026-03-28 11:45:45,253 - unmute.tts.text_to_speech - INFO - Time to first token is 467.0 ms
+2026-03-28 11:45:45,449 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 11:45:45,449 - unmute.unmute_handler - INFO - End of VLLM, after 14 words.
+2026-03-28 11:45:48,828 - unmute.main_websocket - INFO - receive_loop() stopped because WebSocket disconnected: e.code=<CloseCode.NO_STATUS_RCVD: 1005> e.reason=''
+INFO:     connection closed
+2026-03-28 11:45:48,828 - unmute.main_websocket - INFO - websocket_route() finished
+2026-03-28 11:45:48,828 - unmute.stt.speech_to_text - INFO - Shutting down STT, receiving last messages
+2026-03-28 11:45:48,829 - unmute.unmute_handler - INFO - STT connection closed while receiving messages.
+2026-03-28 11:45:48,829 - unmute.stt.speech_to_text - INFO - STT shutdown() finished
+2026-03-28 11:45:48,830 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:49:24,620 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 11:49:24,622 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 11:49:24,624 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff0391d5f10>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 11:49:24,692 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     ('2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e', 0) - "WebSocket /v1/realtime" [accepted]
+INFO:     connection open
+2026-03-28 11:49:28,576 - unmute.stt.speech_to_text - INFO - Connecting to STT ws://127.0.0.1:8090...
+2026-03-28 11:49:28,577 - unmute.stt.speech_to_text - INFO - Connected to STT
+2026-03-28 11:49:28,579 - unmute.service_discovery - INFO - [stt] Instance ws://127.0.0.1:8090 took 3.0ms to accept us.
+2026-03-28 11:49:28,579 - unmute.service_discovery - INFO - [stt] Connection to ws://127.0.0.1:8090 took 4.0ms.
+2026-03-28 11:49:28,583 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 11:49:28,583 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff03bb325d0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 11:49:28,584 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 11:49:28,661 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+2026-03-28 11:49:31,883 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:49:32,083 - unmute.unmute_handler - INFO - Flushing finished, took 200.0 ms, RTF: 2.5
+2026-03-28 11:49:32,087 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:49:32,088 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 11:49:32,088 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 4.0ms.
+2026-03-28 11:49:32,342 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 11:49:32,458 - unmute.unmute_handler - INFO - Sending first word to TTS: Bonjour,
+2026-03-28 11:49:33,008 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 11:49:33,008 - unmute.unmute_handler - INFO - End of VLLM, after 10 words.
+2026-03-28 11:49:33,009 - unmute.tts.text_to_speech - INFO - Time to first token is 550.0 ms
+2026-03-28 11:49:37,810 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:49:40,899 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:49:41,099 - unmute.unmute_handler - INFO - Flushing finished, took 200.0 ms, RTF: 2.5
+2026-03-28 11:49:41,102 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:49:41,104 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 11:49:41,104 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 11:49:41,245 - unmute.unmute_handler - INFO - STT-based interruption
+2026-03-28 11:49:41,249 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:49:41,250 - unmute.unmute_handler - INFO - End of VLLM, after 0 words.
+2026-03-28 11:49:41,341 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:49:41,486 - unmute.unmute_handler - INFO - Flushing finished, took 145.0 ms, RTF: 3.4
+2026-03-28 11:49:41,488 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:49:41,489 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 11:49:41,489 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 11:49:41,654 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 11:49:41,732 - unmute.unmute_handler - INFO - Sending first word to TTS: Oh,
+2026-03-28 11:49:42,248 - unmute.tts.text_to_speech - INFO - Time to first token is 515.0 ms
+2026-03-28 11:49:42,787 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 11:49:42,787 - unmute.unmute_handler - INFO - End of VLLM, after 16 words.
+2026-03-28 11:49:49,691 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:49:52,204 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:49:52,325 - unmute.unmute_handler - INFO - Flushing finished, took 122.0 ms, RTF: 4.1
+2026-03-28 11:49:52,330 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:49:52,331 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 2.0ms to accept us.
+2026-03-28 11:49:52,332 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 11:49:52,495 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 11:49:52,570 - unmute.unmute_handler - INFO - Sending first word to TTS: Ah,
+2026-03-28 11:49:52,977 - unmute.tts.text_to_speech - INFO - Time to first token is 407.0 ms
+2026-03-28 11:49:53,224 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 11:49:53,224 - unmute.unmute_handler - INFO - End of VLLM, after 23 words.
+2026-03-28 11:50:01,458 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:50:02,199 - unmute.main_websocket - INFO - receive_loop() stopped because WebSocket disconnected: e.code=<CloseCode.NO_STATUS_RCVD: 1005> e.reason=''
+INFO:     connection closed
+2026-03-28 11:50:02,201 - unmute.main_websocket - INFO - websocket_route() finished
+2026-03-28 11:50:02,201 - unmute.stt.speech_to_text - INFO - Shutting down STT, receiving last messages
+2026-03-28 11:50:02,218 - unmute.unmute_handler - INFO - STT connection closed while receiving messages.
+2026-03-28 11:50:02,218 - unmute.stt.speech_to_text - INFO - STT shutdown() finished
+2026-03-28 11:51:52,194 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff03bb32510>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 11:51:52,196 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 11:51:52,198 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 11:51:52,269 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     ('2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e', 0) - "WebSocket /v1/realtime" [accepted]
+INFO:     connection open
+2026-03-28 11:51:55,713 - unmute.stt.speech_to_text - INFO - Connecting to STT ws://127.0.0.1:8090...
+2026-03-28 11:51:55,713 - unmute.stt.speech_to_text - INFO - Connected to STT
+2026-03-28 11:51:55,715 - unmute.service_discovery - INFO - [stt] Instance ws://127.0.0.1:8090 took 3.0ms to accept us.
+2026-03-28 11:51:55,716 - unmute.service_discovery - INFO - [stt] Connection to ws://127.0.0.1:8090 took 4.0ms.
+2026-03-28 11:51:55,720 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 11:51:55,720 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff03921e660>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 11:51:55,720 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 11:51:55,793 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+2026-03-28 11:52:00,385 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:52:00,574 - unmute.unmute_handler - INFO - Flushing finished, took 190.0 ms, RTF: 2.6
+2026-03-28 11:52:00,577 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:52:00,578 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 2.0ms to accept us.
+2026-03-28 11:52:00,578 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 3.0ms.
+2026-03-28 11:52:00,826 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 11:52:00,942 - unmute.unmute_handler - INFO - Sending first word to TTS: Bonjour.
+2026-03-28 11:52:01,380 - unmute.tts.text_to_speech - INFO - Time to first token is 437.0 ms
+2026-03-28 11:52:01,518 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 11:52:01,518 - unmute.unmute_handler - INFO - End of VLLM, after 11 words.
+2026-03-28 11:52:05,781 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:52:08,972 - unmute.main_websocket - INFO - receive_loop() stopped because WebSocket disconnected: e.code=<CloseCode.NO_STATUS_RCVD: 1005> e.reason=''
+INFO:     connection closed
+2026-03-28 11:52:08,973 - unmute.main_websocket - INFO - websocket_route() finished
+2026-03-28 11:52:08,973 - unmute.stt.speech_to_text - INFO - Shutting down STT, receiving last messages
+2026-03-28 11:52:08,987 - unmute.unmute_handler - INFO - STT connection closed while receiving messages.
+2026-03-28 11:52:08,987 - unmute.stt.speech_to_text - INFO - STT shutdown() finished
+2026-03-28 11:52:12,401 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 11:52:12,404 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 11:52:12,406 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff0391c5430>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 11:52:12,475 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     ('2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e', 0) - "WebSocket /v1/realtime" [accepted]
+INFO:     connection open
+2026-03-28 11:52:13,905 - unmute.stt.speech_to_text - INFO - Connecting to STT ws://127.0.0.1:8090...
+2026-03-28 11:52:13,905 - unmute.stt.speech_to_text - INFO - Connected to STT
+2026-03-28 11:52:13,906 - unmute.service_discovery - INFO - [stt] Instance ws://127.0.0.1:8090 took 1.0ms to accept us.
+2026-03-28 11:52:13,906 - unmute.service_discovery - INFO - [stt] Connection to ws://127.0.0.1:8090 took 3.0ms.
+2026-03-28 11:52:13,910 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 11:52:13,911 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 11:52:13,911 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff0391df410>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 11:52:13,980 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+2026-03-28 11:52:17,209 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:52:17,396 - unmute.unmute_handler - INFO - Flushing finished, took 186.0 ms, RTF: 2.7
+2026-03-28 11:52:17,399 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:52:17,399 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 11:52:17,399 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 11:52:17,558 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 11:52:17,666 - unmute.unmute_handler - INFO - Sending first word to TTS: Bonjour.
+2026-03-28 11:52:17,997 - unmute.unmute_handler - INFO - STT-based interruption
+2026-03-28 11:52:18,039 - unmute.tts.text_to_speech - WARNING - Can't send - TTS shutting down
+2026-03-28 11:52:18,041 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:52:18,042 - unmute.unmute_handler - INFO - End of VLLM, after 14 words.
+2026-03-28 11:52:18,047 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:52:18,237 - unmute.unmute_handler - INFO - Flushing finished, took 190.0 ms, RTF: 2.6
+2026-03-28 11:52:18,239 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:52:18,240 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 11:52:18,240 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 11:52:18,358 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 11:52:18,410 - unmute.unmute_handler - INFO - Sending first word to TTS: Bonjour...
+2026-03-28 11:52:18,781 - unmute.tts.text_to_speech - INFO - Time to first token is 370.0 ms
+2026-03-28 11:52:19,138 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 11:52:19,138 - unmute.unmute_handler - INFO - End of VLLM, after 27 words.
+2026-03-28 11:52:27,262 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:52:30,718 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:52:30,878 - unmute.unmute_handler - INFO - Flushing finished, took 160.0 ms, RTF: 3.1
+2026-03-28 11:52:30,882 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:52:30,883 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 11:52:30,883 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 11:52:31,006 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 11:52:31,025 - unmute.unmute_handler - INFO - Sending first word to TTS: Depuis
+2026-03-28 11:52:31,038 - unmute.unmute_handler - INFO - STT-based interruption
+2026-03-28 11:52:31,042 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:52:31,043 - unmute.unmute_handler - INFO - End of VLLM, after 1 words.
+2026-03-28 11:52:31,085 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:52:31,248 - unmute.unmute_handler - INFO - Flushing finished, took 163.0 ms, RTF: 3.1
+2026-03-28 11:52:31,251 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:52:31,252 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 11:52:31,252 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 1.0ms.
+2026-03-28 11:52:31,409 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 11:52:31,445 - unmute.unmute_handler - INFO - Sending first word to TTS: Depuis
+2026-03-28 11:52:31,810 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 11:52:31,810 - unmute.unmute_handler - INFO - End of VLLM, after 13 words.
+2026-03-28 11:52:31,891 - unmute.tts.text_to_speech - INFO - Time to first token is 445.0 ms
+2026-03-28 11:52:36,932 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:52:40,117 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:52:40,282 - unmute.unmute_handler - INFO - Flushing finished, took 166.0 ms, RTF: 3.0
+2026-03-28 11:52:40,286 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:52:40,287 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 11:52:40,287 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 11:52:40,423 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 11:52:40,500 - unmute.unmute_handler - INFO - Sending first word to TTS: Non,
+2026-03-28 11:52:40,518 - unmute.unmute_handler - INFO - Interruption by STT-VAD
+2026-03-28 11:52:40,524 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:52:40,525 - unmute.unmute_handler - INFO - End of VLLM, after 1 words.
+2026-03-28 11:52:40,799 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:52:40,997 - unmute.unmute_handler - INFO - Flushing finished, took 198.0 ms, RTF: 2.5
+2026-03-28 11:52:41,001 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:52:41,001 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 11:52:41,002 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 11:52:41,161 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 11:52:41,240 - unmute.unmute_handler - INFO - Sending first word to TTS: Non,
+2026-03-28 11:52:41,624 - unmute.tts.text_to_speech - INFO - Time to first token is 385.0 ms
+2026-03-28 11:52:41,851 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 11:52:41,852 - unmute.unmute_handler - INFO - End of VLLM, after 23 words.
+2026-03-28 11:52:49,226 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:52:57,317 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:52:57,481 - unmute.unmute_handler - INFO - Flushing finished, took 164.0 ms, RTF: 3.0
+2026-03-28 11:52:57,485 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:52:57,486 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 0.0ms to accept us.
+2026-03-28 11:52:57,486 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 11:52:57,654 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 11:52:57,693 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 11:52:58,085 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 11:52:58,085 - unmute.unmute_handler - INFO - End of VLLM, after 12 words.
+2026-03-28 11:52:58,163 - unmute.tts.text_to_speech - INFO - Time to first token is 469.0 ms
+2026-03-28 11:53:02,244 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:53:11,445 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:53:11,640 - unmute.unmute_handler - INFO - Flushing finished, took 194.0 ms, RTF: 2.6
+2026-03-28 11:53:11,647 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:53:11,648 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 11:53:11,648 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 11:53:11,809 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 11:53:11,840 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 11:53:12,273 - unmute.tts.text_to_speech - INFO - Time to first token is 432.0 ms
+2026-03-28 11:53:12,405 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 11:53:12,405 - unmute.unmute_handler - INFO - End of VLLM, after 24 words.
+2026-03-28 11:53:19,955 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:53:24,359 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:53:24,524 - unmute.unmute_handler - INFO - Flushing finished, took 164.0 ms, RTF: 3.0
+2026-03-28 11:53:24,540 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:53:24,542 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 2.0ms to accept us.
+2026-03-28 11:53:24,542 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 5.0ms.
+2026-03-28 11:53:24,559 - unmute.unmute_handler - INFO - Interruption by STT-VAD
+2026-03-28 11:53:24,563 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:53:24,564 - unmute.unmute_handler - INFO - End of VLLM, after 0 words.
+2026-03-28 11:53:26,358 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:53:26,524 - unmute.unmute_handler - INFO - Flushing finished, took 166.0 ms, RTF: 3.0
+2026-03-28 11:53:26,529 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:53:26,530 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 11:53:26,530 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 1.0ms.
+2026-03-28 11:53:26,639 - unmute.unmute_handler - INFO - STT-based interruption
+2026-03-28 11:53:26,642 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:53:26,643 - unmute.unmute_handler - INFO - End of VLLM, after 0 words.
+2026-03-28 11:53:26,808 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:53:26,958 - unmute.unmute_handler - INFO - Flushing finished, took 150.0 ms, RTF: 3.3
+2026-03-28 11:53:26,963 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:53:26,964 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 2.0ms to accept us.
+2026-03-28 11:53:26,965 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 11:53:27,139 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 11:53:27,218 - unmute.unmute_handler - INFO - Sending first word to TTS: Non,
+2026-03-28 11:53:27,683 - unmute.tts.text_to_speech - INFO - Time to first token is 464.0 ms
+2026-03-28 11:53:27,887 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 11:53:27,888 - unmute.unmute_handler - INFO - End of VLLM, after 20 words.
+2026-03-28 11:53:35,283 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:53:38,959 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:53:39,119 - unmute.unmute_handler - INFO - Flushing finished, took 159.0 ms, RTF: 3.1
+2026-03-28 11:53:39,127 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:53:39,129 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 11:53:39,129 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 11:53:39,244 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 11:53:39,261 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 11:53:39,324 - unmute.unmute_handler - INFO - STT-based interruption
+2026-03-28 11:53:39,326 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:53:39,327 - unmute.unmute_handler - INFO - End of VLLM, after 2 words.
+2026-03-28 11:53:39,480 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:53:39,599 - unmute.unmute_handler - INFO - Flushing finished, took 119.0 ms, RTF: 4.2
+2026-03-28 11:53:39,604 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:53:39,605 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 11:53:39,605 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 11:53:39,728 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 11:53:39,742 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 11:53:40,181 - unmute.tts.text_to_speech - INFO - Time to first token is 438.0 ms
+2026-03-28 11:53:40,238 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 11:53:40,238 - unmute.unmute_handler - INFO - End of VLLM, after 22 words.
+2026-03-28 11:53:47,941 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:53:52,399 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:53:52,567 - unmute.unmute_handler - INFO - Flushing finished, took 167.0 ms, RTF: 3.0
+2026-03-28 11:53:52,573 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:53:52,574 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 11:53:52,575 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 11:53:52,700 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 11:53:52,716 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 11:53:53,091 - unmute.tts.text_to_speech - INFO - Time to first token is 374.0 ms
+2026-03-28 11:53:53,186 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 11:53:53,186 - unmute.unmute_handler - INFO - End of VLLM, after 15 words.
+2026-03-28 11:53:59,171 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:54:04,521 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:54:04,682 - unmute.unmute_handler - INFO - Flushing finished, took 160.0 ms, RTF: 3.1
+2026-03-28 11:54:04,689 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:54:04,690 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 11:54:04,690 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 11:54:04,821 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 11:54:04,834 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 11:54:05,225 - unmute.tts.text_to_speech - INFO - Time to first token is 390.0 ms
+2026-03-28 11:54:05,470 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 11:54:05,470 - unmute.unmute_handler - INFO - End of VLLM, after 27 words.
+2026-03-28 11:54:13,946 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:54:20,482 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:54:20,640 - unmute.unmute_handler - INFO - Flushing finished, took 157.0 ms, RTF: 3.2
+2026-03-28 11:54:20,650 - unmute.unmute_handler - INFO - STT-based interruption
+2026-03-28 11:54:20,651 - unmute.unmute_handler - INFO - End of VLLM, after 0 words.
+2026-03-28 11:54:20,691 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:54:20,841 - unmute.unmute_handler - INFO - Flushing finished, took 150.0 ms, RTF: 3.3
+2026-03-28 11:54:20,848 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:54:20,849 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 11:54:20,849 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 1.0ms.
+2026-03-28 11:54:20,978 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 11:54:20,997 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 11:54:21,408 - unmute.tts.text_to_speech - INFO - Time to first token is 411.0 ms
+2026-03-28 11:54:21,572 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 11:54:21,572 - unmute.unmute_handler - INFO - End of VLLM, after 26 words.
+2026-03-28 11:54:30,369 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:54:38,323 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:54:38,480 - unmute.unmute_handler - INFO - Flushing finished, took 157.0 ms, RTF: 3.2
+2026-03-28 11:54:38,488 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:54:38,489 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 11:54:38,489 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 11:54:38,643 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 11:54:38,664 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 11:54:39,087 - unmute.tts.text_to_speech - INFO - Time to first token is 423.0 ms
+2026-03-28 11:54:39,105 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 11:54:39,105 - unmute.unmute_handler - INFO - End of VLLM, after 19 words.
+2026-03-28 11:54:46,368 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:54:50,917 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:54:51,156 - unmute.unmute_handler - INFO - Flushing finished, took 238.0 ms, RTF: 2.1
+2026-03-28 11:54:51,166 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:54:51,168 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 2.0ms to accept us.
+2026-03-28 11:54:51,168 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 4.0ms.
+2026-03-28 11:54:51,248 - unmute.unmute_handler - INFO - STT-based interruption
+2026-03-28 11:54:51,251 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:54:51,251 - unmute.unmute_handler - INFO - End of VLLM, after 0 words.
+2026-03-28 11:54:51,460 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 11:54:51,713 - unmute.unmute_handler - INFO - Flushing finished, took 252.0 ms, RTF: 2.0
+2026-03-28 11:54:51,754 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 11:54:51,757 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 4.0ms to accept us.
+2026-03-28 11:54:51,758 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 9.0ms.
+2026-03-28 11:54:51,920 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 11:54:51,957 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 11:54:52,401 - unmute.tts.text_to_speech - INFO - Time to first token is 444.0 ms
+2026-03-28 11:54:53,033 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 11:54:53,033 - unmute.unmute_handler - INFO - End of VLLM, after 31 words.
+2026-03-28 11:55:03,282 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 11:55:06,119 - unmute.main_websocket - INFO - receive_loop() stopped because WebSocket disconnected: e.code=<CloseCode.NO_STATUS_RCVD: 1005> e.reason=''
+INFO:     connection closed
+2026-03-28 11:55:06,119 - unmute.main_websocket - INFO - websocket_route() finished
+2026-03-28 11:55:06,119 - unmute.stt.speech_to_text - INFO - Shutting down STT, receiving last messages
+2026-03-28 11:55:06,121 - unmute.unmute_handler - INFO - STT connection closed while receiving messages.
+2026-03-28 11:55:06,121 - unmute.stt.speech_to_text - INFO - STT shutdown() finished
+2026-03-28 12:01:01,676 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff0391df470>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 12:01:01,677 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 12:01:01,677 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 12:01:01,757 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     ('2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e', 0) - "WebSocket /v1/realtime" [accepted]
+INFO:     connection open
+2026-03-28 12:01:08,247 - unmute.stt.speech_to_text - INFO - Connecting to STT ws://127.0.0.1:8090...
+2026-03-28 12:01:08,248 - unmute.stt.speech_to_text - INFO - Connected to STT
+2026-03-28 12:01:08,249 - unmute.service_discovery - INFO - [stt] Instance ws://127.0.0.1:8090 took 2.0ms to accept us.
+2026-03-28 12:01:08,249 - unmute.service_discovery - INFO - [stt] Connection to ws://127.0.0.1:8090 took 3.0ms.
+2026-03-28 12:01:08,253 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff0391df140>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 12:01:08,254 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 12:01:08,255 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 12:01:08,440 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+2026-03-28 12:01:15,139 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:01:15,259 - unmute.unmute_handler - INFO - Flushing finished, took 119.0 ms, RTF: 4.2
+2026-03-28 12:01:15,262 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:01:15,263 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:01:15,263 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 12:01:15,575 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:01:15,659 - unmute.unmute_handler - INFO - Sending first word to TTS: Bonjour.
+2026-03-28 12:01:15,944 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 12:01:15,945 - unmute.unmute_handler - INFO - End of VLLM, after 10 words.
+2026-03-28 12:01:16,102 - unmute.tts.text_to_speech - INFO - Time to first token is 443.0 ms
+2026-03-28 12:01:20,185 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:01:25,421 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:01:25,580 - unmute.unmute_handler - INFO - Flushing finished, took 159.0 ms, RTF: 3.1
+2026-03-28 12:01:25,583 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:01:25,584 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:01:25,584 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 12:01:25,743 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:01:25,829 - unmute.unmute_handler - INFO - Sending first word to TTS: Bonjour.
+2026-03-28 12:01:26,080 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 12:01:26,080 - unmute.unmute_handler - INFO - End of VLLM, after 12 words.
+2026-03-28 12:01:26,088 - unmute.unmute_handler - INFO - STT-based interruption
+2026-03-28 12:01:26,180 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:01:26,229 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:01:26,359 - unmute.unmute_handler - INFO - Flushing finished, took 130.0 ms, RTF: 3.8
+2026-03-28 12:01:26,362 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:01:26,363 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:01:26,363 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 12:01:26,484 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:01:26,520 - unmute.unmute_handler - INFO - Sending first word to TTS: Je
+2026-03-28 12:01:26,882 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 12:01:26,882 - unmute.unmute_handler - INFO - End of VLLM, after 9 words.
+2026-03-28 12:01:27,004 - unmute.tts.text_to_speech - INFO - Time to first token is 483.0 ms
+2026-03-28 12:01:31,566 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:01:36,553 - unmute.main_websocket - INFO - receive_loop() stopped because WebSocket disconnected: e.code=<CloseCode.NO_STATUS_RCVD: 1005> e.reason=''
+INFO:     connection closed
+2026-03-28 12:01:36,553 - unmute.main_websocket - INFO - websocket_route() finished
+2026-03-28 12:01:36,553 - unmute.stt.speech_to_text - INFO - Shutting down STT, receiving last messages
+2026-03-28 12:01:36,556 - unmute.unmute_handler - INFO - STT connection closed while receiving messages.
+2026-03-28 12:01:36,556 - unmute.stt.speech_to_text - INFO - STT shutdown() finished
+2026-03-28 12:05:11,957 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 12:05:11,959 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 12:05:11,961 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff0391850a0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 12:05:12,037 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+2026-03-28 12:06:15,470 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 12:06:15,472 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 12:06:15,473 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff0391d54c0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 12:06:15,613 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     ('2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e', 0) - "WebSocket /v1/realtime" [accepted]
+INFO:     connection open
+2026-03-28 12:06:18,225 - unmute.stt.speech_to_text - INFO - Connecting to STT ws://127.0.0.1:8090...
+2026-03-28 12:06:18,226 - unmute.stt.speech_to_text - INFO - Connected to STT
+2026-03-28 12:06:18,227 - unmute.service_discovery - INFO - [stt] Instance ws://127.0.0.1:8090 took 2.0ms to accept us.
+2026-03-28 12:06:18,227 - unmute.service_discovery - INFO - [stt] Connection to ws://127.0.0.1:8090 took 3.0ms.
+2026-03-28 12:06:18,231 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 12:06:18,232 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 12:06:18,232 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff0391df3e0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 12:06:18,355 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+2026-03-28 12:06:21,472 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:06:21,631 - unmute.unmute_handler - INFO - Flushing finished, took 159.0 ms, RTF: 3.1
+2026-03-28 12:06:21,634 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:06:21,635 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:06:21,635 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 12:06:21,919 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:06:21,988 - unmute.unmute_handler - INFO - Sending first word to TTS: Bonjour
+2026-03-28 12:06:22,404 - unmute.tts.text_to_speech - INFO - Time to first token is 415.0 ms
+2026-03-28 12:06:22,529 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 12:06:22,529 - unmute.unmute_handler - INFO - End of VLLM, after 20 words.
+2026-03-28 12:06:29,046 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:06:34,343 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:06:34,498 - unmute.unmute_handler - INFO - Flushing finished, took 155.0 ms, RTF: 3.2
+2026-03-28 12:06:34,501 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:06:34,502 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:06:34,502 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 1.0ms.
+2026-03-28 12:06:34,631 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:06:34,648 - unmute.unmute_handler - INFO - Sending first word to TTS: Depuis
+2026-03-28 12:06:34,665 - unmute.unmute_handler - INFO - STT-based interruption
+2026-03-28 12:06:34,671 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:06:34,672 - unmute.unmute_handler - INFO - End of VLLM, after 1 words.
+2026-03-28 12:06:34,858 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:06:35,020 - unmute.unmute_handler - INFO - Flushing finished, took 162.0 ms, RTF: 3.1
+2026-03-28 12:06:35,034 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:06:35,037 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 3.0ms to accept us.
+2026-03-28 12:06:35,037 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 5.0ms.
+2026-03-28 12:06:35,193 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:06:35,226 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 12:06:35,647 - unmute.tts.text_to_speech - INFO - Time to first token is 422.0 ms
+2026-03-28 12:06:35,807 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 12:06:35,808 - unmute.unmute_handler - INFO - End of VLLM, after 25 words.
+2026-03-28 12:06:44,691 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:06:49,459 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:06:49,644 - unmute.unmute_handler - INFO - Flushing finished, took 184.0 ms, RTF: 2.7
+2026-03-28 12:06:49,660 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:06:49,666 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 6.0ms to accept us.
+2026-03-28 12:06:49,666 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 8.0ms.
+2026-03-28 12:06:49,782 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:06:49,797 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 12:06:50,140 - unmute.tts.text_to_speech - INFO - Time to first token is 343.0 ms
+2026-03-28 12:06:50,379 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 12:06:50,379 - unmute.unmute_handler - INFO - End of VLLM, after 28 words.
+2026-03-28 12:06:50,538 - unmute.unmute_handler - INFO - Interruption by STT-VAD
+2026-03-28 12:06:50,546 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:06:51,980 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:06:52,101 - unmute.unmute_handler - INFO - Flushing finished, took 122.0 ms, RTF: 4.1
+2026-03-28 12:06:52,107 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:06:52,108 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:06:52,108 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 3.0ms.
+2026-03-28 12:06:52,187 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:06:52,220 - unmute.unmute_handler - INFO - Interruption by STT-VAD
+2026-03-28 12:06:52,223 - unmute.unmute_handler - INFO - Sending first word to TTS: Des...
+2026-03-28 12:06:52,223 - unmute.tts.text_to_speech - WARNING - Can't send - TTS shutting down
+2026-03-28 12:06:52,243 - unmute.tts.text_to_speech - WARNING - Can't send - TTS shutting down
+2026-03-28 12:06:52,245 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:06:52,245 - unmute.unmute_handler - INFO - End of VLLM, after 2 words.
+2026-03-28 12:06:52,499 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:06:52,659 - unmute.unmute_handler - INFO - Flushing finished, took 159.0 ms, RTF: 3.1
+2026-03-28 12:06:52,663 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:06:52,664 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:06:52,664 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 1.0ms.
+2026-03-28 12:06:52,818 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:06:52,857 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 12:06:53,229 - unmute.tts.text_to_speech - INFO - Time to first token is 373.0 ms
+2026-03-28 12:06:53,509 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 12:06:53,509 - unmute.unmute_handler - INFO - End of VLLM, after 33 words.
+2026-03-28 12:07:04,991 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:07:11,859 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:07:12,015 - unmute.main_websocket - INFO - receive_loop() stopped because WebSocket disconnected: e.code=<CloseCode.NO_STATUS_RCVD: 1005> e.reason=''
+INFO:     connection closed
+2026-03-28 12:07:12,016 - unmute.main_websocket - INFO - websocket_route() finished
+2026-03-28 12:07:12,016 - unmute.stt.speech_to_text - INFO - Shutting down STT, receiving last messages
+2026-03-28 12:07:12,018 - unmute.unmute_handler - INFO - STT connection closed while receiving messages.
+2026-03-28 12:07:12,018 - unmute.stt.speech_to_text - INFO - STT shutdown() finished
+2026-03-28 12:09:20,278 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 12:09:20,280 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 12:09:20,281 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff0391f5520>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 12:09:20,352 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+2026-03-28 12:09:33,215 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 12:09:33,217 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff03bb5bbf0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 12:09:33,219 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 12:09:33,290 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     ('2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e', 0) - "WebSocket /v1/realtime" [accepted]
+INFO:     connection open
+2026-03-28 12:09:35,246 - unmute.stt.speech_to_text - INFO - Connecting to STT ws://127.0.0.1:8090...
+2026-03-28 12:09:35,247 - unmute.stt.speech_to_text - INFO - Connected to STT
+2026-03-28 12:09:35,248 - unmute.service_discovery - INFO - [stt] Instance ws://127.0.0.1:8090 took 1.0ms to accept us.
+2026-03-28 12:09:35,248 - unmute.service_discovery - INFO - [stt] Connection to ws://127.0.0.1:8090 took 2.0ms.
+2026-03-28 12:09:35,252 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 12:09:35,253 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff0391df3e0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 12:09:35,253 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 12:09:35,327 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+2026-03-28 12:09:38,731 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:09:38,891 - unmute.unmute_handler - INFO - Flushing finished, took 159.0 ms, RTF: 3.1
+2026-03-28 12:09:38,894 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:09:38,895 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:09:38,895 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 12:09:39,175 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:09:39,248 - unmute.unmute_handler - INFO - Sending first word to TTS: Bonjour
+2026-03-28 12:09:39,609 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 12:09:39,609 - unmute.unmute_handler - INFO - End of VLLM, after 15 words.
+2026-03-28 12:09:39,639 - unmute.tts.text_to_speech - INFO - Time to first token is 391.0 ms
+2026-03-28 12:09:44,600 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:09:48,411 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:09:48,573 - unmute.unmute_handler - INFO - Flushing finished, took 162.0 ms, RTF: 3.1
+2026-03-28 12:09:48,577 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:09:48,578 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:09:48,578 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 12:09:48,700 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:09:48,715 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 12:09:48,979 - unmute.main_websocket - INFO - emit_loop() stopped because WebSocket disconnected: e.code=1006 e.reason=''
+2026-03-28 12:09:48,979 - unmute.main_websocket - INFO - receive_loop() stopped because WebSocket disconnected: e.code=<CloseCode.NO_STATUS_RCVD: 1005> e.reason=''
+INFO:     connection closed
+2026-03-28 12:09:48,980 - unmute.main_websocket - INFO - websocket_route() finished
+2026-03-28 12:09:48,980 - unmute.stt.speech_to_text - INFO - Shutting down STT, receiving last messages
+2026-03-28 12:09:48,996 - unmute.unmute_handler - INFO - STT connection closed while receiving messages.
+2026-03-28 12:09:48,996 - unmute.stt.speech_to_text - INFO - STT shutdown() finished
+2026-03-28 12:09:48,996 - unmute.unmute_handler - INFO - End of VLLM, after 13 words.
+2026-03-28 12:09:49,037 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:11:09,765 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 12:11:09,769 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 12:11:09,770 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff0391d54c0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 12:11:09,935 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/voices HTTP/1.1" 200 OK
+INFO:     ('2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e', 0) - "WebSocket /v1/realtime" [accepted]
+INFO:     connection open
+2026-03-28 12:11:12,333 - unmute.stt.speech_to_text - INFO - Connecting to STT ws://127.0.0.1:8090...
+2026-03-28 12:11:12,334 - unmute.stt.speech_to_text - INFO - Connected to STT
+2026-03-28 12:11:12,335 - unmute.service_discovery - INFO - [stt] Instance ws://127.0.0.1:8090 took 3.0ms to accept us.
+2026-03-28 12:11:12,335 - unmute.service_discovery - INFO - [stt] Connection to ws://127.0.0.1:8090 took 3.0ms.
+2026-03-28 12:11:12,339 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 12:11:12,340 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 12:11:12,344 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff0391e77d0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 12:11:12,516 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+2026-03-28 12:11:15,620 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:11:15,783 - unmute.unmute_handler - INFO - Flushing finished, took 163.0 ms, RTF: 3.1
+2026-03-28 12:11:15,786 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:11:15,787 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:11:15,787 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 3.0ms.
+2026-03-28 12:11:16,131 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:11:16,167 - unmute.unmute_handler - INFO - Sending first word to TTS: Bonjour
+2026-03-28 12:11:16,461 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 12:11:16,461 - unmute.unmute_handler - INFO - End of VLLM, after 13 words.
+2026-03-28 12:11:16,558 - unmute.tts.text_to_speech - INFO - Time to first token is 391.0 ms
+2026-03-28 12:11:21,279 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:11:24,983 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:11:25,181 - unmute.unmute_handler - INFO - Flushing finished, took 198.0 ms, RTF: 2.5
+2026-03-28 12:11:25,187 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:11:25,188 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:11:25,188 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 3.0ms.
+2026-03-28 12:11:25,581 - unmute.unmute_handler - INFO - STT-based interruption
+2026-03-28 12:11:25,585 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:11:25,585 - unmute.unmute_handler - INFO - End of VLLM, after 0 words.
+2026-03-28 12:11:25,677 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:11:25,821 - unmute.unmute_handler - INFO - Flushing finished, took 144.0 ms, RTF: 3.5
+2026-03-28 12:11:25,826 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:11:25,827 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:11:25,827 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 12:11:26,033 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:11:26,056 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 12:11:26,473 - unmute.tts.text_to_speech - INFO - Time to first token is 416.0 ms
+2026-03-28 12:11:26,863 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 12:11:26,863 - unmute.unmute_handler - INFO - End of VLLM, after 33 words.
+2026-03-28 12:11:37,995 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:11:42,302 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:11:42,461 - unmute.unmute_handler - INFO - Flushing finished, took 159.0 ms, RTF: 3.1
+2026-03-28 12:11:42,465 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:11:42,466 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:11:42,466 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 1.0ms.
+2026-03-28 12:11:42,632 - unmute.unmute_handler - INFO - STT-based interruption
+2026-03-28 12:11:42,635 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:11:42,635 - unmute.unmute_handler - INFO - End of VLLM, after 0 words.
+2026-03-28 12:11:42,823 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:11:42,983 - unmute.unmute_handler - INFO - Flushing finished, took 160.0 ms, RTF: 3.1
+2026-03-28 12:11:42,987 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:11:42,988 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:11:42,988 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 12:11:43,198 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:11:43,215 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 12:11:43,588 - unmute.tts.text_to_speech - INFO - Time to first token is 373.0 ms
+2026-03-28 12:11:43,804 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 12:11:43,804 - unmute.unmute_handler - INFO - End of VLLM, after 26 words.
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /portal-resolver?t=1774699908732 HTTP/1.1" 404 Not Found
+2026-03-28 12:11:53,749 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:11:55,426 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:11:55,581 - unmute.unmute_handler - INFO - Flushing finished, took 155.0 ms, RTF: 3.2
+2026-03-28 12:11:55,586 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:11:55,587 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:11:55,587 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 12:11:55,727 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:11:55,752 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 12:11:55,982 - unmute.unmute_handler - INFO - STT-based interruption
+2026-03-28 12:11:55,991 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:11:55,991 - unmute.unmute_handler - INFO - End of VLLM, after 7 words.
+2026-03-28 12:11:56,084 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:11:56,225 - unmute.unmute_handler - INFO - Flushing finished, took 141.0 ms, RTF: 3.5
+2026-03-28 12:11:56,231 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:11:56,232 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:11:56,232 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 12:11:56,383 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:11:56,418 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 12:11:56,879 - unmute.tts.text_to_speech - INFO - Time to first token is 461.0 ms
+2026-03-28 12:11:57,684 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 12:11:57,684 - unmute.unmute_handler - INFO - End of VLLM, after 33 words.
+2026-03-28 12:12:08,401 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:12:13,745 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:12:13,901 - unmute.unmute_handler - INFO - Flushing finished, took 156.0 ms, RTF: 3.2
+2026-03-28 12:12:13,906 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:12:13,907 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:12:13,907 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 1.0ms.
+2026-03-28 12:12:14,072 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:12:14,108 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 12:12:14,146 - unmute.unmute_handler - INFO - STT-based interruption
+2026-03-28 12:12:14,150 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:12:14,150 - unmute.unmute_handler - INFO - End of VLLM, after 1 words.
+2026-03-28 12:12:14,245 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:12:14,421 - unmute.unmute_handler - INFO - Flushing finished, took 176.0 ms, RTF: 2.8
+2026-03-28 12:12:14,426 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:12:14,427 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:12:14,427 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 1.0ms.
+2026-03-28 12:12:14,585 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:12:14,621 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 12:12:15,031 - unmute.tts.text_to_speech - INFO - Time to first token is 409.0 ms
+2026-03-28 12:12:15,478 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 12:12:15,479 - unmute.unmute_handler - INFO - End of VLLM, after 33 words.
+2026-03-28 12:12:28,791 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:12:34,190 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:12:34,382 - unmute.unmute_handler - INFO - Flushing finished, took 192.0 ms, RTF: 2.6
+2026-03-28 12:12:34,388 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:12:34,389 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:12:34,389 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 1.0ms.
+2026-03-28 12:12:34,567 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:12:34,601 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 12:12:34,822 - unmute.unmute_handler - INFO - Interruption by STT-VAD
+2026-03-28 12:12:34,841 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:12:34,841 - unmute.unmute_handler - INFO - End of VLLM, after 4 words.
+2026-03-28 12:12:41,863 - unmute.unmute_handler - INFO - Long silence detected.
+2026-03-28 12:12:41,863 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:12:42,022 - unmute.unmute_handler - INFO - Flushing finished, took 159.0 ms, RTF: 3.1
+2026-03-28 12:12:42,027 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:12:42,028 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:12:42,029 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 12:12:42,188 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:12:42,223 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 12:12:42,713 - unmute.tts.text_to_speech - INFO - Time to first token is 491.0 ms
+2026-03-28 12:12:43,484 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 12:12:43,485 - unmute.unmute_handler - INFO - End of VLLM, after 23 words.
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /portal-resolver?t=1774699968746 HTTP/1.1" 404 Not Found
+2026-03-28 12:12:50,955 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:12:55,704 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:12:55,871 - unmute.unmute_handler - INFO - Flushing finished, took 167.0 ms, RTF: 3.0
+2026-03-28 12:12:55,877 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:12:55,878 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:12:55,878 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 12:12:56,032 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:12:56,068 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 12:12:56,557 - unmute.tts.text_to_speech - INFO - Time to first token is 489.0 ms
+2026-03-28 12:12:57,039 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 12:12:57,039 - unmute.unmute_handler - INFO - End of VLLM, after 19 words.
+2026-03-28 12:13:06,157 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:13:10,948 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:13:11,071 - unmute.unmute_handler - INFO - Flushing finished, took 122.0 ms, RTF: 4.1
+2026-03-28 12:13:11,077 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:13:11,078 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:13:11,078 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 12:13:11,234 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:13:11,264 - unmute.unmute_handler - INFO - Interruption by STT-VAD
+2026-03-28 12:13:11,264 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:13:11,265 - unmute.unmute_handler - INFO - End of VLLM, after 0 words.
+2026-03-28 12:13:18,309 - unmute.unmute_handler - INFO - Long silence detected.
+2026-03-28 12:13:18,309 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:13:18,465 - unmute.unmute_handler - INFO - Flushing finished, took 155.0 ms, RTF: 3.2
+2026-03-28 12:13:18,471 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:13:18,472 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:13:18,472 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 12:13:18,630 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:13:18,665 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 12:13:19,203 - unmute.tts.text_to_speech - INFO - Time to first token is 537.0 ms
+2026-03-28 12:13:19,798 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 12:13:19,799 - unmute.unmute_handler - INFO - End of VLLM, after 19 words.
+2026-03-28 12:13:26,243 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:13:27,111 - unmute.main_websocket - INFO - receive_loop() stopped because WebSocket disconnected: e.code=<CloseCode.NO_STATUS_RCVD: 1005> e.reason=''
+INFO:     connection closed
+2026-03-28 12:13:27,112 - unmute.main_websocket - INFO - websocket_route() finished
+2026-03-28 12:13:27,112 - unmute.stt.speech_to_text - INFO - Shutting down STT, receiving last messages
+2026-03-28 12:13:27,114 - unmute.unmute_handler - INFO - STT connection closed while receiving messages.
+2026-03-28 12:13:27,114 - unmute.stt.speech_to_text - INFO - STT shutdown() finished
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /portal-resolver?t=1774700028772 HTTP/1.1" 404 Not Found
+2026-03-28 12:14:34,209 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 12:14:34,211 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 12:14:34,213 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff03bb7b4d0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 12:14:34,294 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     ('2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e', 0) - "WebSocket /v1/realtime" [accepted]
+INFO:     connection open
+2026-03-28 12:14:37,667 - unmute.stt.speech_to_text - INFO - Connecting to STT ws://127.0.0.1:8090...
+2026-03-28 12:14:37,668 - unmute.stt.speech_to_text - INFO - Connected to STT
+2026-03-28 12:14:37,668 - unmute.service_discovery - INFO - [stt] Instance ws://127.0.0.1:8090 took 2.0ms to accept us.
+2026-03-28 12:14:37,668 - unmute.service_discovery - INFO - [stt] Connection to ws://127.0.0.1:8090 took 3.0ms.
+2026-03-28 12:14:37,673 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-28 12:14:37,674 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-28 12:14:37,674 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff0391e58e0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-28 12:14:37,749 - unmute.main_websocket - INFO - Response from http://77.48.24.250:48231/v1/models: <Response [200]>
+2026-03-28 12:14:40,167 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:14:40,327 - unmute.unmute_handler - INFO - Flushing finished, took 159.0 ms, RTF: 3.1
+2026-03-28 12:14:40,328 - unmute.unmute_handler - INFO - STT-based interruption
+2026-03-28 12:14:40,329 - unmute.unmute_handler - INFO - End of VLLM, after 0 words.
+2026-03-28 12:14:40,891 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:14:41,057 - unmute.unmute_handler - INFO - Flushing finished, took 166.0 ms, RTF: 3.0
+2026-03-28 12:14:41,078 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:14:41,079 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 2.0ms to accept us.
+2026-03-28 12:14:41,080 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 21.0ms.
+2026-03-28 12:14:41,258 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:14:41,373 - unmute.unmute_handler - INFO - Sending first word to TTS: Bonjour...
+2026-03-28 12:14:41,794 - unmute.tts.text_to_speech - INFO - Time to first token is 420.0 ms
+2026-03-28 12:14:41,937 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 12:14:41,938 - unmute.unmute_handler - INFO - End of VLLM, after 14 words.
+2026-03-28 12:14:46,115 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /portal-resolver?t=1774700088775 HTTP/1.1" 404 Not Found
+2026-03-28 12:14:50,007 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:14:50,169 - unmute.unmute_handler - INFO - Flushing finished, took 162.0 ms, RTF: 3.1
+2026-03-28 12:14:50,172 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:14:50,173 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:14:50,173 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 12:14:50,333 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:14:50,369 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 12:14:50,647 - unmute.unmute_handler - INFO - STT-based interruption
+2026-03-28 12:14:50,649 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:14:50,650 - unmute.unmute_handler - INFO - End of VLLM, after 4 words.
+2026-03-28 12:14:50,729 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:14:50,927 - unmute.unmute_handler - INFO - Flushing finished, took 197.0 ms, RTF: 2.5
+2026-03-28 12:14:50,930 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:14:50,931 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:14:50,931 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 1.0ms.
+2026-03-28 12:14:51,089 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:14:51,125 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 12:14:51,633 - unmute.tts.text_to_speech - INFO - Time to first token is 508.0 ms
+2026-03-28 12:14:52,240 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 12:14:52,240 - unmute.unmute_handler - INFO - End of VLLM, after 21 words.
+2026-03-28 12:14:59,074 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:15:02,336 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:15:02,488 - unmute.unmute_handler - INFO - Flushing finished, took 151.0 ms, RTF: 3.3
+2026-03-28 12:15:02,492 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:15:02,493 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-28 12:15:02,494 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 12:15:02,607 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:15:02,623 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 12:15:02,650 - unmute.unmute_handler - INFO - STT-based interruption
+2026-03-28 12:15:02,653 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:15:02,654 - unmute.unmute_handler - INFO - End of VLLM, after 1 words.
+2026-03-28 12:15:02,809 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:15:03,012 - unmute.unmute_handler - INFO - Flushing finished, took 203.0 ms, RTF: 2.5
+2026-03-28 12:15:03,017 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:15:03,018 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 2.0ms to accept us.
+2026-03-28 12:15:03,019 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-28 12:15:03,133 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:15:03,149 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 12:15:03,545 - unmute.tts.text_to_speech - INFO - Time to first token is 396.0 ms
+2026-03-28 12:15:03,625 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 12:15:03,626 - unmute.unmute_handler - INFO - End of VLLM, after 20 words.
+2026-03-28 12:15:10,907 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-28 12:15:16,009 - unmute.unmute_handler - INFO - Pause detected
+2026-03-28 12:15:16,169 - unmute.unmute_handler - INFO - Flushing finished, took 160.0 ms, RTF: 3.1
+2026-03-28 12:15:16,177 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
+2026-03-28 12:15:16,179 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 2.0ms to accept us.
+2026-03-28 12:15:16,179 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 3.0ms.
+2026-03-28 12:15:16,338 - httpx - INFO - HTTP Request: POST http://77.48.24.250:48231/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-28 12:15:16,374 - unmute.unmute_handler - INFO - Sending first word to TTS: «
+2026-03-28 12:15:16,831 - unmute.tts.text_to_speech - INFO - Time to first token is 456.0 ms
+2026-03-28 12:15:17,059 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-28 12:15:17,059 - unmute.unmute_handler - INFO - End of VLLM, after 21 words.
+2026-03-28 12:15:26,912 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+INFO:     connection closed
+2026-03-28 12:15:29,855 - unmute.main_websocket - INFO - receive_loop() stopped because WebSocket disconnected: e.code=<CloseCode.NO_STATUS_RCVD: 1005> e.reason=''
+2026-03-28 12:15:29,855 - unmute.main_websocket - INFO - websocket_route() finished
+2026-03-28 12:15:29,856 - unmute.stt.speech_to_text - INFO - Shutting down STT, receiving last messages
+2026-03-28 12:15:29,890 - unmute.unmute_handler - INFO - STT connection closed while receiving messages.
+2026-03-28 12:15:29,890 - unmute.stt.speech_to_text - INFO - STT shutdown() finished
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /portal-resolver?t=1774700148803 HTTP/1.1" 404 Not Found
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /portal-resolver?t=1774700208807 HTTP/1.1" 404 Not Found
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /portal-resolver?t=1774700268765 HTTP/1.1" 404 Not Found
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /portal-resolver?t=1774700328808 HTTP/1.1" 404 Not Found
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /portal-resolver?t=1774700366622 HTTP/1.1" 404 Not Found
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /portal-resolver?t=1774700370753 HTTP/1.1" 404 Not Found
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /portal-resolver?t=1774700400681 HTTP/1.1" 404 Not Found
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /portal-resolver?t=1774700430811 HTTP/1.1" 404 Not Found
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /portal-resolver?t=1774700460753 HTTP/1.1" 404 Not Found
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /portal-resolver?t=1774700490781 HTTP/1.1" 404 Not Found
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /portal-resolver?t=1774700520746 HTTP/1.1" 404 Not Found
+INFO:     2a01:cb0c:342:4000:6d07:adf2:ed0f:e21e:0 - "GET /portal-resolver?t=1774700550732 HTTP/1.1" 404 Not Found

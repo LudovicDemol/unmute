@@ -1,30 +1,41 @@
 #!/bin/bash
-set -ex
-cd "$(dirname "$0")/"
+# -e: arrête en cas d'erreur / -x: affiche les commandes exécutées
+set -e 
 
-# This is part of a hack to get dependencies needed for the TTS Rust server, because it integrates a Python component
+# On se place dans le dossier du script
+cd "$(dirname "$0")"
+
+echo "--- Démarrage de la procédure TTS ---"
+
+# 1. NETTOYAGE : On libère le port 8089 avant tout
+echo "Nettoyage du port 8089..."
+fuser -k 8089/tcp || true
+
+# 2. Gestion des fichiers de configuration requis par Moshi
 [ -f pyproject.toml ] || wget https://raw.githubusercontent.com/kyutai-labs/moshi/9837ca328d58deef5d7a4fe95a0fb49c902ec0ae/rust/moshi-server/pyproject.toml
 [ -f uv.lock ] || wget https://raw.githubusercontent.com/kyutai-labs/moshi/9837ca328d58deef5d7a4fe95a0fb49c902ec0ae/rust/moshi-server/uv.lock
 
-[ -d .venv ] || uv venv
+# 3. Environnement Virtuel (Correction de l'erreur 'A virtual environment already exists')
+if [ ! -d ".venv" ]; then
+    echo "Création du venv..."
+    uv venv
+fi
 source .venv/bin/activate
 
-cd ..
-
-# This env var must be set to get the correct environment for the Rust build.
-# Must be set before running `cargo install`!
-# If you don't have it, you'll see an error like `no module named 'huggingface_hub'`
-# or similar, which means you don't have the necessary Python packages installed.
+# 4. Variables d'environnement
 export LD_LIBRARY_PATH=$(python -c 'import sysconfig; print(sysconfig.get_config_var("LIBDIR"))')
-
-# A fix for building Sentencepiece on GCC 15, see: https://github.com/google/sentencepiece/issues/1108
 export CXXFLAGS="-include cstdint"
 
-# If you already have moshi-server installed and things are not working because of the LD_LIBRARY_PATH issue,
-# you might have to force a rebuild with --force.
-cargo install --features cuda moshi-server@0.6.4
+# 5. Installation de moshi-server (si pas déjà présent)
+if ! command -v moshi-server &> /dev/null; then
+    echo "Installation de moshi-server..."
+    cargo install --features cuda moshi-server@0.6.4
+fi
 
-# If you're getting `moshi-server: error: unrecognized arguments: worker`, it means you're
-# using the binary from the `moshi` Python package rather than from the Rust package.
-# Use `pip install moshi --upgrade` to update the Python package to >=0.2.8.
-uv run --locked --project ./dockerless moshi-server worker --config services/moshi-server/configs/tts.toml --port 8089
+# On remonte d'un cran si nécessaire pour trouver les configs
+cd ..
+
+# 6. LANCEMENT avec UV
+echo "Lancement du worker TTS sur le port 8089..."
+# Utilisation de exec pour que le processus moshi récupère le PID du script
+exec uv run --locked --project ./dockerless moshi-server worker --config services/moshi-server/configs/tts.toml  --port 8089
