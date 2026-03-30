@@ -4,194 +4,188 @@ nohup: ignoring input
 + uv run uvicorn unmute.main_websocket:app --reload --host 0.0.0.0 --port 8000 --ws-per-message-deflate=false
 INFO:     Will watch for changes in these directories: ['/workspace/unmute']
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [23515] using WatchFiles
+INFO:     Started reloader process [26466] using WatchFiles
 NEWSAPI_API_KEY is not set. News API functionality will be disabled.
-INFO:     Started server process [23517]
+INFO:     Started server process [26481]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774874474722 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774874483640 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774874513669 HTTP/1.1" 404 Not Found
-2026-03-30 12:42:04,397 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
-2026-03-30 12:42:04,397 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
-2026-03-30 12:42:04,397 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7d2858f908c0>: Failed to establish a new connection: [Errno 111] Connection refused'))
-2026-03-30 12:42:04,600 - unmute.main_websocket - INFO - Response from https://api.groq.com/openai/v1/models: <Response [200]>
+2026-03-30 14:39:19,774 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x713cf672ef60>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-30 14:39:19,775 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-30 14:39:19,775 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-30 14:39:19,976 - unmute.main_websocket - INFO - Response from https://api.groq.com/openai/v1/models: <Response [200]>
 INFO:     46.193.57.247:0 - "GET /v1/health HTTP/1.1" 200 OK
 INFO:     ('46.193.57.247', 0) - "WebSocket /v1/realtime" [accepted]
 INFO:     connection open
-2026-03-30 12:42:07,595 - unmute.stt.speech_to_text - INFO - Connecting to STT ws://127.0.0.1:8090...
-2026-03-30 12:42:07,598 - unmute.stt.speech_to_text - INFO - Connected to STT
-2026-03-30 12:42:07,600 - unmute.service_discovery - INFO - [stt] Instance ws://127.0.0.1:8090 took 5.0ms to accept us.
-2026-03-30 12:42:07,600 - unmute.service_discovery - INFO - [stt] Connection to ws://127.0.0.1:8090 took 5.0ms.
-2026-03-30 12:42:07,602 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
-2026-03-30 12:42:07,603 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
-2026-03-30 12:42:07,603 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7d2858fd36e0>: Failed to establish a new connection: [Errno 111] Connection refused'))
-2026-03-30 12:42:07,812 - unmute.main_websocket - INFO - Response from https://api.groq.com/openai/v1/models: <Response [200]>
-2026-03-30 12:42:10,667 - unmute.unmute_handler - INFO - Pause detected
-2026-03-30 12:42:10,811 - unmute.unmute_handler - INFO - Flushing finished, took 145.0 ms, RTF: 3.4
-2026-03-30 12:42:10,814 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=voix%2Ftherese.wav&cfg_alpha=1.5
-2026-03-30 12:42:10,814 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
-2026-03-30 12:42:10,814 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 1.0ms.
-2026-03-30 12:42:10,987 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
-2026-03-30 12:42:11,287 - unmute.unmute_handler - INFO - Sending first word to TTS: Bonjour
-2026-03-30 12:42:11,398 - unmute.unmute_handler - INFO - Sending TTS EOS.
-2026-03-30 12:42:11,398 - unmute.unmute_handler - INFO - End of VLLM, after 22 words.
-2026-03-30 12:42:11,603 - unmute.tts.text_to_speech - INFO - Time to first token is 317.0 ms
-2026-03-30 12:42:13,571 - unmute.unmute_handler - INFO - Interruption by STT-VAD
-2026-03-30 12:42:13,584 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
-2026-03-30 12:42:14,487 - unmute.main_websocket - INFO - receive_loop() stopped because WebSocket disconnected: e.code=<CloseCode.NO_STATUS_RCVD: 1005> e.reason=''
+2026-03-30 14:39:24,995 - unmute.stt.speech_to_text - INFO - Connecting to STT ws://127.0.0.1:8090...
+2026-03-30 14:39:24,999 - unmute.stt.speech_to_text - INFO - Connected to STT
+2026-03-30 14:39:25,001 - unmute.service_discovery - INFO - [stt] Instance ws://127.0.0.1:8090 took 7.0ms to accept us.
+2026-03-30 14:39:25,001 - unmute.service_discovery - INFO - [stt] Connection to ws://127.0.0.1:8090 took 7.0ms.
+2026-03-30 14:39:25,004 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-30 14:39:25,004 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-30 14:39:25,004 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x713cf67924e0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-30 14:39:25,209 - unmute.main_websocket - INFO - Response from https://api.groq.com/openai/v1/models: <Response [200]>
+2026-03-30 14:39:28,557 - unmute.unmute_handler - INFO - Pause detected
+2026-03-30 14:39:28,680 - unmute.unmute_handler - INFO - Flushing finished, took 123.0 ms, RTF: 4.1
+2026-03-30 14:39:28,683 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=therese.wav&cfg_alpha=1.5
+2026-03-30 14:39:28,683 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-30 14:39:28,683 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 1.0ms.
+2026-03-30 14:39:28,929 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-30 14:39:29,167 - unmute.unmute_handler - INFO - Sending first word to TTS: Bonjour
+2026-03-30 14:39:29,292 - unmute.unmute_handler - INFO - Sending TTS EOS.
+2026-03-30 14:39:29,292 - unmute.unmute_handler - INFO - End of VLLM, after 23 words.
+2026-03-30 14:39:29,468 - unmute.tts.text_to_speech - INFO - Time to first token is 301.0 ms
+2026-03-30 14:39:30,638 - unmute.main_websocket - INFO - receive_loop() stopped because WebSocket disconnected: e.code=<CloseCode.NO_STATUS_RCVD: 1005> e.reason=''
 INFO:     connection closed
-2026-03-30 12:42:14,488 - unmute.main_websocket - INFO - websocket_route() finished
-2026-03-30 12:42:14,488 - unmute.stt.speech_to_text - INFO - Shutting down STT, receiving last messages
-2026-03-30 12:42:14,489 - unmute.unmute_handler - INFO - STT connection closed while receiving messages.
-2026-03-30 12:42:14,489 - unmute.stt.speech_to_text - INFO - STT shutdown() finished
-INFO:     ('46.193.57.247', 0) - "WebSocket /v1/realtime" [accepted]
-INFO:     connection open
-2026-03-30 12:42:29,923 - unmute.stt.speech_to_text - INFO - Connecting to STT ws://127.0.0.1:8090...
-2026-03-30 12:42:29,924 - unmute.stt.speech_to_text - INFO - Connected to STT
-2026-03-30 12:42:29,926 - unmute.service_discovery - INFO - [stt] Instance ws://127.0.0.1:8090 took 2.0ms to accept us.
-2026-03-30 12:42:29,926 - unmute.service_discovery - INFO - [stt] Connection to ws://127.0.0.1:8090 took 2.0ms.
-2026-03-30 12:42:29,929 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7d2858e35670>: Failed to establish a new connection: [Errno 111] Connection refused'))
-2026-03-30 12:42:29,930 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
-2026-03-30 12:42:29,930 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
-2026-03-30 12:42:30,129 - unmute.main_websocket - INFO - Response from https://api.groq.com/openai/v1/models: <Response [200]>
-2026-03-30 12:42:33,056 - unmute.unmute_handler - INFO - Pause detected
-2026-03-30 12:42:33,174 - unmute.unmute_handler - INFO - Flushing finished, took 118.0 ms, RTF: 4.2
-2026-03-30 12:42:33,176 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=voix%2Ftherese.wav&cfg_alpha=1.5
-2026-03-30 12:42:33,177 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 0.0ms to accept us.
-2026-03-30 12:42:33,177 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 1.0ms.
-2026-03-30 12:42:33,291 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
-2026-03-30 12:42:33,435 - unmute.unmute_handler - INFO - Sending first word to TTS: Bonjour
-2026-03-30 12:42:33,545 - unmute.unmute_handler - INFO - Sending TTS EOS.
-2026-03-30 12:42:33,545 - unmute.unmute_handler - INFO - End of VLLM, after 23 words.
-2026-03-30 12:42:33,742 - unmute.tts.text_to_speech - INFO - Time to first token is 306.0 ms
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774874555690 HTTP/1.1" 404 Not Found
-2026-03-30 12:42:39,107 - unmute.main_websocket - INFO - receive_loop() stopped because WebSocket disconnected: e.code=<CloseCode.NO_STATUS_RCVD: 1005> e.reason=''
-INFO:     connection closed
-2026-03-30 12:42:39,108 - unmute.main_websocket - INFO - websocket_route() finished
-2026-03-30 12:42:39,108 - unmute.stt.speech_to_text - INFO - Shutting down STT, receiving last messages
-2026-03-30 12:42:39,110 - unmute.unmute_handler - INFO - STT connection closed while receiving messages.
-2026-03-30 12:42:39,110 - unmute.stt.speech_to_text - INFO - STT shutdown() finished
-2026-03-30 12:42:39,110 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774874615974 HTTP/1.1" 404 Not Found
-2026-03-30 12:43:43,669 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
-2026-03-30 12:43:43,670 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
-2026-03-30 12:43:43,670 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7d2858e68650>: Failed to establish a new connection: [Errno 111] Connection refused'))
-2026-03-30 12:43:48,878 - unmute.main_websocket - INFO - Response from https://api.groq.com/openai/v1/models: <Response [200]>
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774874634278 HTTP/1.1" 404 Not Found
-2026-03-30 12:44:23,695 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
-2026-03-30 12:44:23,696 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7d2858e36f60>: Failed to establish a new connection: [Errno 111] Connection refused'))
-2026-03-30 12:44:23,696 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
-2026-03-30 12:44:23,891 - unmute.main_websocket - INFO - Response from https://api.groq.com/openai/v1/models: <Response [200]>
+2026-03-30 14:39:30,638 - unmute.main_websocket - INFO - websocket_route() finished
+2026-03-30 14:39:30,638 - unmute.stt.speech_to_text - INFO - Shutting down STT, receiving last messages
+2026-03-30 14:39:30,639 - unmute.unmute_handler - INFO - STT connection closed while receiving messages.
+2026-03-30 14:39:30,639 - unmute.stt.speech_to_text - INFO - STT shutdown() finished
+2026-03-30 14:39:30,656 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774881575808 HTTP/1.1" 404 Not Found
+2026-03-30 14:39:39,705 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x713cf6792270>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-30 14:39:39,705 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-30 14:39:39,706 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-30 14:39:39,900 - unmute.main_websocket - INFO - Response from https://api.groq.com/openai/v1/models: <Response [200]>
 INFO:     46.193.57.247:0 - "GET /v1/health HTTP/1.1" 200 OK
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774874663799 HTTP/1.1" 404 Not Found
 INFO:     ('46.193.57.247', 0) - "WebSocket /v1/realtime" [accepted]
 INFO:     connection open
-2026-03-30 12:44:27,937 - unmute.stt.speech_to_text - INFO - Connecting to STT ws://127.0.0.1:8090...
-2026-03-30 12:44:27,938 - unmute.stt.speech_to_text - INFO - Connected to STT
-2026-03-30 12:44:27,939 - unmute.service_discovery - INFO - [stt] Instance ws://127.0.0.1:8090 took 2.0ms to accept us.
-2026-03-30 12:44:27,939 - unmute.service_discovery - INFO - [stt] Connection to ws://127.0.0.1:8090 took 2.0ms.
-2026-03-30 12:44:27,943 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
-2026-03-30 12:44:27,943 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
-2026-03-30 12:44:27,944 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7d2858fd1430>: Failed to establish a new connection: [Errno 111] Connection refused'))
-2026-03-30 12:44:28,161 - unmute.main_websocket - INFO - Response from https://api.groq.com/openai/v1/models: <Response [200]>
-2026-03-30 12:44:30,932 - unmute.unmute_handler - INFO - Pause detected
-2026-03-30 12:44:31,017 - unmute.unmute_handler - INFO - Flushing finished, took 85.0 ms, RTF: 5.9
-2026-03-30 12:44:31,019 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=unmute-prod-website%2Ffabieng-enhanced-v2.wav&cfg_alpha=1.5
-2026-03-30 12:44:31,019 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
-2026-03-30 12:44:31,019 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
-2026-03-30 12:44:31,196 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
-2026-03-30 12:44:31,649 - unmute.unmute_handler - INFO - Sending first word to TTS: Bonjour
-2026-03-30 12:44:31,789 - unmute.unmute_handler - INFO - Sending TTS EOS.
-2026-03-30 12:44:31,789 - unmute.unmute_handler - INFO - End of VLLM, after 26 words.
-2026-03-30 12:44:31,945 - unmute.tts.text_to_speech - INFO - Time to first token is 297.0 ms
-2026-03-30 12:44:33,879 - unmute.main_websocket - INFO - receive_loop() stopped because WebSocket disconnected: e.code=<CloseCode.NO_STATUS_RCVD: 1005> e.reason=''
+2026-03-30 14:39:41,793 - unmute.stt.speech_to_text - INFO - Connecting to STT ws://127.0.0.1:8090...
+2026-03-30 14:39:41,794 - unmute.stt.speech_to_text - INFO - Connected to STT
+2026-03-30 14:39:41,796 - unmute.service_discovery - INFO - [stt] Instance ws://127.0.0.1:8090 took 3.0ms to accept us.
+2026-03-30 14:39:41,796 - unmute.service_discovery - INFO - [stt] Connection to ws://127.0.0.1:8090 took 4.0ms.
+2026-03-30 14:39:41,800 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-30 14:39:41,800 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-30 14:39:41,800 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x713cf5da5a00>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-30 14:39:41,993 - unmute.main_websocket - INFO - Response from https://api.groq.com/openai/v1/models: <Response [200]>
+2026-03-30 14:39:46,216 - unmute.unmute_handler - INFO - Pause detected
+2026-03-30 14:39:46,320 - unmute.unmute_handler - INFO - Flushing finished, took 105.0 ms, RTF: 4.8
+2026-03-30 14:39:46,322 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=therese.wav&cfg_alpha=1.5
+2026-03-30 14:39:46,322 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-30 14:39:46,322 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-30 14:39:46,356 - unmute.unmute_handler - INFO - STT-based interruption
+2026-03-30 14:39:46,371 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-30 14:39:46,371 - unmute.unmute_handler - INFO - End of VLLM, after 0 words.
+2026-03-30 14:39:46,542 - unmute.unmute_handler - INFO - Pause detected
+2026-03-30 14:39:46,679 - unmute.unmute_handler - INFO - Flushing finished, took 137.0 ms, RTF: 3.6
+2026-03-30 14:39:46,680 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=therese.wav&cfg_alpha=1.5
+2026-03-30 14:39:46,681 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-30 14:39:46,681 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 1.0ms.
+2026-03-30 14:39:46,750 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-03-30 14:39:46,750 - unmute.unmute_handler - INFO - End of VLLM, after 0 words.
+2026-03-30 14:39:46,750 - unmute.main_websocket - INFO - websocket_route() finished
+2026-03-30 14:39:46,750 - unmute.stt.speech_to_text - INFO - Shutting down STT, receiving last messages
+2026-03-30 14:39:46,752 - unmute.unmute_handler - INFO - STT connection closed while receiving messages.
+2026-03-30 14:39:46,752 - unmute.stt.speech_to_text - INFO - STT shutdown() finished
+2026-03-30 14:39:46,758 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-30 14:39:46,758 - unmute.main_websocket - ERROR - Unexpected error: RateLimitError("Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kmyzh2znfchb02d0e0x3gych` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99396, Requested 1839. Please try again in 17m47.04s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}")
+  + Exception Group Traceback (most recent call last):
+  |   File "/workspace/unmute/unmute/main_websocket.py", line 319, in websocket_route
+  |     await _run_route(websocket, handler)
+  |   File "/workspace/unmute/unmute/main_websocket.py", line 392, in _run_route
+  |     async with asyncio.TaskGroup() as tg:
+  |                ^^^^^^^^^^^^^^^^^^^
+  |   File "/venv/main/lib/python3.12/asyncio/taskgroups.py", line 71, in __aexit__
+  |     return await self._aexit(et, exc)
+  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "/venv/main/lib/python3.12/asyncio/taskgroups.py", line 164, in _aexit
+  |     raise BaseExceptionGroup(
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/workspace/unmute/unmute/quest_manager.py", line 113, in wait
+    |     await self._future
+    |   File "/workspace/unmute/unmute/quest_manager.py", line 140, in _one_is_done
+    |     future.result()
+    |   File "/workspace/unmute/unmute/quest_manager.py", line 75, in _run
+    |     await self.run(data)
+    |   File "/workspace/unmute/unmute/quest_manager.py", line 54, in _run
+    |     await run()
+    |   File "/workspace/unmute/unmute/unmute_handler.py", line 225, in _generate_response_task
+    |     async for delta in rechunk_to_words(llm.chat_completion(messages)):
+    |   File "/workspace/unmute/unmute/llm/llm_utils.py", line 78, in rechunk_to_words
+    |     async for delta in iterator:
+    |   File "/workspace/unmute/unmute/llm/llm_utils.py", line 145, in chat_completion
+    |     stream = await self.client.chat.completions.create(
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/workspace/unmute/.venv/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py", line 2028, in create
+    |     return await self._post(
+    |            ^^^^^^^^^^^^^^^^^
+    |   File "/workspace/unmute/.venv/lib/python3.12/site-packages/openai/_base_client.py", line 1742, in post
+    |     return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/workspace/unmute/.venv/lib/python3.12/site-packages/openai/_base_client.py", line 1549, in request
+    |     raise self._make_status_error_from_response(err.response) from None
+    | openai.RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kmyzh2znfchb02d0e0x3gych` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99396, Requested 1839. Please try again in 17m47.04s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+    +------------------------------------
 INFO:     connection closed
-2026-03-30 12:44:33,879 - unmute.main_websocket - INFO - websocket_route() finished
-2026-03-30 12:44:33,880 - unmute.stt.speech_to_text - INFO - Shutting down STT, receiving last messages
-2026-03-30 12:44:33,884 - unmute.unmute_handler - INFO - STT connection closed while receiving messages.
-2026-03-30 12:44:33,885 - unmute.stt.speech_to_text - INFO - STT shutdown() finished
-2026-03-30 12:44:33,887 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774874693659 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774874723630 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774874795737 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774874855644 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774874915670 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774874975659 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774875035678 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774875095648 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774875155720 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774875215699 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774875275969 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774875335643 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774875395652 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774875455668 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774875515716 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774875575671 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774875635667 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774875695778 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774875755662 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774875815655 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774875875717 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774875935689 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774875995704 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774876041102 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774876043659 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774876073706 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774876115738 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774876175830 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774876235741 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774876295698 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774876355725 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774876415929 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774876475751 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774876535741 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774876595661 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774876655681 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774876715794 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774876775692 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774876835715 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774876895719 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774876955719 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877015729 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877075692 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877110191 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877123696 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877153716 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877195755 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877255735 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877273709 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877303701 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877333720 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877363695 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877393703 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877423696 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877495800 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877555722 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877573230 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877603223 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877633252 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877663755 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877693731 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877735782 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877795747 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877855711 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877915758 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774877975739 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774878035762 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774878095728 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774878155737 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774878177583 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774878203727 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774878233741 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774878275779 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774878304997 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774878323728 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774878353710 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774878395808 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774878421978 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774878443754 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774878473728 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774878515827 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774878575773 HTTP/1.1" 404 Not Found
-INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774878635734 HTTP/1.1" 404 Not Found
+2026-03-30 14:39:55,644 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x713cf5321250>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-30 14:39:55,644 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-30 14:39:55,644 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-30 14:39:55,835 - unmute.main_websocket - INFO - Response from https://api.groq.com/openai/v1/models: <Response [200]>
+INFO:     46.193.57.247:0 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     ('46.193.57.247', 0) - "WebSocket /v1/realtime" [accepted]
+INFO:     connection open
+2026-03-30 14:39:58,614 - unmute.stt.speech_to_text - INFO - Connecting to STT ws://127.0.0.1:8090...
+2026-03-30 14:39:58,615 - unmute.stt.speech_to_text - INFO - Connected to STT
+2026-03-30 14:39:58,616 - unmute.service_discovery - INFO - [stt] Instance ws://127.0.0.1:8090 took 3.0ms to accept us.
+2026-03-30 14:39:58,616 - unmute.service_discovery - INFO - [stt] Connection to ws://127.0.0.1:8090 took 4.0ms.
+2026-03-30 14:39:58,621 - unmute.main_websocket - INFO - Response from http://localhost:8090/api/build_info: <Response [200]>
+2026-03-30 14:39:58,621 - unmute.main_websocket - INFO - Response from http://localhost:8089/api/build_info: <Response [200]>
+2026-03-30 14:39:58,621 - unmute.main_websocket - INFO - Couldn't connect to http://localhost:8092/api/build_info: HTTPConnectionPool(host='localhost', port=8092): Max retries exceeded with url: /api/build_info (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x713cf5334ec0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+2026-03-30 14:39:58,812 - unmute.main_websocket - INFO - Response from https://api.groq.com/openai/v1/models: <Response [200]>
+2026-03-30 14:40:02,380 - unmute.unmute_handler - INFO - Pause detected
+2026-03-30 14:40:02,503 - unmute.unmute_handler - INFO - Flushing finished, took 124.0 ms, RTF: 4.0
+2026-03-30 14:40:02,505 - unmute.tts.text_to_speech - INFO - Connecting to TTS: ws://127.0.0.1:8089/api/tts_streaming?format=PcmMessagePack&voice=therese.wav&cfg_alpha=1.5
+2026-03-30 14:40:02,506 - unmute.service_discovery - INFO - [tts] Instance ws://127.0.0.1:8089 took 1.0ms to accept us.
+2026-03-30 14:40:02,506 - unmute.service_discovery - INFO - [tts] Connection to ws://127.0.0.1:8089 took 2.0ms.
+2026-03-30 14:40:02,573 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-03-30 14:40:02,573 - unmute.unmute_handler - INFO - End of VLLM, after 0 words.
+2026-03-30 14:40:02,573 - unmute.main_websocket - INFO - websocket_route() finished
+2026-03-30 14:40:02,573 - unmute.stt.speech_to_text - INFO - Shutting down STT, receiving last messages
+2026-03-30 14:40:02,574 - unmute.unmute_handler - INFO - STT connection closed while receiving messages.
+2026-03-30 14:40:02,575 - unmute.stt.speech_to_text - INFO - STT shutdown() finished
+2026-03-30 14:40:02,588 - unmute.tts.text_to_speech - INFO - TTS shutdown() finished
+2026-03-30 14:40:02,588 - unmute.main_websocket - ERROR - Unexpected error: RateLimitError("Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kmyzh2znfchb02d0e0x3gych` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99378, Requested 1802. Please try again in 16m59.52s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}")
+  + Exception Group Traceback (most recent call last):
+  |   File "/workspace/unmute/unmute/main_websocket.py", line 319, in websocket_route
+  |     await _run_route(websocket, handler)
+  |   File "/workspace/unmute/unmute/main_websocket.py", line 392, in _run_route
+  |     async with asyncio.TaskGroup() as tg:
+  |                ^^^^^^^^^^^^^^^^^^^
+  |   File "/venv/main/lib/python3.12/asyncio/taskgroups.py", line 71, in __aexit__
+  |     return await self._aexit(et, exc)
+  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "/venv/main/lib/python3.12/asyncio/taskgroups.py", line 164, in _aexit
+  |     raise BaseExceptionGroup(
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/workspace/unmute/unmute/quest_manager.py", line 113, in wait
+    |     await self._future
+    |   File "/workspace/unmute/unmute/quest_manager.py", line 140, in _one_is_done
+    |     future.result()
+    |   File "/workspace/unmute/unmute/quest_manager.py", line 75, in _run
+    |     await self.run(data)
+    |   File "/workspace/unmute/unmute/quest_manager.py", line 54, in _run
+    |     await run()
+    |   File "/workspace/unmute/unmute/unmute_handler.py", line 225, in _generate_response_task
+    |     async for delta in rechunk_to_words(llm.chat_completion(messages)):
+    |   File "/workspace/unmute/unmute/llm/llm_utils.py", line 78, in rechunk_to_words
+    |     async for delta in iterator:
+    |   File "/workspace/unmute/unmute/llm/llm_utils.py", line 145, in chat_completion
+    |     stream = await self.client.chat.completions.create(
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/workspace/unmute/.venv/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py", line 2028, in create
+    |     return await self._post(
+    |            ^^^^^^^^^^^^^^^^^
+    |   File "/workspace/unmute/.venv/lib/python3.12/site-packages/openai/_base_client.py", line 1742, in post
+    |     return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/workspace/unmute/.venv/lib/python3.12/site-packages/openai/_base_client.py", line 1549, in request
+    |     raise self._make_status_error_from_response(err.response) from None
+    | openai.RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kmyzh2znfchb02d0e0x3gych` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99378, Requested 1802. Please try again in 16m59.52s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+    +------------------------------------
+INFO:     connection closed
+INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774881635769 HTTP/1.1" 404 Not Found
+INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774881695756 HTTP/1.1" 404 Not Found
+INFO:     46.193.57.247:0 - "GET /portal-resolver?t=1774881755756 HTTP/1.1" 404 Not Found
