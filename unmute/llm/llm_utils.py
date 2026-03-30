@@ -127,7 +127,8 @@ class VLLMStream:
     def __init__(
         self,
         client: AsyncOpenAI,
-        temperature: float = 1.0,
+        temperature: float = 0.7,
+        max_tokens: int = 150,
     ):
         """
         If `model` is None, it will look at the available models, and if there is only
@@ -136,6 +137,7 @@ class VLLMStream:
         self.client = client
         self.model = autoselect_model()
         self.temperature = temperature
+        self.max_tokens = max_tokens
 
     async def chat_completion(
         self, messages: list[dict[str, str]]
@@ -145,6 +147,8 @@ class VLLMStream:
             messages=cast(Any, messages),  # Cast and hope for the best
             stream=True,
             temperature=self.temperature,
+            max_tokens=self.max_tokens,
+            stop=["Étudiant:", "\n\n"],  # stop si le LLM veut jouer les 2 rôles
         )
 
         async with stream:

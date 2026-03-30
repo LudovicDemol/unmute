@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import localFont from "next/font/local";
-import ConsentModal from "./ConsentModal";
+import ConsentModal from "../components/ConsentModal";
 
 export const metadata: Metadata = {
   title: "Unmute by Kyutai",

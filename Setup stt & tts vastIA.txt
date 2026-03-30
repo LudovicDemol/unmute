@@ -1,0 +1,35 @@
+Setup stt & tts
+1x RTX A4000
+Max CUDA: 12.4
+20.6 TFLOPS 
+VRAM 10.7/16.0 GB
+372.5 GB/s
+60go stockage
+
+   1  apt-get update && apt-get install -y git-lfs ffmpeg
+    2  git lfs install
+    3  ssh-keygen -t ed25519 -C "demol.ludovic@yahoo.fr"
+    4  cat /root/.ssh/id_ed25519.pub
+    6  eval "$(ssh-agent -s)"
+    7  ssh-add ~/.ssh/id_ed25519
+    8  git clone git@github.com:LudovicDemol/unmute.git
+   10  cd unmute/
+   17  apt-get install -y git-lfs ffmpeg
+   18  git lfs install
+   19  git lfs pull
+   20  pip install --upgrade pip
+   21  pip install -e . --root-user-action=ignore
+   37  cd dockerless/
+   40  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+   41  source "$HOME/.cargo/env"
+nohup ./start_tts.sh > tts.log 2>&1 &
+nohup ./start_stt.sh > stt.log 2>&1 &
+nohup ./start_backend.sh > backend.log 2>&1 &
+
+   65  tail -f stt.log
+   66  tail -f tts.log
+
+pkill -9 python
+pkill -9 moshi-server
+pkill -9 uvicorn
+   pour tuer tts et stt = pkill -f moshi-server
