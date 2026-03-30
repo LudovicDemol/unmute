@@ -9,7 +9,7 @@ HEADERS = {"kyutai-api-key": "public_token"}
 STT_SERVER = http_to_ws(os.environ.get("KYUTAI_STT_URL", "ws://localhost:8090"))
 TTS_SERVER = http_to_ws(os.environ.get("KYUTAI_TTS_URL", "ws://localhost:8089"))
 LLM_SERVER = "https://api.groq.com/openai"
-KYUTAI_LLM_MODEL = "openai/gpt-oss-120b"
+KYUTAI_LLM_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"
 # llama-3.3-70b-versatile c'est le plus efficace
 KYUTAI_LLM_API_KEY = "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"
 VOICE_CLONING_SERVER = os.environ.get(
