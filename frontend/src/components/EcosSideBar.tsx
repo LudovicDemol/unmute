@@ -23,7 +23,7 @@ const NAV_ITEMS = [
     icon: ClipboardList,
   },
   {
-    href: "/historique",
+    href: "/history",
     label: "Historique",
     sublabel: "Sessions passées",
     icon: Clock,

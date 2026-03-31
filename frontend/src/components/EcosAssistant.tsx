@@ -2,7 +2,7 @@
 import { useEcosAudio } from "../hooks/useEcosAudio";
 import { ReadyState } from "react-use-websocket";
 import { useEcosWebSocket } from "../hooks/useEcosWebSocket";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useMicrophoneAccess } from "../hooks/useMicrophoneAccess";
 import EcosControlsBar from "./EcosControlsBar";
 import SessionStartOverlay from "./SessionStartOverlay";
@@ -17,6 +17,13 @@ import { useEcosTimer } from "@/hooks/useEcosTimer";
 import ChatPanel from "./ChatPanel";
 import { DEFAULT_UNMUTE_CONFIG, UnmuteConfig } from "../types/type";
 import { useBackendServerUrl } from "@/hooks/useBackendServerUrl";
+import { useAttempt } from "@/hooks/useAttempt";
+import { useEvaluation } from "@/hooks/useEvaluation";
+import EvaluationLoadingPopup from "./EvaluationLoadingPopup";
+import { useRouter } from "next/navigation";
+import { usePollResults } from "@/hooks/usePollResults";
+
+const POC_STUDENT_ID = "00000000-0000-0000-0000-000000000001"
 
 interface EcosAssistantProps {
   id: string;
@@ -36,10 +43,70 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
   const [healthStatus, setHealthStatus] = useState<HealthStatus | null>(null);
   const [errors, setErrors] = useState<ErrorItem[]>([]);
   const [scenarioReady, setScenarioReady] = useState(false);
-  const [sceneMode, setSceneMode] = useState<"patient" | "exam" | "intervention">("patient");
+  const isSessionActive = useRef(false)
+  const [showEvaluationPopup, setShowEvaluationPopup] = useState(false);
+  const [evaluationStarted, setEvaluationStarted] = useState(false)
+
+  const router = useRouter()
+
+  const {
+    attemptId,
+    startAttempt,
+    addEntry,
+    completeAttempt,
+  } = useAttempt(POC_STUDENT_ID)
+
+  const { results: evaluationResult, timedOut } = usePollResults(attemptId, evaluationStarted)
+
+  const triggerEvaluation = useCallback(async (currentAttemptId: string) => {
+    await fetch(`${process.env.NEXT_PUBLIC_URL_API_ECOS}/attempts/${currentAttemptId}/trigger-evaluation`, {
+      method: 'POST',
+    })
+    setEvaluationStarted(true) // ← déclenche popup + polling en une seule ligne
+  }, [backendServerUrl])
+
+  useEffect(() => {
+  if (evaluationResult) {
+    router.push(`/history/results/${evaluationResult.id}`)
+    router.refresh()
+  }
+  }, [evaluationResult])
+
+
+  useEffect(() => {
+  if (timedOut) {
+    setErrors(prev => [...prev, makeErrorItem("L'évaluation a pris trop de temps. Veuillez réessayer.")])
+  }
+  }, [timedOut])
+
+
+  const handleTimerExpire = useCallback(async () => {
+    isSessionActive.current = false
+    setShouldConnect(false)
+    shutdownAudio()
+    setShowEvaluationPopup(true)
+    if (attemptId) {
+      await completeAttempt()
+      await triggerEvaluation(attemptId)
+    }
+  }, [attemptId, completeAttempt, triggerEvaluation])
+
+  const { formatted, status, progressPct, start: startTimer, reset: resetTimer } =
+    useEcosTimer(handleTimerExpire)
+
+  // ── Session end (déconnexion manuelle) ────────────────────────────────────
+  const handleSessionEnd = useCallback(async () => {
+    setShouldConnect(false)
+    shutdownAudio()
+    resetTimer()
+    if (!attemptId) return
+    await completeAttempt()
+    await triggerEvaluation(attemptId)
+  }, [attemptId, completeAttempt, triggerEvaluation, resetTimer])
 
   useWakeLock(shouldConnect);
 
+  // ── Scenario loading ──────────────────────────────────────────────────────
   useEffect(() => {
     async function recoverFullContext() {
       if (!id) return;
@@ -60,7 +127,7 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
     recoverFullContext();
   }, [id]);
 
-  
+  // ── Health check ──────────────────────────────────────────────────────────
   useEffect(() => {
     if (!backendServerUrl) return;
     setWebSocketUrl(backendServerUrl.toString() + "/v1/realtime");
@@ -73,6 +140,7 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
         clearTimeout(timeoutId);
         if (!response.ok) {
           setHealthStatus({ connected: "yes_request_fail", ok: false });
+          return;
         }
         const data = await response.json();
         data["connected"] = "yes_request_ok";
@@ -84,6 +152,7 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
     checkHealth();
   }, [backendServerUrl]);
 
+  // ── Callbacks audio / WS ──────────────────────────────────────────────────
   const onError = useCallback((msg: string, isWarning?: boolean) => {
     if (isWarning) console.warn(`Warning: ${msg}`);
     else {
@@ -94,11 +163,13 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
 
   const onUserTranscription = useCallback((text: string) => {
     setRawChatHistory((prev) => [...prev, { role: "user", content: text }]);
-  }, []);
+    if (isSessionActive.current) addEntry("student", text)
+  }, [addEntry]);
 
   const onAssistantText = useCallback((text: string) => {
     setRawChatHistory((prev) => [...prev, { role: "assistant", content: " " + text }]);
-  }, []);
+    if (isSessionActive.current) addEntry("patient", text) 
+  }, [addEntry]);
 
   const { setupAudio, shutdownAudio, audioProcessor, recordingCanvasRef } = useEcosAudio({
     shouldRecord: shouldConnect,
@@ -126,31 +197,26 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
     onAssistantText,
   });
 
+  // ── Connect button ────────────────────────────────────────────────────────
   const onConnectButtonPress = async () => {
     if (!scenarioReady) return;
     if (!shouldConnect) {
       const mediaStream = await askMicrophoneAccess();
       if (mediaStream) {
         await setupAudio(mediaStream);
+        isSessionActive.current = true
+        await startAttempt(id);
         setShouldConnect(true);
         startTimer();
         setShowOverlay(true);
       }
     } else {
-      setShouldConnect(false);
-      shutdownAudio();
-      resetTimer();
+      // TODO: décider du comportement sur déconnexion manuelle
+      await handleSessionEnd()
     }
   };
 
-  const handleTimerExpire = useCallback(() => {
-    setShouldConnect(false);
-    shutdownAudio();
-  }, [shutdownAudio]);
-
-  const { formatted, status, progressPct, start: startTimer, reset: resetTimer } =
-    useEcosTimer(handleTimerExpire);
-
+  // ── WS state effects ──────────────────────────────────────────────────────
   useEffect(() => {
     if (readyState === ReadyState.CLOSING || readyState === ReadyState.CLOSED) {
       setShouldConnect(false);
@@ -177,8 +243,7 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
     shutdownAudio();
   }, [shutdownAudio, unmuteConfig.voice, unmuteConfig.instructions]);
 
-  console.log(healthStatus, backendServerUrl);
-  // ── Loading ────────────────────────────────────────────────────────────────
+  // ── Guards ────────────────────────────────────────────────────────────────
   if (!healthStatus || !backendServerUrl) {
     return (
       <div className="h-screen bg-slate-900 flex items-center justify-center">
@@ -195,15 +260,14 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
     );
   }
 
-  if (healthStatus && !healthStatus.ok) {
+  if (!healthStatus.ok) {
     return <CouldNotConnect healthStatus={healthStatus} />;
   }
 
-  // ── Render ─────────────────────────────────────────────────────────────────
+  // ── Render ────────────────────────────────────────────────────────────────
   return (
-    <div className="h-screen  flex flex-col overflow-hidden">
-
-      {/* ── HEADER ──────────────────────────────────────────────────────── */}
+    <div className="h-screen flex flex-col overflow-hidden">
+      {/* HEADER */}
       <div className="bg-slate-800 border-b border-slate-700 px-6 py-4 flex items-center justify-between flex-shrink-0">
         <div className="flex items-center gap-4">
           <div className="w-10 h-10 bg-teal-500 rounded-xl flex items-center justify-center flex-shrink-0">
@@ -218,37 +282,25 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
             </p>
           </div>
         </div>
-
-        {/* Timer */}
         <div className={`px-4 py-2 rounded-xl font-mono text-sm ${
-          status === "warning"
-            ? "bg-yellow-500/20 text-yellow-400"
-            : "bg-teal-500/20 text-teal-400"
+          status === "warning" ? "bg-yellow-500/20 text-yellow-400" : "bg-teal-500/20 text-teal-400"
         }`}>
           {formatted}
         </div>
       </div>
 
-      {/* ── MAIN ────────────────────────────────────────────────────────── */}
+      {/* MAIN */}
       <div className="flex-1 flex overflow-hidden">
-
-        {/* Patient Info Panel (left 1/3) */}
         <div className="w-1/3 bg-slate-800 border-r border-slate-700 flex flex-col overflow-hidden">
-          {/* Scene image */}
-          {/* Patient details */}
           <div className="flex-1 overflow-y-auto p-6 space-y-6">
             {scenarioDetails ? (
               <>
                 <div>
-                  <h3 className="text-teal-400 font-semibold mb-4">
-                    Informations patient
-                  </h3>
+                  <h3 className="text-teal-400 font-semibold mb-4">Informations patient</h3>
                   <div className="space-y-3 text-slate-300">
                     <div>
                       <p className="text-slate-500 text-xs mb-1">Identité</p>
-                      <p className="text-sm">
-                        {scenarioDetails.firstname} {scenarioDetails.lastname}
-                      </p>
+                      <p className="text-sm">{scenarioDetails.firstname} {scenarioDetails.lastname}</p>
                     </div>
                     <div>
                       <p className="text-slate-500 text-xs mb-1">Âge</p>
@@ -260,18 +312,13 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
                     </div>
                   </div>
                 </div>
-
                 <div className="border-t border-slate-700 pt-6">
                   <h4 className="text-teal-400 font-semibold mb-3">Contexte</h4>
-                  <p className="text-slate-300 text-sm leading-relaxed">
-                    {scenarioDetails.description}
-                  </p>
+                  <p className="text-slate-300 text-sm leading-relaxed">{scenarioDetails.description}</p>
                 </div>
-
                 <div className="bg-slate-700/50 rounded-xl p-4">
                   <p className="text-yellow-400 text-sm">
-                    <strong>Spécialité :</strong>{" "}
-                    {scenarioDetails.category}
+                    <strong>Spécialité :</strong> {scenarioDetails.category}
                     {scenarioDetails.domain ? ` · ${scenarioDetails.domain}` : ""}
                   </p>
                 </div>
@@ -284,48 +331,34 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
           </div>
         </div>
 
-        {/* Voice + Chat (right 2/3) */}
         <div className="flex-1 bg-slate-900 flex flex-col overflow-hidden">
-          {/* Chat transcript */}
           <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
             <ChatPanel chatHistory={chatHistory} isConnected={shouldConnect} />
           </div>
-
-          {/* Waveform zone */}
           <div className="flex items-end justify-center gap-1.5 h-24 px-6 pb-4 flex-shrink-0">
             {[...Array(24)].map((_, i) => (
               <div
                 key={i}
-                className={`w-1.5 rounded-full transition-all ${
-                  shouldConnect ? "bg-teal-500" : "bg-slate-700"
-                }`}
+                className={`w-1.5 rounded-full transition-all ${shouldConnect ? "bg-teal-500" : "bg-slate-700"}`}
                 style={{
                   height: shouldConnect ? `${Math.random() * 70 + 20}%` : "20%",
-                  animation: shouldConnect
-                    ? `ecosWave ${(Math.random() * 0.5 + 0.5).toFixed(2)}s ease-in-out infinite`
-                    : "none",
+                  animation: shouldConnect ? `ecosWave ${(Math.random() * 0.5 + 0.5).toFixed(2)}s ease-in-out infinite` : "none",
                 }}
               />
             ))}
           </div>
-
-          {/* Status badge */}
           <div className="flex justify-center pb-4 flex-shrink-0">
             <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm ${
-              shouldConnect
-                ? "bg-teal-500/20 text-teal-400"
-                : "bg-slate-700 text-slate-400"
+              shouldConnect ? "bg-teal-500/20 text-teal-400" : "bg-slate-700 text-slate-400"
             }`}>
-              <div className={`w-2 h-2 rounded-full ${
-                shouldConnect ? "bg-teal-400 animate-pulse" : "bg-slate-500"
-              }`} />
+              <div className={`w-2 h-2 rounded-full ${shouldConnect ? "bg-teal-400 animate-pulse" : "bg-slate-500"}`} />
               {shouldConnect ? "Enregistrement en cours" : "En attente"}
             </div>
           </div>
         </div>
       </div>
 
-      {/* ── BOTTOM CONTROLS ──────────────────────────────────────────────── */}
+      {/* BOTTOM CONTROLS */}
       <div className="bg-slate-800 border-t border-slate-700 px-6 py-4 flex-shrink-0">
         <EcosControlsBar
           formatted={formatted}
@@ -339,10 +372,8 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
 
       <ErrorMessages errors={errors} setErrors={setErrors} />
       <canvas ref={recordingCanvasRef} className="hidden" />
-      <SessionStartOverlay
-        visible={showOverlay}
-        onReady={() => setShowOverlay(false)}
-      />
+      <SessionStartOverlay visible={showOverlay} onReady={() => setShowOverlay(false)} />
+      <EvaluationLoadingPopup visible={evaluationStarted && !evaluationResult && !timedOut} done={!!evaluationResult} />
 
       <style>{`
         @keyframes ecosWave {

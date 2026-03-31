@@ -1,43 +1,47 @@
 // hooks/useEcosTimer.ts
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const DURATION_SECONDS = 8 * 60; 
+const DURATION_SECONDS = 1 * 30;
 
 export type TimerStatus = "idle" | "running" | "warning" | "expired";
 
 export interface EcosTimerResult {
-  remaining: number;        // secondes restantes
-  formatted: string;        // "7:42"
-  status: TimerStatus;      // pour les styles conditionnels
-  progressPct: number;      // 0 → 100 (pour une barre de progression)
+  remaining: number;
+  formatted: string;
+  status: TimerStatus;
+  progressPct: number;
   start: () => void;
   reset: () => void;
 }
 
-export function useEcosTimer(onExpire: () => void): EcosTimerResult {
+export function useEcosTimer(onExpire: () => void | Promise<void>): EcosTimerResult {
   const [remaining, setRemaining] = useState(DURATION_SECONDS);
   const [running, setRunning] = useState(false);
   const onExpireRef = useRef(onExpire);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null) // ← ref stable
 
-  // Garder onExpire stable sans le mettre en dépendance
   useEffect(() => { onExpireRef.current = onExpire; }, [onExpire]);
 
   useEffect(() => {
     if (!running) return;
 
-    const interval = setInterval(() => {
+    intervalRef.current = setInterval(() => {
       setRemaining((prev) => {
         if (prev <= 1) {
-          clearInterval(interval);
+          // Stoppe l'interval via la ref, pas via la closure
+          if (intervalRef.current) clearInterval(intervalRef.current)
           setRunning(false);
-          onExpireRef.current();
+          // Lance onExpire de façon non-bloquante (supporte async)
+          Promise.resolve(onExpireRef.current()).catch(console.error)
           return 0;
         }
         return prev - 1;
       });
     }, 1000);
 
-    return () => clearInterval(interval);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current)
+    }
   }, [running]);
 
   const start = useCallback(() => {
@@ -46,6 +50,7 @@ export function useEcosTimer(onExpire: () => void): EcosTimerResult {
   }, []);
 
   const reset = useCallback(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current)
     setRunning(false);
     setRemaining(DURATION_SECONDS);
   }, []);

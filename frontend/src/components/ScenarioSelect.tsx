@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useScenario, type ScenarioListItem } from "@/hooks/useScenario";
 import ScenarioFilters from "@/components/ScenarioFilters";
 import { Search, Clock, Play, AlertCircle, ClipboardList } from "lucide-react";
+import { useAttempt } from "@/hooks/useAttempt";
 
 interface ScenarioSelectProps {
   userId?: string;
@@ -22,6 +23,7 @@ export default function ScenarioSelectPage({
   const [filteredScenarios, setFilteredScenarios] = useState<ScenarioListItem[]>([]);
   const [loading, setLoadingLocal] = useState(true);
   const [error, setErrorLocal] = useState<string | null>(null);
+  const { startAttempt } = useAttempt('caca');
 
   useEffect(() => {
     const fetchScenarios = async () => {
