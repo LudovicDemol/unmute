@@ -1,4 +1,3 @@
-import EcosTimer from "@/components/EcosTimer";
 import clsx from "clsx";
 
 interface EcosControlsBarProps {
@@ -19,9 +18,6 @@ const EcosControlsBar = ({
   microphoneAccess,
 }: EcosControlsBarProps) => (
   <div className="w-full flex flex-col gap-4 px-6 py-5">
-
-    {/* Timer */}
-    <EcosTimer formatted={formatted} status={status} progressPct={progressPct} />
 
     {/* Connect / Disconnect button */}
     <button

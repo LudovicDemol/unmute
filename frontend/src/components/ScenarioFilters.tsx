@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import type { ScenarioListItem } from "@/hooks/useEcosApi";
+import type { ScenarioListItem } from "@/hooks/useScenario";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
