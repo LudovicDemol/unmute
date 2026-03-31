@@ -1,5 +1,10 @@
+import AuthGuard from "@/components/AuthGuard";
 import ScenarioSelectPage from "@/components/ScenarioSelect";
 
 export default function Page() {
-  return <ScenarioSelectPage />;
+  return (
+    <AuthGuard>
+      <ScenarioSelectPage />
+    </AuthGuard>
+  );
 }

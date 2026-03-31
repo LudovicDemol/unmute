@@ -77,11 +77,11 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
   const { results: evaluationResult, timedOut } = usePollResults(attemptId, evaluationStarted)
 
   const triggerEvaluation = useCallback(async (currentAttemptId: string) => {
-    await fetchWithAuth(`${process.env.NEXT_PUBLIC_URL_API_ECOS}/attempts/${currentAttemptId}/trigger-evaluation`, {
+    await fetchWithAuth(`/attempts/${currentAttemptId}/trigger-evaluation`, {
       method: 'POST',
     })
     startEvaluation();
-  }, [backendServerUrl, startEvaluation])
+  }, [startEvaluation])
 
   const allFakeStepsDone = useRef(false) 
 

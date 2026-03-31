@@ -21,23 +21,30 @@ export function useEcosTimer(onExpire: () => void | Promise<void>): EcosTimerRes
   const onExpireRef = useRef(onExpire);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const startedAtRef = useRef<number | null>(null); // ← timestamp de démarrage
+  const remainingRef = useRef<number>(DURATION_SECONDS);
 
-  useEffect(() => { onExpireRef.current = onExpire; }, [onExpire]);
+  useEffect(() => {
+    onExpireRef.current = onExpire;
+  }, [onExpire]);
 
   useEffect(() => {
     if (!running) return;
 
     intervalRef.current = setInterval(() => {
-      setRemaining((prev) => {
-        if (prev <= 1) {
-          if (intervalRef.current) clearInterval(intervalRef.current);
-          setRunning(false);
-          startedAtRef.current = null;
-          Promise.resolve(onExpireRef.current()).catch(console.error);
-          return 0;
-        }
-        return prev - 1;
-      });
+      const next = remainingRef.current - 1;
+
+      if (next <= 0) {
+        if (intervalRef.current) clearInterval(intervalRef.current);
+        remainingRef.current = 0;
+        setRemaining(0);
+        setRunning(false);
+        startedAtRef.current = null;
+        Promise.resolve(onExpireRef.current()).catch(console.error);
+        return;
+      }
+
+      remainingRef.current = next;
+      setRemaining(next);
     }, 1000);
 
     return () => {

@@ -14,7 +14,11 @@ export async function fetchWithAuth<T>(
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs)
 
   try {
-    const res = await fetch(`${API_BASE}${path}`, {
+const url = path.startsWith('http://') || path.startsWith('https://')
+    ? path
+    : `${API_BASE}${path}`;
+
+  const res = await fetch(url, {
       ...options,
       signal: controller.signal,
       headers: {

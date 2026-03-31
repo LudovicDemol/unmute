@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { getSidebarConfig } from "@/hooks/useEcosSidebar";
 import { useAuthStore } from "@/stores/authStore";
+import { supabase } from "@/lib/supabase";
+
 import {
   ClipboardList,
   Clock,
@@ -14,7 +16,9 @@ import {
   ChevronRight,
   Activity,
   Settings,
+  LogOut,
 } from "lucide-react";
+import DisconnectLoginConfirmPopup from "./DisconnectLoginConfirmPopup";
 
 const NAV_ITEMS = [
   {
@@ -34,10 +38,13 @@ const NAV_ITEMS = [
 
 export default function EcosSidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const config = getSidebarConfig(pathname);
   const { user } = useAuthStore();
 
   const [expanded, setExpanded] = useState(config.defaultExpanded);
+  const [showLogoutMenu, setShowLogoutMenu] = useState(false);
+  const [showDisconnectConfirm, setShowDisconnectConfirm] = useState(false);
 
   const prevPathnameRef = useRef(pathname);
   useEffect(() => {
@@ -114,36 +121,70 @@ export default function EcosSidebar() {
         })}
       </nav>
 
-      {/* User Profile */}
-      <div className="p-3 border-t border-slate-200">
-        <div
-          className={`flex items-center gap-3 px-3 py-2.5 ${
-            !expanded ? "justify-center" : ""
-          }`}
-        >
-          <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center flex-shrink-0">
-            <span className="text-teal-600 font-semibold text-sm">
-              {user?.user_metadata?.firstname?.[0]?.toUpperCase() || ''}
-              {user?.user_metadata?.lastname?.[0]?.toUpperCase() || ''}
-            </span>
-          </div>
-          {expanded && (
-            <div className="flex flex-col min-w-0 flex-1">
-              <span className="font-medium text-slate-900 text-sm truncate">
-                {user?.user_metadata?.firstname && user?.user_metadata?.lastname
-                  ? `${user.user_metadata.firstname} ${user.user_metadata.lastname}`
-                  : ''}
-              </span>
-            
+     {/* User Profile */}
+      <div className="p-3 border-t border-slate-200 relative">
+        
+        {showLogoutMenu && expanded && (
+          <>
+            <div
+              className="fixed inset-0 z-10"
+              onClick={() => setShowLogoutMenu(false)}
+            />
+            <div className="absolute bottom-full left-3 right-3 mb-2 bg-white border border-slate-200 rounded-xl shadow-lg z-20 overflow-hidden">
+              {/* Ligne "Se déconnecter" */}
+              <button
+                onClick={() => {
+                  setShowLogoutMenu(false)
+                  setShowDisconnectConfirm(true)
+                }}
+                className="w-full flex items-center gap-2.5 px-3 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+              >
+                <LogOut className="w-4 h-4 text-slate-400" />
+                Se déconnecter
+              </button>
+
+              
             </div>
-          )}
-          {expanded && (
-            <button className="text-slate-300 hover:text-slate-500 transition-colors flex-shrink-0">
-              <Settings className="w-4 h-4" />
-            </button>
-          )}
+          </>
+        )}
+
+  {/* Bouton profil toujours visible */}
+  <button
+    onClick={() => expanded && setShowLogoutMenu(v => !v)}
+    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 transition-colors ${
+      !expanded ? 'justify-center' : ''
+    }`}
+  >
+    <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center flex-shrink-0">
+      <span className="text-teal-600 font-semibold text-sm">
+        {user?.user_metadata?.firstname?.[0]?.toUpperCase() || ''}
+        {user?.user_metadata?.lastname?.[0]?.toUpperCase() || ''}
+      </span>
+    </div>
+    {expanded && (
+      <>
+        <div className="flex flex-col min-w-0 flex-1 text-left">
+          <span className="font-medium text-slate-900 text-sm truncate">
+            {user?.user_metadata?.firstname} {user?.user_metadata?.lastname}
+          </span>
+          <span className="text-xs text-slate-400 truncate">{user?.email}</span>
         </div>
-      </div>
+        <Settings className={`w-4 h-4 flex-shrink-0 transition-colors ${showLogoutMenu ? 'text-slate-500' : 'text-slate-300'}`} />
+      </>
+    )}
+  </button>
+</div>
+
+      <DisconnectLoginConfirmPopup
+        visible={showDisconnectConfirm}
+        onConfirm={async () => {
+          await supabase.auth.signOut()
+          setShowDisconnectConfirm(false)
+          setShowLogoutMenu(false)
+          router.push('/')
+        }}
+        onCancel={() => setShowDisconnectConfirm(false)}
+      />
 
       {/* Collapse Toggle */}
       <button

@@ -14,6 +14,7 @@ import {
   Trophy,
 } from "lucide-react"
 import { getDomainLabel } from "@/utils/labelUtil"
+import AuthGuard from "@/components/AuthGuard"
 
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -175,104 +176,69 @@ export default function HistoryPage() {
   const userId = useAuthStore((s) => s.user?.id)
   const { data: attempts = [], isLoading, isError, error } = useAttemptHistory(userId)
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-slate-50">
-        <div className="text-center space-y-4">
-          <div className="relative mx-auto w-10 h-10">
-            <div className="absolute inset-0 rounded-full border-2 border-teal-100" />
-            <div className="absolute inset-0 rounded-full border-2 border-teal-500 border-t-transparent animate-spin" />
-          </div>
-          <p className="text-sm font-medium text-slate-400 tracking-wide uppercase">
-            Chargement de l'historique…
-          </p>
-        </div>
-      </div>
-    )
-  }
-
-  if (isError) {
-    const message = error instanceof Error ? error.message : "Erreur de chargement"
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-slate-50">
-        <div className="text-center max-w-sm">
-          <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center mx-auto mb-4">
-            <AlertCircle className="w-5 h-5 text-red-400" />
-          </div>
-          <h2 className="text-base font-semibold text-slate-800 mb-1">Erreur de chargement</h2>
-          <p className="text-sm text-slate-400">{message}</p>
-        </div>
-      </div>
-    )
-  }
-
-  const evaluated = attempts.filter(a => a.status === "evaluated")
-  const others    = attempts.filter(a => a.status !== "evaluated")
-  const avgScore  = evaluated.length > 0
-    ? Math.round((evaluated.reduce((s, a) => s + (a.score_total ?? 0), 0) / evaluated.length) * 10) / 10
-    : null
-
   return (
-    <div className="p-8 max-w-3xl mx-auto">
-
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-slate-900 mb-1">Historique</h1>
-        <p className="text-slate-500 text-sm">Toutes vos sessions d'entraînement ECOS</p>
-      </div>
-
-      {/* Stats strip */}
-      {attempts.length > 0 && (
-        <div className="grid grid-cols-3 gap-4 mb-6">
-          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm text-center">
-            <p className="text-2xl font-bold text-slate-800">{attempts.length}</p>
-            <p className="text-xs text-slate-400 mt-0.5">Sessions</p>
-          </div>
-          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm text-center">
-            <p className="text-2xl font-bold text-slate-800">{evaluated.length}</p>
-            <p className="text-xs text-slate-400 mt-0.5">Évaluées</p>
-          </div>
-          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm text-center">
-            <p className={`text-2xl font-bold ${avgScore ? scoreColor(avgScore) : "text-slate-300"}`}>
-              {avgScore ?? "—"}
+    <AuthGuard>
+      {isLoading ? (
+        <div className="flex items-center justify-center min-h-screen bg-slate-50">
+          <div className="text-center space-y-4">
+            <div className="relative mx-auto w-10 h-10">
+              <div className="absolute inset-0 rounded-full border-2 border-teal-100" />
+              <div className="absolute inset-0 rounded-full border-2 border-teal-500 border-t-transparent animate-spin" />
+            </div>
+            <p className="text-sm font-medium text-slate-400 tracking-wide uppercase">
+              Chargement de l'historique…
             </p>
-            <p className="text-xs text-slate-400 mt-0.5">Moyenne / 20</p>
           </div>
         </div>
-      )}
-
-      {/* Empty state */}
-      {attempts.length === 0 ? (
-        <div className="text-center py-16">
-          <div className="w-12 h-12 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center mx-auto mb-4">
-            <Clock className="w-5 h-5 text-slate-300" />
+      ) : isError ? (
+        <div className="flex items-center justify-center min-h-screen bg-slate-50">
+          <div className="text-center max-w-sm">
+            <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center mx-auto mb-4">
+              <AlertCircle className="w-5 h-5 text-red-400" />
+            </div>
+            <h2 className="text-base font-semibold text-slate-800 mb-1">Erreur de chargement</h2>
+            <p className="text-sm text-slate-400">{error instanceof Error ? error.message : "Erreur de chargement"}</p>
           </div>
-          <p className="text-slate-500 text-sm">Aucune session pour le moment.</p>
-          <button
-            onClick={() => router.push("/scenarios")}
-            className="mt-4 bg-teal-500 text-white px-4 py-2 rounded-xl hover:bg-teal-600 transition-colors text-sm"
-          >
-            Démarrer un scénario
-          </button>
         </div>
       ) : (
-        <div className="space-y-3">
-          {attempts.map(attempt => (
-            <AttemptItem
-              key={attempt.id}
-              attempt={attempt}
-              onClick={() => router.push(`/history/results/${attempt.id}`)}
-            />
-          ))}
+        <div className="p-8 max-w-3xl mx-auto">
+          <div className="mb-8">
+            <h1 className="text-2xl font-bold text-slate-900 mb-1">Historique</h1>
+            <p className="text-slate-500 text-sm">Toutes vos sessions d'entraînement ECOS</p>
+          </div>
+
+          {attempts.length === 0 ? (
+            <div className="text-center py-16">
+              <div className="w-12 h-12 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center mx-auto mb-4">
+                <Clock className="w-5 h-5 text-slate-300" />
+              </div>
+              <p className="text-slate-500 text-sm">Aucune session pour le moment.</p>
+              <button
+                onClick={() => router.push("/scenarios")}
+                className="mt-4 bg-teal-500 text-white px-4 py-2 rounded-xl hover:bg-teal-600 transition-colors text-sm"
+              >
+                Démarrer un scénario
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {attempts.map((attempt) => (
+                <AttemptItem
+                  key={attempt.id}
+                  attempt={attempt}
+                  onClick={() => router.push(`/history/results/${attempt.id}`)}
+                />
+              ))}
+            </div>
+          )}
+
+          {attempts.length > 0 && (
+            <p className="text-center text-xs text-slate-300 mt-8">
+              {attempts.length} session{attempts.length > 1 ? "s" : ""} au total
+            </p>
+          )}
         </div>
       )}
-
-      {/* Footer count */}
-      {attempts.length > 0 && (
-        <p className="text-center text-xs text-slate-300 mt-8">
-          {attempts.length} session{attempts.length > 1 ? "s" : ""} au total
-        </p>
-      )}
-    </div>
+    </AuthGuard>
   )
 }
