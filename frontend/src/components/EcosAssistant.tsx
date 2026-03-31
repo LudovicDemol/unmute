@@ -25,6 +25,7 @@ import { useAuthStore } from "@/stores/authStore";
 import { usePollResults } from "@/hooks/usePollResults";
 import { getDomainLabel } from "@/utils/labelUtil";
 import DisconnectConfirmPopup from "./DisconnectConfirmPopup"
+import { fetchWithAuth } from "@/lib/api";
 
 const MIN_SESSION_DURATION_SECONDS = 1
 
@@ -76,7 +77,7 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
   const { results: evaluationResult, timedOut } = usePollResults(attemptId, evaluationStarted)
 
   const triggerEvaluation = useCallback(async (currentAttemptId: string) => {
-    await fetch(`${process.env.NEXT_PUBLIC_URL_API_ECOS}/attempts/${currentAttemptId}/trigger-evaluation`, {
+    await fetchWithAuth(`${process.env.NEXT_PUBLIC_URL_API_ECOS}/attempts/${currentAttemptId}/trigger-evaluation`, {
       method: 'POST',
     })
     startEvaluation();

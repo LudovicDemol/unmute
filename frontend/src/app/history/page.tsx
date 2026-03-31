@@ -249,7 +249,7 @@ export default function HistoryPage() {
           </div>
           <p className="text-slate-500 text-sm">Aucune session pour le moment.</p>
           <button
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/scenarios")}
             className="mt-4 bg-teal-500 text-white px-4 py-2 rounded-xl hover:bg-teal-600 transition-colors text-sm"
           >
             Démarrer un scénario

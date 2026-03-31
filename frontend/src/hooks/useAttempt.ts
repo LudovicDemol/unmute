@@ -11,16 +11,6 @@ export type TranscriptEntry = {
 
 export type AttemptStatus = 'idle' | 'in_progress' | 'completed' | 'evaluated' | 'error'
 
-const API_BASE = process.env.NEXT_PUBLIC_URL_API_ECOS
-
-const handleError = async (res: Response, context: string) => {
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}))
-    throw new Error(body?.error ?? `${context}: HTTP ${res.status}`)
-  }
-  return res.json()
-}
-
 const startAttemptApi = (studentId: string, scenarioId: string) =>
   fetchWithAuth('/attempts', {
     method: 'POST',

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { getSidebarConfig } from "@/hooks/useEcosSidebar";
+import { useAuthStore } from "@/stores/authStore";
 import {
   ClipboardList,
   Clock,
@@ -34,6 +35,7 @@ const NAV_ITEMS = [
 export default function EcosSidebar() {
   const pathname = usePathname();
   const config = getSidebarConfig(pathname);
+  const { user } = useAuthStore();
 
   const [expanded, setExpanded] = useState(config.defaultExpanded);
 
@@ -120,16 +122,19 @@ export default function EcosSidebar() {
           }`}
         >
           <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center flex-shrink-0">
-            <span className="text-teal-600 font-semibold text-sm">ÉT</span>
+            <span className="text-teal-600 font-semibold text-sm">
+              {user?.user_metadata?.firstname?.[0]?.toUpperCase() || ''}
+              {user?.user_metadata?.lastname?.[0]?.toUpperCase() || ''}
+            </span>
           </div>
           {expanded && (
             <div className="flex flex-col min-w-0 flex-1">
               <span className="font-medium text-slate-900 text-sm truncate">
-                Étudiant
+                {user?.user_metadata?.firstname && user?.user_metadata?.lastname
+                  ? `${user.user_metadata.firstname} ${user.user_metadata.lastname}`
+                  : ''}
               </span>
-              <span className="text-xs text-slate-500 truncate">
-                Médecine — DFGSM3
-              </span>
+            
             </div>
           )}
           {expanded && (
