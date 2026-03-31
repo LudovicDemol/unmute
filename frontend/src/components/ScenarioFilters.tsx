@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import type { ScenarioListItem } from "@/hooks/useScenario";
+import { getDomainLabel } from "@/utils/labelUtil";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -220,7 +221,7 @@ export default function ScenarioFilters({ scenarios, onChange }: ScenarioFilters
                 {allDomains.map((d) => (
                   <Pill
                     key={d}
-                    label={d}
+                    label={getDomainLabel(d)}
                     active={filters.domains.includes(d)}
                     onClick={() => togglePill("domains", d)}
                   />

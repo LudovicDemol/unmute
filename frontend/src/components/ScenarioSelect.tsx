@@ -6,6 +6,7 @@ import { useScenario, type ScenarioListItem } from "@/hooks/useScenario";
 import ScenarioFilters from "@/components/ScenarioFilters";
 import { Search, Clock, Play, AlertCircle, ClipboardList } from "lucide-react";
 import { useAttempt } from "@/hooks/useAttempt";
+import { getDomainLabel } from "@/utils/labelUtil";
 
 interface ScenarioSelectProps {
   userId?: string;
@@ -131,7 +132,7 @@ export default function ScenarioSelectPage({
                     {scenario.category}
                   </span>
                   <span className="px-3 py-1 bg-slate-50 text-slate-600 border border-slate-200 rounded-full text-sm">
-                    {scenario.domain}
+                    {getDomainLabel(scenario.domain)}
                   </span>
                 </div>
 

@@ -12,6 +12,7 @@ import {
   Stethoscope,
   Trophy,
 } from "lucide-react"
+import { getDomainLabel } from "@/utils/labelUtil"
 
 const POC_STUDENT_ID = "00000000-0000-0000-0000-000000000001"
 
@@ -98,7 +99,7 @@ function AttemptItem({ attempt, onClick }: { attempt: AttemptSummary; onClick: (
             )}
             {attempt.scenario.domain && (
               <span className="px-2.5 py-0.5 bg-slate-50 text-slate-500 border border-slate-200 rounded-full text-xs">
-                {attempt.scenario.domain}
+                {getDomainLabel(attempt.scenario.domain)}
               </span>
             )}
             <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 border rounded-full text-xs font-medium ${status.className}`}>

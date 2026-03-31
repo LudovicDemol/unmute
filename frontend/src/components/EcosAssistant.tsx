@@ -18,12 +18,14 @@ import ChatPanel from "./ChatPanel";
 import { DEFAULT_UNMUTE_CONFIG, UnmuteConfig } from "../types/type";
 import { useBackendServerUrl } from "@/hooks/useBackendServerUrl";
 import { useAttempt } from "@/hooks/useAttempt";
-import { useEvaluation } from "@/hooks/useEvaluation";
 import EvaluationLoadingPopup from "./EvaluationLoadingPopup";
 import { useRouter } from "next/navigation";
 import { usePollResults } from "@/hooks/usePollResults";
+import { getDomainLabel } from "@/utils/labelUtil";
+import DisconnectConfirmPopup from "./DisconnectConfirmPopup"
 
 const POC_STUDENT_ID = "00000000-0000-0000-0000-000000000001"
+const MIN_SESSION_DURATION_SECONDS = 240
 
 interface EcosAssistantProps {
   id: string;
@@ -44,8 +46,8 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
   const [errors, setErrors] = useState<ErrorItem[]>([]);
   const [scenarioReady, setScenarioReady] = useState(false);
   const isSessionActive = useRef(false)
-  const [showEvaluationPopup, setShowEvaluationPopup] = useState(false);
   const [evaluationStarted, setEvaluationStarted] = useState(false)
+  const [showDisconnectPopup, setShowDisconnectPopup] = useState(false)
 
   const router = useRouter()
 
@@ -79,30 +81,41 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
   }
   }, [timedOut])
 
-
   const handleTimerExpire = useCallback(async () => {
     isSessionActive.current = false
     setShouldConnect(false)
     shutdownAudio()
-    setShowEvaluationPopup(true)
     if (attemptId) {
       await completeAttempt()
       await triggerEvaluation(attemptId)
     }
   }, [attemptId, completeAttempt, triggerEvaluation])
 
-  const { formatted, status, progressPct, start: startTimer, reset: resetTimer } =
-    useEcosTimer(handleTimerExpire)
+
+
+  const { formatted, status, progressPct, start: startTimer, reset: resetTimer, getElapsedSeconds } =
+    useEcosTimer(handleTimerExpire);
 
   // ── Session end (déconnexion manuelle) ────────────────────────────────────
   const handleSessionEnd = useCallback(async () => {
+    isSessionActive.current = false
+    setShowDisconnectPopup(false)
     setShouldConnect(false)
     shutdownAudio()
-    resetTimer()
-    if (!attemptId) return
+    resetTimer()  
+    if (!attemptId) {
+    router.push("/scenarios")
+    return
+  }
+
     await completeAttempt()
-    await triggerEvaluation(attemptId)
-  }, [attemptId, completeAttempt, triggerEvaluation, resetTimer])
+
+    if (getElapsedSeconds() >= MIN_SESSION_DURATION_SECONDS) {
+      await triggerEvaluation(attemptId)
+    } else {
+      router.push("/scenarios")
+    }
+  }, [attemptId, completeAttempt, triggerEvaluation, resetTimer, getElapsedSeconds])
 
   useWakeLock(shouldConnect);
 
@@ -211,8 +224,7 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
         setShowOverlay(true);
       }
     } else {
-      // TODO: décider du comportement sur déconnexion manuelle
-      await handleSessionEnd()
+      setShowDisconnectPopup(true)
     }
   };
 
@@ -274,7 +286,7 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
             <span className="text-white font-semibold text-sm">M</span>
           </div>
           <div>
-            <h2 className="text-white font-semibold">Session en cours</h2>
+            <h2 className="text-white font-semibold">{scenarioDetails ? getDomainLabel(scenarioDetails.domain) : "Session en cours"}</h2>
             <p className="text-slate-400 text-sm">
               {scenarioDetails
                 ? `${scenarioDetails.firstname} ${scenarioDetails.lastname} · ${scenarioDetails.category}`
@@ -319,7 +331,6 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
                 <div className="bg-slate-700/50 rounded-xl p-4">
                   <p className="text-yellow-400 text-sm">
                     <strong>Spécialité :</strong> {scenarioDetails.category}
-                    {scenarioDetails.domain ? ` · ${scenarioDetails.domain}` : ""}
                   </p>
                 </div>
               </>
@@ -374,7 +385,12 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
       <canvas ref={recordingCanvasRef} className="hidden" />
       <SessionStartOverlay visible={showOverlay} onReady={() => setShowOverlay(false)} />
       <EvaluationLoadingPopup visible={evaluationStarted && !evaluationResult && !timedOut} done={!!evaluationResult} />
-
+      <DisconnectConfirmPopup
+        visible={showDisconnectPopup}
+        willBeEvaluated={getElapsedSeconds() >= MIN_SESSION_DURATION_SECONDS}
+        onConfirm={handleSessionEnd}
+        onCancel={() => setShowDisconnectPopup(false)}
+      />
       <style>{`
         @keyframes ecosWave {
           0%, 100% { transform: scaleY(0.4); }

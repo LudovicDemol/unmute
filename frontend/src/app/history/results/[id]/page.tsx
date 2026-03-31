@@ -12,6 +12,7 @@ import {
   Clock,
 } from "lucide-react"
 import { useAttemptResults } from "@/hooks/useAttempResults"
+import { getDomainLabel } from "@/utils/labelUtil"
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -144,7 +145,7 @@ export default function ResultsPage() {
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
               <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
-                {results.scenario.category}{results.scenario.domain ? ` · ${results.scenario.domain}` : ""}
+                {results.scenario.category}{results.scenario.domain ? ` · ${getDomainLabel(results.scenario.domain)}` : ""}
               </p>
               <h1 className="text-xl font-bold text-slate-900 mb-1">
                 {results.scenario.title}

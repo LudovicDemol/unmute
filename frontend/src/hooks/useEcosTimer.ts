@@ -12,6 +12,7 @@ export interface EcosTimerResult {
   progressPct: number;
   start: () => void;
   reset: () => void;
+  getElapsedSeconds: () => number;
 }
 
 export function useEcosTimer(onExpire: () => void | Promise<void>): EcosTimerResult {
@@ -55,6 +56,8 @@ export function useEcosTimer(onExpire: () => void | Promise<void>): EcosTimerRes
     setRemaining(DURATION_SECONDS);
   }, []);
 
+  
+
   const minutes = Math.floor(remaining / 60);
   const seconds = remaining % 60;
   const formatted = `${minutes}:${String(seconds).padStart(2, "0")}`;
@@ -65,5 +68,9 @@ export function useEcosTimer(onExpire: () => void | Promise<void>): EcosTimerRes
   else if (running && remaining <= 60) status = "warning";
   else if (remaining === 0) status = "expired";
 
-  return { remaining, formatted, status, progressPct, start, reset };
+  const getElapsedSeconds = useCallback(() => {
+  return DURATION_SECONDS - remaining
+  }, [remaining])
+
+  return { remaining, formatted, status, progressPct, start, reset, getElapsedSeconds };
 }
