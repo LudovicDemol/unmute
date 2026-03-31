@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useScenarios, type ScenarioListItem } from "@/hooks/useScenario";
 import ScenarioFilters from "@/components/ScenarioFilters";
 import { Search, Clock, Play, AlertCircle, ClipboardList } from "lucide-react";
-import { useAttempt } from "@/hooks/useAttempt";
 import { getDomainLabel } from "@/utils/labelUtil";
 
 interface ScenarioSelectProps {
@@ -20,7 +19,6 @@ export default function ScenarioSelectPage({
   const router = useRouter();
   const { data: scenarios = [], isLoading, isError, error } = useScenarios();
   const [filteredScenarios, setFilteredScenarios] = useState<ScenarioListItem[]>(scenarios);
-  const { startAttempt } = useAttempt('caca');
 
   const navigateToScenario = (scenarioId: string) => {
     router.push(`/conversation/${scenarioId}`);

@@ -1,5 +1,7 @@
 import { useCallback, useState, useRef } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useAuthStore } from '@/stores/authStore'
+import { fetchWithAuth } from '@/lib/api'
 
 export type TranscriptEntry = {
   role: 'student' | 'patient'
@@ -19,26 +21,23 @@ const handleError = async (res: Response, context: string) => {
   return res.json()
 }
 
-const startAttemptApi = async (studentId: string, scenarioId: string) => {
-  const res = await fetch(`${API_BASE}/attempts`, {
+const startAttemptApi = (studentId: string, scenarioId: string) =>
+  fetchWithAuth('/attempts', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ studentId, scenarioId }),
   })
-  return handleError(res, 'Failed to start attempt')
-}
 
-const completeAttemptApi = async (attemptId: string, transcript: TranscriptEntry[]) => {
-  const res = await fetch(`${API_BASE}/attempts/${attemptId}/transcript`, {
+const completeAttemptApi = (attemptId: string, transcript: TranscriptEntry[]) =>
+  fetchWithAuth(`/attempts/${attemptId}/transcript`, {
     method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ transcript }),
   })
-  return handleError(res, 'Failed to save transcript')
-}
 
-export function useAttempt(studentId: string) {
+  
+export function useAttempt(studentId?: string) {
   const queryClient = useQueryClient()
+  const authUser = useAuthStore((s) => s.user)
+  const effectiveStudentId = studentId ?? authUser?.id
 
   const [attemptId, setAttemptId] = useState<string | null>(null)
   const [status, setStatus] = useState<AttemptStatus>('idle')
@@ -49,16 +48,21 @@ export function useAttempt(studentId: string) {
   const [transcript, setTranscript] = useState<TranscriptEntry[]>([])
 
   const startAttemptMutation = useMutation({
-    mutationFn: (scenarioId: string) => startAttemptApi(studentId, scenarioId),
+    mutationFn: (scenarioId: string) => {
+      if (!effectiveStudentId) throw new Error('Authentification requise pour démarrer une session')
+      return startAttemptApi(effectiveStudentId, scenarioId)
+    },
     onMutate: () => {
       setStatus('in_progress')
       setError(null)
       transcriptRef.current = []
-      setTranscript([])
+      setTranscript([]) 
     },
-    onSuccess: (data) => {
+    onSuccess: (data: any) => {
       setAttemptId(data.id)
-      queryClient.invalidateQueries({ queryKey: ['attemptHistory', studentId] })
+      if (effectiveStudentId) {
+        queryClient.invalidateQueries({ queryKey: ['attemptHistory', effectiveStudentId] })
+      }
       queryClient.invalidateQueries({ queryKey: ['attemptResults', data.id] })
     },
     onError: (err: any) => {
@@ -77,7 +81,9 @@ export function useAttempt(studentId: string) {
     },
     onSuccess: () => {
       if (attemptId) {
-        queryClient.invalidateQueries({ queryKey: ['attemptHistory', studentId] })
+        if (effectiveStudentId) {
+          queryClient.invalidateQueries({ queryKey: ['attemptHistory', effectiveStudentId] })
+        }
         queryClient.invalidateQueries({ queryKey: ['attemptResults', attemptId] })
       }
     },

@@ -19,7 +19,8 @@ export function useEcosTimer(onExpire: () => void | Promise<void>): EcosTimerRes
   const [remaining, setRemaining] = useState(DURATION_SECONDS);
   const [running, setRunning] = useState(false);
   const onExpireRef = useRef(onExpire);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null) // ← ref stable
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const startedAtRef = useRef<number | null>(null); // ← timestamp de démarrage
 
   useEffect(() => { onExpireRef.current = onExpire; }, [onExpire]);
 
@@ -29,11 +30,10 @@ export function useEcosTimer(onExpire: () => void | Promise<void>): EcosTimerRes
     intervalRef.current = setInterval(() => {
       setRemaining((prev) => {
         if (prev <= 1) {
-          // Stoppe l'interval via la ref, pas via la closure
-          if (intervalRef.current) clearInterval(intervalRef.current)
+          if (intervalRef.current) clearInterval(intervalRef.current);
           setRunning(false);
-          // Lance onExpire de façon non-bloquante (supporte async)
-          Promise.resolve(onExpireRef.current()).catch(console.error)
+          startedAtRef.current = null;
+          Promise.resolve(onExpireRef.current()).catch(console.error);
           return 0;
         }
         return prev - 1;
@@ -41,22 +41,28 @@ export function useEcosTimer(onExpire: () => void | Promise<void>): EcosTimerRes
     }, 1000);
 
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current)
-    }
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, [running]);
 
   const start = useCallback(() => {
     setRemaining(DURATION_SECONDS);
+    startedAtRef.current = Date.now(); // ← mémorise le départ
     setRunning(true);
   }, []);
 
   const reset = useCallback(() => {
-    if (intervalRef.current) clearInterval(intervalRef.current)
+    if (intervalRef.current) clearInterval(intervalRef.current);
     setRunning(false);
     setRemaining(DURATION_SECONDS);
+    startedAtRef.current = null;
   }, []);
 
-  
+  // Basé sur le timestamp réel — insensible aux re-renders et aux pauses
+  const getElapsedSeconds = useCallback(() => {
+    if (!startedAtRef.current) return 0;
+    return Math.floor((Date.now() - startedAtRef.current) / 1000);
+  }, []); // ← plus de dépendance sur `remaining`
 
   const minutes = Math.floor(remaining / 60);
   const seconds = remaining % 60;
@@ -67,10 +73,6 @@ export function useEcosTimer(onExpire: () => void | Promise<void>): EcosTimerRes
   if (running && remaining > 60) status = "running";
   else if (running && remaining <= 60) status = "warning";
   else if (remaining === 0) status = "expired";
-
-  const getElapsedSeconds = useCallback(() => {
-  return DURATION_SECONDS - remaining
-  }, [remaining])
 
   return { remaining, formatted, status, progressPct, start, reset, getElapsedSeconds };
 }

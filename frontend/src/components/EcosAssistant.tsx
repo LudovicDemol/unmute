@@ -21,11 +21,11 @@ import { useAttempt } from "@/hooks/useAttempt";
 import { useSessionStore } from "@/stores/sessionStore";
 import EvaluationLoadingPopup from "./EvaluationLoadingPopup";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/stores/authStore";
 import { usePollResults } from "@/hooks/usePollResults";
 import { getDomainLabel } from "@/utils/labelUtil";
 import DisconnectConfirmPopup from "./DisconnectConfirmPopup"
 
-const POC_STUDENT_ID = "00000000-0000-0000-0000-000000000001"
 const MIN_SESSION_DURATION_SECONDS = 1
 
 interface EcosAssistantProps {
@@ -64,13 +64,14 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
   const [showDisconnectPopup, setShowDisconnectPopup] = useState(false)
 
   const router = useRouter()
+  const authUserId = useAuthStore((s) => s.user?.id)
 
   const {
     attemptId,
     startAttempt,
     addEntry,
     completeAttempt,
-  } = useAttempt(POC_STUDENT_ID)
+  } = useAttempt(authUserId)
 
   const { results: evaluationResult, timedOut } = usePollResults(attemptId, evaluationStarted)
 

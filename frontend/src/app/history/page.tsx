@@ -1,6 +1,7 @@
 "use client"
 import { useRouter } from "next/navigation"
 import { useAttemptHistory, AttemptSummary } from "@/hooks/useAttemptHistory"
+import { useAuthStore } from "@/stores/authStore"
 import {
   AlertCircle,
   Clock,
@@ -14,7 +15,6 @@ import {
 } from "lucide-react"
 import { getDomainLabel } from "@/utils/labelUtil"
 
-const POC_STUDENT_ID = "00000000-0000-0000-0000-000000000001"
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -172,7 +172,8 @@ function AttemptItem({ attempt, onClick }: { attempt: AttemptSummary; onClick: (
 
 export default function HistoryPage() {
   const router = useRouter()
-  const { data: attempts = [], isLoading, isError, error } = useAttemptHistory(POC_STUDENT_ID)
+  const userId = useAuthStore((s) => s.user?.id)
+  const { data: attempts = [], isLoading, isError, error } = useAttemptHistory(userId)
 
   if (isLoading) {
     return (

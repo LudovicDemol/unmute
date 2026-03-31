@@ -1,11 +1,12 @@
-// hooks/useAttemptHistory.ts
-import { useQuery } from "@tanstack/react-query"
+import { useQuery } from '@tanstack/react-query'
+import { useAuthStore } from '@/stores/authStore'
+import { fetchWithAuth } from '@/lib/api'
 
 export interface AttemptSummary {
   id: string
   started_at: string
   ended_at: string | null
-  status: "in_progress" | "completed" | "evaluated"
+  status: 'in_progress' | 'completed' | 'evaluated'
   score_total: number | null
   global_evaluation: string | null
   scenario: {
@@ -20,26 +21,14 @@ export interface AttemptSummary {
   }
 }
 
-const fetchAttemptHistory = async (studentId: string): Promise<AttemptSummary[]> => {
-  const controller = new AbortController()
-  const timeoutId = window.setTimeout(() => controller.abort(), 8000)
+export function useAttemptHistory(studentId?: string) {
+  const authUser = useAuthStore(s => s.user)
+  const effectiveId = studentId ?? authUser?.id
 
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API_ECOS}/attempts/student/${studentId}`, {
-      signal: controller.signal,
-    })
-    if (!res.ok) throw new Error(`Erreur ${res.status}`)
-    return res.json()
-  } finally {
-    clearTimeout(timeoutId)
-  }
-}
-
-export function useAttemptHistory(studentId: string) {
   return useQuery<AttemptSummary[], Error>({
-    queryKey: ["attemptHistory", studentId],
-    queryFn: () => fetchAttemptHistory(studentId),
-    enabled: !!studentId,
+    queryKey: ['attemptHistory', effectiveId],
+    queryFn: () => fetchWithAuth<AttemptSummary[]>(`/attempts/student/${effectiveId}`),
+    enabled: !!effectiveId,
     staleTime: 1 * 60 * 1000,
     retry: 1,
   })

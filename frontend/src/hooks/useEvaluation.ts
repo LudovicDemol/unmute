@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-
-const API_BASE = process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:3001'
+import { fetchWithAuth } from '@/lib/api'
 
 export type ChecklistScore = {
   itemId: string
@@ -62,27 +61,15 @@ export function useEvaluation(onEvaluated?: () => void) {
   const queryClient = useQueryClient()
 
   const mutation = useMutation<AttemptResult, Error, { attemptId: string; payload: EvaluatePayload }>({
-    mutationFn: async ({ attemptId, payload }: { attemptId: string; payload: EvaluatePayload }) => {
-      const evalRes = await fetch(`${API_BASE}/attempts/${attemptId}/evaluate`, {
+    mutationFn: async ({ attemptId, payload }) => {
+      await fetchWithAuth(`/attempts/${attemptId}/evaluate`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       })
-      if (!evalRes.ok) {
-        const body = await evalRes.json().catch(() => ({}))
-        throw new Error(body?.error ?? `Failed to evaluate attempt: ${evalRes.status}`)
-      }
-
-      const resultsRes = await fetch(`${API_BASE}/attempts/${attemptId}/results`)
-      if (!resultsRes.ok) {
-        const body = await resultsRes.json().catch(() => ({}))
-        throw new Error(body?.error ?? `Failed to fetch results: ${resultsRes.status}`)
-      }
-
-      return resultsRes.json()
+      return fetchWithAuth<AttemptResult>(`/attempts/${attemptId}/results`)
     },
-    onSuccess: (result, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['attemptResults', variables.attemptId] })
+    onSuccess: (_, { attemptId }) => {
+      queryClient.invalidateQueries({ queryKey: ['attemptResults', attemptId] })
       queryClient.invalidateQueries({ queryKey: ['attemptHistory'] })
       onEvaluated?.()
     },
@@ -90,7 +77,7 @@ export function useEvaluation(onEvaluated?: () => void) {
 
   return {
     result: mutation.data ?? null,
-    loading: mutation.status === 'pending',
+    loading: mutation.isPending,
     error: mutation.error ?? null,
     evaluate: (attemptId: string, payload: EvaluatePayload) =>
       mutation.mutateAsync({ attemptId, payload }),
