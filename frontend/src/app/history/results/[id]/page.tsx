@@ -66,10 +66,10 @@ function CommScoreDots({ score }: { score: number }) {
 export default function ResultsPage() {
   const { id } = useParams<{ id: string }>()
   const router = useRouter()
-  const { results, loading, error } = useAttemptResults(id)
+  const { data: results, isLoading, isError, error } = useAttemptResults(id)
 
   // ── Loading ──
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-slate-50">
         <div className="text-center space-y-4">
@@ -86,7 +86,8 @@ export default function ResultsPage() {
   }
 
   // ── Error ──
-  if (error || !results) {
+  if (isError || !results) {
+    const message = error instanceof Error ? error.message : "Tentative introuvable"
     return (
       <div className="flex items-center justify-center min-h-screen bg-slate-50">
         <div className="text-center max-w-sm">
@@ -96,7 +97,7 @@ export default function ResultsPage() {
           <h2 className="text-base font-semibold text-slate-800 mb-1">
             Résultats introuvables
           </h2>
-          <p className="text-sm text-slate-400 mb-4">{error ?? "Tentative inconnue"}</p>
+          <p className="text-sm text-slate-400 mb-4">{message}</p>
           <button
             onClick={() => router.push("/scenarios")}
             className="flex items-center gap-2 mx-auto bg-teal-500 text-white px-4 py-2 rounded-xl hover:bg-teal-600 transition-colors text-sm"

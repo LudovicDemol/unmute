@@ -2,8 +2,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import localFont from "next/font/local";
-import ConsentModal from "../components/ConsentModal";
 import EcosSidebar from "@/components/EcosSideBar";
+import ClientProviders from "@/components/ClientProviders";
 
 export const metadata: Metadata = {
   title: "ECOS Trainer",
@@ -29,6 +29,8 @@ const inter = localFont({
   display: "swap",
 });
 
+
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -45,13 +47,15 @@ export default function RootLayout({
         {/* Inter & JetBrains Mono fonts CDN */}
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" />
       </head>
-       <body className="bg-slate-50 antialiased">
-        <div className="flex min-h-screen">
-          <EcosSidebar />
-          <main className="flex-1 min-w-0">
-            {children}
-          </main>
-        </div>
+      <body className="bg-slate-50 antialiased">
+        <ClientProviders>
+          <div className="flex min-h-screen">
+            <EcosSidebar />
+            <main className="flex-1 min-w-0">
+              {children}
+            </main>
+          </div>
+        </ClientProviders>
       </body>
     </html>
   );

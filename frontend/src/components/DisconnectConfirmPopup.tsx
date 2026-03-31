@@ -38,27 +38,27 @@ export default function DisconnectConfirmPopup({
           </div>
         </div>
 
-        {/* Body */}
-        <p className="text-slate-600 text-sm leading-relaxed">
-            {willBeEvaluated ? (
+        <div className="px-6 py-4">
+            <p className="text-slate-600 text-sm leading-relaxed">
+                {willBeEvaluated ? (
                 <>
-                La session sera terminée et{" "}
-                <span className="font-medium text-slate-800">
+                    La session sera terminée et{" "}
+                    <span className="font-medium text-slate-800">
                     vos résultats seront évalués
-                </span>
-                . Vous pouvez consulter votre score dans l'historique.
+                    </span>
+                    . Vous pouvez consulter vos résultats depuis l'historique.
                 </>
-            ) : (
+                ) : (
                 <>
-                La session sera abandonnée et{" "}
-                <span className="font-medium text-slate-800">
+                    La session sera abandonnée et{" "}
+                    <span className="font-medium text-slate-800">
                     aucun résultat ne sera enregistré
-                </span>
-                {" "}(session trop courte — minimum 2 minutes).
+                    </span>
+                    {" "}(la durée de la session est trop courte).
                 </>
-            )}
-        </p>
-
+                )}
+            </p>
+        </div>
         {/* Actions */}
         <div className="px-6 pb-6 flex gap-3">
           <button

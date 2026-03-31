@@ -4,6 +4,7 @@
  */
 
 import { useCallback } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 export interface ScenarioListItem {
   id: string;
@@ -72,40 +73,61 @@ export interface UserProgress {
   completion: number;
 }
 
+const handleError = async (response: Response, context: string) => {
+  if (!response.ok) throw new Error(`${context}: ${response.status} ${response.statusText}`);
+  return response.json();
+};
+
+const fetchWithTimeout = async <T>(url: string, timeoutMs = 8000): Promise<T> => {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    return await handleError(res, `Failed to fetch ${url}`);
+  } finally {
+    clearTimeout(timeout);
+  }
+};
+
+export const fetchScenarios = async (): Promise<ScenarioListItem[]> => {
+  return fetchWithTimeout<ScenarioListItem[]>(`${process.env.NEXT_PUBLIC_URL_API_ECOS}/scenarios`);
+};
+
+export const fetchScenarioDetail = async (id: string): Promise<ScenarioDetail> => {
+  return fetchWithTimeout<ScenarioDetail>(`${process.env.NEXT_PUBLIC_URL_API_ECOS}/scenarios/${id}`);
+};
+
+export const checkHealth = async () => {
+  return fetchWithTimeout(`${process.env.NEXT_PUBLIC_URL_API_ECOS}/health`, 3000);
+};
+
 export function useScenario() {
-  const handleError = useCallback((response: Response, context: string) => {
-    if (!response.ok) {
-      throw new Error(
-        `${context}: ${response.status} ${response.statusText}`
-      );
-    }
-    return response.json();
-  }, []);
+  const getScenarios = useCallback(fetchScenarios, []);
+  const getScenarioDetail = useCallback(fetchScenarioDetail, []);
+  return { getScenarios, getScenarioDetail, checkHealth };
+}
 
-  const getScenarios = useCallback(async (): Promise<ScenarioListItem[]> => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API_ECOS}/scenarios`);
-    return handleError(response, "Failed to fetch scenarios");
-  }, [handleError]);
+export function useScenarios() {
+  return useQuery<ScenarioListItem[]>({
+    queryKey: ["scenarios"],
+    queryFn: fetchScenarios,
+    staleTime: 5 * 60 * 1000,
+    retry: 2,
+    refetchOnWindowFocus: true,
+  });
+}
 
-  const getScenarioDetail = useCallback(
-    async (id: string): Promise<ScenarioDetail> => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API_ECOS}/scenarios/${id}`);
-      console.log(response);
-      return handleError(response, `Failed to fetch scenario ${id}`);
+export function useScenarioDetail(id?: string) {
+  return useQuery<ScenarioDetail>({
+    queryKey: ["scenario", id],
+    queryFn: () => {
+      if (!id) throw new Error("Scenario ID is required");
+      return fetchScenarioDetail(id);
     },
-    [handleError]
-  );
-
-  const checkHealth = useCallback(async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API_ECOS}/health`, {
-      signal: AbortSignal.timeout(3000),
-    });
-    return handleError(response, "API health check failed");
-  }, [handleError]);
-
-  return {
-    getScenarios,
-    getScenarioDetail,
-    checkHealth,
-  };
+    enabled: !!id,
+    staleTime: 5 * 60 * 1000,
+    retry: 2,
+    refetchOnWindowFocus: true,
+  });
 }

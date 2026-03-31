@@ -1,5 +1,13 @@
 
-export default function Home() {
+import { createClient } from '@/utils/supabase/server';
+import { cookies } from 'next/headers';
+
+export default async function Page() {
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+
+  const { data: todos } = await supabase.from('todos').select();
+
   return (
     <div className="w-full h-screen flex items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
       <div className="max-w-xl w-full p-10 rounded-3xl bg-slate-900/80 border border-slate-800/70 shadow-blue-500/10 backdrop-blur-md flex flex-col items-center gap-6">

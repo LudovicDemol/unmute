@@ -12,12 +12,13 @@ import useWakeLock from "../hooks/useWakeLock";
 import ErrorMessages, { ErrorItem, makeErrorItem } from "./ErrorMessages";
 import { getRecordingConsent } from "../utils/recordingConsent";
 import { getScenarioDifficultyLabel, buildMasterPrompt } from "../utils/scenario";
-import { ScenarioDetail, useScenario } from "@/hooks/useScenario";
+import { ScenarioDetail, useScenarioDetail } from "@/hooks/useScenario";
 import { useEcosTimer } from "@/hooks/useEcosTimer";
 import ChatPanel from "./ChatPanel";
 import { DEFAULT_UNMUTE_CONFIG, UnmuteConfig } from "../types/type";
 import { useBackendServerUrl } from "@/hooks/useBackendServerUrl";
 import { useAttempt } from "@/hooks/useAttempt";
+import { useSessionStore } from "@/stores/sessionStore";
 import EvaluationLoadingPopup from "./EvaluationLoadingPopup";
 import { useRouter } from "next/navigation";
 import { usePollResults } from "@/hooks/usePollResults";
@@ -25,7 +26,7 @@ import { getDomainLabel } from "@/utils/labelUtil";
 import DisconnectConfirmPopup from "./DisconnectConfirmPopup"
 
 const POC_STUDENT_ID = "00000000-0000-0000-0000-000000000001"
-const MIN_SESSION_DURATION_SECONDS = 240
+const MIN_SESSION_DURATION_SECONDS = 1
 
 interface EcosAssistantProps {
   id: string;
@@ -35,18 +36,31 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
   const [unmuteConfig, setUnmuteConfig] = useState<UnmuteConfig>(DEFAULT_UNMUTE_CONFIG);
   const [rawChatHistory, setRawChatHistory] = useState<ChatMessage[]>([]);
   const chatHistory = compressChatHistory(rawChatHistory);
-  const { getScenarioDetail } = useScenario();
-  const [scenarioDetails, setScenarioDetails] = useState<ScenarioDetail>();
+  const {
+    data: scenarioDetails,
+    isLoading: scenarioLoading,
+    isError: scenarioError,
+    error: scenarioErrorObject,
+  } = useScenarioDetail(id);
+
   const { microphoneAccess, askMicrophoneAccess } = useMicrophoneAccess();
   const [showOverlay, setShowOverlay] = useState(false);
-  const [shouldConnect, setShouldConnect] = useState(false);
+  const {
+    shouldConnect,
+    setShouldConnect,
+    evaluationStarted,
+    setEvaluationStarted,
+    startEvaluation,
+    popupDismissed,
+    dismissPopup,
+    reset: resetSessionState,
+  } = useSessionStore();
   const backendServerUrl = useBackendServerUrl();
   const [webSocketUrl, setWebSocketUrl] = useState<string | null>(null);
   const [healthStatus, setHealthStatus] = useState<HealthStatus | null>(null);
   const [errors, setErrors] = useState<ErrorItem[]>([]);
   const [scenarioReady, setScenarioReady] = useState(false);
   const isSessionActive = useRef(false)
-  const [evaluationStarted, setEvaluationStarted] = useState(false)
   const [showDisconnectPopup, setShowDisconnectPopup] = useState(false)
 
   const router = useRouter()
@@ -64,16 +78,22 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
     await fetch(`${process.env.NEXT_PUBLIC_URL_API_ECOS}/attempts/${currentAttemptId}/trigger-evaluation`, {
       method: 'POST',
     })
-    setEvaluationStarted(true) // ← déclenche popup + polling en une seule ligne
-  }, [backendServerUrl])
+    startEvaluation();
+  }, [backendServerUrl, startEvaluation])
+
+  const allFakeStepsDone = useRef(false) 
 
   useEffect(() => {
-  if (evaluationResult) {
-    router.push(`/history/results/${evaluationResult.id}`)
-    router.refresh()
-  }
-  }, [evaluationResult])
+    if (!evaluationResult) return
 
+    if (allFakeStepsDone.current) {
+      const timer = setTimeout(() => {
+        dismissPopup()
+        router.push(`/history/results/${evaluationResult.id}`)
+      }, 1200)
+      return () => clearTimeout(timer)
+    }
+  }, [evaluationResult, dismissPopup, router])
 
   useEffect(() => {
   if (timedOut) {
@@ -115,30 +135,29 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
     } else {
       router.push("/scenarios")
     }
-  }, [attemptId, completeAttempt, triggerEvaluation, resetTimer, getElapsedSeconds])
+  }, [attemptId, completeAttempt, triggerEvaluation, resetTimer, getElapsedSeconds, setShouldConnect])
 
   useWakeLock(shouldConnect);
 
-  // ── Scenario loading ──────────────────────────────────────────────────────
+  // ── Scenario loading (react-query) ───────────────────────────────────────
   useEffect(() => {
-    async function recoverFullContext() {
-      if (!id) return;
-      try {
-        const scenarioInfo = await getScenarioDetail(id);
-        setScenarioDetails(scenarioInfo);
-        const masterPrompt = buildMasterPrompt(scenarioInfo, getScenarioDifficultyLabel);
-        setUnmuteConfig((prev) => ({
-          ...prev,
-          instructions: { type: "constant", text: masterPrompt },
-          voice: scenarioInfo.voice,
-        }));
-        setScenarioReady(true);
-      } catch (err) {
-        console.error("Erreur lors de la récupération du scénario:", err);
-      }
+    if (scenarioLoading || !scenarioDetails) {
+      setScenarioReady(false);
+      return;
     }
-    recoverFullContext();
-  }, [id]);
+
+    const masterPrompt = buildMasterPrompt(scenarioDetails, getScenarioDifficultyLabel);
+    setUnmuteConfig((prev) => ({
+      ...prev,
+      instructions: { type: "constant", text: masterPrompt },
+      voice: scenarioDetails.voice,
+    }));
+    setScenarioReady(true);
+
+    if (scenarioError) {
+      console.error("Erreur lors de la récupération du scénario:", scenarioErrorObject);
+    }
+  }, [scenarioDetails, scenarioLoading, scenarioError, scenarioErrorObject]);
 
   // ── Health check ──────────────────────────────────────────────────────────
   useEffect(() => {
@@ -220,8 +239,9 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
         isSessionActive.current = true
         await startAttempt(id);
         setShouldConnect(true);
-        startTimer();
         setShowOverlay(true);
+        dismissPopup();
+        setEvaluationStarted(false);
       }
     } else {
       setShowDisconnectPopup(true)
@@ -383,8 +403,20 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
 
       <ErrorMessages errors={errors} setErrors={setErrors} />
       <canvas ref={recordingCanvasRef} className="hidden" />
-      <SessionStartOverlay visible={showOverlay} onReady={() => setShowOverlay(false)} />
-      <EvaluationLoadingPopup visible={evaluationStarted && !evaluationResult && !timedOut} done={!!evaluationResult} />
+      <SessionStartOverlay visible={showOverlay} onReady={() => {setShowOverlay(false); startTimer();}} />
+      <EvaluationLoadingPopup 
+        visible={evaluationStarted && !popupDismissed && !timedOut} 
+        done={!!evaluationResult}
+        onComplete={() => {
+          allFakeStepsDone.current = true
+          if (evaluationResult) {
+            setTimeout(() => {
+              dismissPopup()
+              router.push(`/history/results/${evaluationResult.id}`)
+            }, 1200)
+          }
+        }}
+      />
       <DisconnectConfirmPopup
         visible={showDisconnectPopup}
         willBeEvaluated={getElapsedSeconds() >= MIN_SESSION_DURATION_SECONDS}

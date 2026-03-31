@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CheckCircle, Loader2 } from "lucide-react";
 
 interface Step {
@@ -10,9 +10,9 @@ interface Step {
 const STEPS: Step[] = [
   { label: "Finalisation de la session…",       duration: 1200 },
   { label: "Analyse de la conversation…",        duration: 2000 },
-  { label: "Évaluation clinique en cours…",      duration: 2500 },
+  { label: "Évaluation clinique en cours…",      duration: 1000 },
   { label: "Évaluation de la communication…",    duration: 2000 },
-  { label: "Calcul du score final…",             duration: 1500 },
+  { label: "Calcul du score final…",             duration: 500 },
   { label: "Préparation des résultats…",         duration: 1000 },
 ];
 
@@ -21,33 +21,14 @@ const FAKE_MAX = 99;
 interface EvaluationLoadingPopupProps {
   visible: boolean;
   done: boolean;
+  onComplete?: () => void;
 }
 
-export default function EvaluationLoadingPopup({ visible, done }: EvaluationLoadingPopupProps) {
+export default function EvaluationLoadingPopup({ visible, done, onComplete }: EvaluationLoadingPopupProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
-
-  useEffect(() => {
-    if (!visible) {
-      setCurrentStep(0);
-      setCompletedSteps([]);
-      return;
-    }
-    // On bloque l'avancement des étapes à la dernière tant que done est false
-    if (currentStep >= STEPS.length) return;
-
-    const timer = setTimeout(() => {
-      setCompletedSteps((prev) => [...prev, currentStep]);
-      setCurrentStep((prev) => prev + 1);
-    }, STEPS[currentStep].duration);
-
-    return () => clearTimeout(timer);
-  }, [visible, currentStep]);
-
-  if (!visible) return null;
-
-  // Toutes les étapes fausses sont terminées mais API pas encore là → bloqué à 99%
-  const allFakeStepsDone = completedSteps.length >= STEPS.length;
+  const hasCalledComplete = useRef(false)
+  const allFakeStepsDone = completedSteps.length >= STEPS.length
   const progress = done
     ? 100
     : allFakeStepsDone
@@ -57,6 +38,32 @@ export default function EvaluationLoadingPopup({ visible, done }: EvaluationLoad
   // Dernière étape reste "active" (spinner) si toutes les fausses étapes sont
   // passées mais que l'API n'a pas encore répondu
   const isStuck = allFakeStepsDone && !done;
+
+  useEffect(() => {
+    if (allFakeStepsDone && done && !hasCalledComplete.current) {
+      hasCalledComplete.current = true
+      onComplete?.()
+    }
+  }, [allFakeStepsDone, done, onComplete])
+
+    useEffect(() => {
+    if (!visible) {
+        setCurrentStep(0)
+        setCompletedSteps([])
+        hasCalledComplete.current = false
+        return
+    }
+    if (currentStep >= STEPS.length) return
+
+    const timer = setTimeout(() => {
+        setCompletedSteps((prev) => [...prev, currentStep])
+        setCurrentStep((prev) => prev + 1)
+    }, STEPS[currentStep].duration)
+
+    return () => clearTimeout(timer)
+    }, [visible, currentStep])
+
+  if (!visible) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">

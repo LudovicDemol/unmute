@@ -1,48 +1,65 @@
-import { useEffect, useRef, useState } from 'react'
-import { useBackendServerUrl } from './useBackendServerUrl'
+import { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { AttemptResults } from './useAttempResults'
 
 const POLL_INTERVAL_MS = 3000
 const POLL_TIMEOUT_MS  = 120_000 // 2 min max
 
+const fetchAttemptResults = async (attemptId: string): Promise<AttemptResults> => {
+  const controller = new AbortController()
+  const timeoutId = window.setTimeout(() => controller.abort(), 8000)
+
+  try {
+    const r = await fetch(`${process.env.NEXT_PUBLIC_URL_API_ECOS}/attempts/${attemptId}/results`, {
+      signal: controller.signal,
+    })
+
+    if (!r.ok) {
+      throw new Error(`Erreur ${r.status}`)
+    }
+
+    return r.json()
+  } finally {
+    clearTimeout(timeoutId)
+  }
+}
+
 export function usePollResults(attemptId: string | null, enabled: boolean) {
-  const [results, setResults]   = useState<AttemptResults | null>(null)
   const [timedOut, setTimedOut] = useState(false)
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
-  const timeoutRef  = useRef<ReturnType<typeof setTimeout>  | null>(null)
+
+  const query = useQuery<AttemptResults, Error>({
+    queryKey: ['attemptResults', attemptId],
+    queryFn: () => {
+      if (!attemptId) throw new Error('Attempt ID requis')
+      return fetchAttemptResults(attemptId)
+    },
+    enabled: !!attemptId && enabled && !timedOut,
+    refetchInterval: (query) => {
+      const latestData = query.state.data as AttemptResults | undefined
+      return latestData?.status === 'evaluated' ? false : POLL_INTERVAL_MS
+    },
+    refetchOnWindowFocus: true,
+    retry: 1,
+    staleTime: 0,
+  })
 
   useEffect(() => {
-    if (!enabled || !attemptId || !process.env.NEXT_PUBLIC_URL_API_ECOS) return
+    setTimedOut(false)
+  }, [attemptId, enabled])
 
-    const poll = async () => {
-      try {
-        const r = await fetch(`${process.env.NEXT_PUBLIC_URL_API_ECOS}/attempts/${attemptId}/results`)
-        if (r.ok) {
-          const data = await r.json()
-          setResults(data)
-          cleanup()
-        }
-        // 400 = pas encore évalué → on continue à poller
-      } catch {
-        // réseau flaky → on continue
-      }
-    }
+  useEffect(() => {
+    if (!enabled || !attemptId) return
 
-    const cleanup = () => {
-      if (intervalRef.current) clearInterval(intervalRef.current)
-      if (timeoutRef.current)  clearTimeout(timeoutRef.current)
-    }
+    const timerId = window.setTimeout(() => setTimedOut(true), POLL_TIMEOUT_MS)
+    return () => window.clearTimeout(timerId)
+  }, [attemptId, enabled])
 
-    intervalRef.current = setInterval(poll, POLL_INTERVAL_MS)
-    timeoutRef.current  = setTimeout(() => {
-      cleanup()
-      setTimedOut(true)
-    }, POLL_TIMEOUT_MS)
-
-    poll() // premier appel immédiat
-
-    return cleanup
-  }, [enabled, attemptId, process.env.NEXT_PUBLIC_URL_API_ECOS])
-
-  return { results, timedOut }
+  return {
+    results: query.data ?? null,
+    timedOut,
+    isLoading: query.isLoading,
+    isError: query.isError,
+    error: query.error,
+    refetch: query.refetch,
+  }
 }

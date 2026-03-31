@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 const API_BASE = process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:3001'
 
@@ -59,44 +59,40 @@ export type AttemptResult = {
 }
 
 export function useEvaluation(onEvaluated?: () => void) {
-  const [result, setResult] = useState<AttemptResult | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const queryClient = useQueryClient()
 
-  const handleError = useCallback(async (res: Response, context: string) => {
-    if (!res.ok) {
-      const body = await res.json().catch(() => ({}))
-      throw new Error(body?.error ?? `${context}: HTTP ${res.status}`)
-    }
-    return res.json()
-  }, [])
-
-  const evaluate = useCallback(async (
-    attemptId: string,
-    payload: EvaluatePayload
-  ): Promise<void> => {
-    try {
-      setLoading(true)
-      setError(null)
-
+  const mutation = useMutation<AttemptResult, Error, { attemptId: string; payload: EvaluatePayload }>({
+    mutationFn: async ({ attemptId, payload }: { attemptId: string; payload: EvaluatePayload }) => {
       const evalRes = await fetch(`${API_BASE}/attempts/${attemptId}/evaluate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       })
-      await handleError(evalRes, 'Failed to evaluate attempt')
+      if (!evalRes.ok) {
+        const body = await evalRes.json().catch(() => ({}))
+        throw new Error(body?.error ?? `Failed to evaluate attempt: ${evalRes.status}`)
+      }
 
       const resultsRes = await fetch(`${API_BASE}/attempts/${attemptId}/results`)
-      const data = await handleError(resultsRes, 'Failed to fetch results')
+      if (!resultsRes.ok) {
+        const body = await resultsRes.json().catch(() => ({}))
+        throw new Error(body?.error ?? `Failed to fetch results: ${resultsRes.status}`)
+      }
 
-      setResult(data)
+      return resultsRes.json()
+    },
+    onSuccess: (result, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['attemptResults', variables.attemptId] })
+      queryClient.invalidateQueries({ queryKey: ['attemptHistory'] })
       onEvaluated?.()
-    } catch (e: any) {
-      setError(e.message)
-    } finally {
-      setLoading(false)
-    }
-  }, [handleError, onEvaluated])
+    },
+  })
 
-  return { result, loading, error, evaluate }
+  return {
+    result: mutation.data ?? null,
+    loading: mutation.status === 'pending',
+    error: mutation.error ?? null,
+    evaluate: (attemptId: string, payload: EvaluatePayload) =>
+      mutation.mutateAsync({ attemptId, payload }),
+  }
 }

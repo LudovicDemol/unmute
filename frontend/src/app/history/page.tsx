@@ -42,7 +42,7 @@ const STATUS_CONFIG = {
     className: "bg-teal-50 text-teal-700 border-teal-200",
   },
   completed: {
-    label: "Terminé",
+    label: "Terminé sans évaluation",
     icon: <CheckCircle className="w-3.5 h-3.5" />,
     className: "bg-blue-50 text-blue-700 border-blue-200",
   },
@@ -172,9 +172,9 @@ function AttemptItem({ attempt, onClick }: { attempt: AttemptSummary; onClick: (
 
 export default function HistoryPage() {
   const router = useRouter()
-  const { attempts, loading, error } = useAttemptHistory(POC_STUDENT_ID)
+  const { data: attempts = [], isLoading, isError, error } = useAttemptHistory(POC_STUDENT_ID)
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-slate-50">
         <div className="text-center space-y-4">
@@ -190,7 +190,8 @@ export default function HistoryPage() {
     )
   }
 
-  if (error) {
+  if (isError) {
+    const message = error instanceof Error ? error.message : "Erreur de chargement"
     return (
       <div className="flex items-center justify-center min-h-screen bg-slate-50">
         <div className="text-center max-w-sm">
@@ -198,7 +199,7 @@ export default function HistoryPage() {
             <AlertCircle className="w-5 h-5 text-red-400" />
           </div>
           <h2 className="text-base font-semibold text-slate-800 mb-1">Erreur de chargement</h2>
-          <p className="text-sm text-slate-400">{error}</p>
+          <p className="text-sm text-slate-400">{message}</p>
         </div>
       </div>
     )

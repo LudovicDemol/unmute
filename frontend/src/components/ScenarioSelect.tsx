@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useScenario, type ScenarioListItem } from "@/hooks/useScenario";
+import { useScenarios, type ScenarioListItem } from "@/hooks/useScenario";
 import ScenarioFilters from "@/components/ScenarioFilters";
 import { Search, Clock, Play, AlertCircle, ClipboardList } from "lucide-react";
 import { useAttempt } from "@/hooks/useAttempt";
@@ -18,32 +18,9 @@ export default function ScenarioSelectPage({
   onSessionStarted,
 }: ScenarioSelectProps) {
   const router = useRouter();
-  const { getScenarios } = useScenario();
-
-  const [scenarios, setScenarios] = useState<ScenarioListItem[]>([]);
-  const [filteredScenarios, setFilteredScenarios] = useState<ScenarioListItem[]>([]);
-  const [loading, setLoadingLocal] = useState(true);
-  const [error, setErrorLocal] = useState<string | null>(null);
+  const { data: scenarios = [], isLoading, isError, error } = useScenarios();
+  const [filteredScenarios, setFilteredScenarios] = useState<ScenarioListItem[]>(scenarios);
   const { startAttempt } = useAttempt('caca');
-
-  useEffect(() => {
-    const fetchScenarios = async () => {
-      try {
-        setLoadingLocal(true);
-        const data = await getScenarios();
-        setScenarios(data);
-        setFilteredScenarios(data);
-        setErrorLocal(null);
-      } catch (err) {
-        const errorMsg =
-          err instanceof Error ? err.message : "Erreur lors de la récupération";
-        setErrorLocal(errorMsg);
-      } finally {
-        setLoadingLocal(false);
-      }
-    };
-    fetchScenarios();
-  }, [getScenarios]);
 
   const navigateToScenario = (scenarioId: string) => {
     router.push(`/conversation/${scenarioId}`);
@@ -51,7 +28,7 @@ export default function ScenarioSelectPage({
   };
 
   // --- Loading ---
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-slate-50">
         <div className="text-center space-y-4">
@@ -68,7 +45,9 @@ export default function ScenarioSelectPage({
   }
 
   // --- Error ---
-  if (error) {
+  if (isError) {
+    const errMsg =
+      error instanceof Error ? error.message : "Erreur lors de la récupération";
     return (
       <div className="flex items-center justify-center min-h-screen bg-slate-50">
         <div className="text-center max-w-sm">
@@ -78,7 +57,7 @@ export default function ScenarioSelectPage({
           <h2 className="text-base font-semibold text-slate-800 mb-1">
             Une erreur est survenue
           </h2>
-          <p className="text-sm text-slate-400">{error}</p>
+          <p className="text-sm text-slate-400">{errMsg}</p>
         </div>
       </div>
     );

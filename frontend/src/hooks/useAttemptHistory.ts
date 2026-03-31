@@ -1,5 +1,5 @@
 // hooks/useAttemptHistory.ts
-import { useState, useEffect } from "react"
+import { useQuery } from "@tanstack/react-query"
 
 export interface AttemptSummary {
   id: string
@@ -20,20 +20,27 @@ export interface AttemptSummary {
   }
 }
 
+const fetchAttemptHistory = async (studentId: string): Promise<AttemptSummary[]> => {
+  const controller = new AbortController()
+  const timeoutId = window.setTimeout(() => controller.abort(), 8000)
+
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API_ECOS}/attempts/student/${studentId}`, {
+      signal: controller.signal,
+    })
+    if (!res.ok) throw new Error(`Erreur ${res.status}`)
+    return res.json()
+  } finally {
+    clearTimeout(timeoutId)
+  }
+}
+
 export function useAttemptHistory(studentId: string) {
-  const [attempts, setAttempts] = useState<AttemptSummary[]>([])
-  const [loading, setLoading]   = useState(true)
-  const [error, setError]       = useState<string | null>(null)
-
-  useEffect(() => {
-    if (!studentId || !process.env.NEXT_PUBLIC_URL_API_ECOS) return
-    setLoading(true)
-    fetch(`${process.env.NEXT_PUBLIC_URL_API_ECOS}/attempts/student/${studentId}`)
-      .then(r => { if (!r.ok) throw new Error(`Erreur ${r.status}`); return r.json() })
-      .then(setAttempts)
-      .catch(e => setError(e.message))
-      .finally(() => setLoading(false))
-  }, [studentId])
-
-  return { attempts, loading, error }
+  return useQuery<AttemptSummary[], Error>({
+    queryKey: ["attemptHistory", studentId],
+    queryFn: () => fetchAttemptHistory(studentId),
+    enabled: !!studentId,
+    staleTime: 1 * 60 * 1000,
+    retry: 1,
+  })
 }

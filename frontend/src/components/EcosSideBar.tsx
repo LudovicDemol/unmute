@@ -28,18 +28,7 @@ const NAV_ITEMS = [
     sublabel: "Sessions passées",
     icon: Clock,
   },
-  {
-    href: "/progression",
-    label: "Progression",
-    sublabel: "Statistiques",
-    icon: BarChart3,
-  },
-  {
-    href: "/ressources",
-    label: "Ressources",
-    sublabel: "Guides & aide",
-    icon: BookOpen,
-  },
+  
 ];
 
 export default function EcosSidebar() {
