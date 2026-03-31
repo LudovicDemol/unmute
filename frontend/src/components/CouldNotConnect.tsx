@@ -50,12 +50,12 @@ const CouldNotConnect = ({ healthStatus }: { healthStatus: HealthStatus }) => {
   if (healthStatus.ok) {
     return null;
   }
-  console.error("Health check failed:", healthStatus);
 
   return (
-    <div className="w-full h-full flex flex-col gap-12 items-center justify-center bg-background">
-      <div className="text-center text-xl">
-        <h1 className="text-3xl mb-4">Désolés nos services sont indisponibles...</h1>
+    <div className="w-full h-full flex flex-col gap-12 items-center justify-center bg-slate-800">
+      <div className="text-center text-white text-xl">
+        <h1 className="text-3xl mb-4">Désolés l'assistant est momentanément indisponible</h1>
+        <p>Si le problème persiste, n'hésitez pas à nous contacter pour que nous puissions le résoudre au plus vite.</p>
       </div>
     </div>
   );
