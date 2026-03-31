@@ -4,7 +4,7 @@ export const useBackendServerUrl = () => {
   const [backendServerUrl, setBackendServerUrl] = useState<string | null>(null);
 
   useEffect(() => {
-      setBackendServerUrl("https://push-teddy-merge-kodak.trycloudflare.com");
+      setBackendServerUrl("https://echo-valley-jefferson-nextel.trycloudflare.com");
   }, []);
 
   return backendServerUrl;

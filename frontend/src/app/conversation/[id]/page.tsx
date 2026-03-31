@@ -9,9 +9,6 @@ export default async function Page({
   const resolvedParams = await params;
 
   return (
-    <div className="w-full h-screen flex justify-center bg-background">
-      {/* Passe l'id au composant client, pas ici */}
       <EcosAssistant key={resolvedParams.id} id={resolvedParams.id} />
-    </div>
   );
 }

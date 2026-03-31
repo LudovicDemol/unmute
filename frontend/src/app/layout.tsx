@@ -3,10 +3,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 import localFont from "next/font/local";
 import ConsentModal from "../components/ConsentModal";
+import EcosSidebar from "@/components/EcosSideBar";
 
 export const metadata: Metadata = {
-  title: "Unmute by Kyutai",
-  description: "Make LLMs listen and speak.",
+  title: "ECOS Trainer",
+  description: "A training tool for the ECOS assistant, designed to help healthcare professionals practice and improve their communication skills in a safe and controlled environment.",
 };
 
 
@@ -44,15 +45,12 @@ export default function RootLayout({
         {/* Inter & JetBrains Mono fonts CDN */}
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" />
       </head>
-      <body>
-        <div className="flex min-h-screen w-full bg-slate-950 text-slate-200 font-sans selection:bg-blue-500/30 overflow-hidden relative">
-          {/* Glow top bar */}
-          <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500/30 via-blue-500/60 to-blue-500/30 blur-lg pointer-events-none z-50" />
-          {/* Main content */}
-          <div className="flex flex-1 w-full h-full">
+       <body className="bg-slate-50 antialiased">
+        <div className="flex min-h-screen">
+          <EcosSidebar />
+          <main className="flex-1 min-w-0">
             {children}
-          </div>
-          <ConsentModal />
+          </main>
         </div>
       </body>
     </html>

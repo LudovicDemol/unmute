@@ -1,38 +1,39 @@
 @import "tailwindcss";
 
 :root {
-  --green: #39F2AE;
-  --offwhite: #EFEFEF;
-  --textgray: rgb(181, 188, 197);
-  --lightgray: #9d9d9d;
-  /* #B5BCC5; */
-  --gray: #343434;
-  /* #8D949E; */
-  --darkgray: #191919;
-  /* #1e293b; */
-  --background: #121212;
+  /* ── Brand ─────────────────────────────────────────────── */
+  --teal:       #14b8a6;
+  --teal-light: #ccfbf1;
+  --teal-dark:  #0f766e;
 
-  --orange: #f5ab4a;
-  --pink: #f051db;
-  --purple: #a57de8;
-  /* for errors */
-  --red: #f55142;
+  /* ── Neutrals ───────────────────────────────────────────── */
+  --white:      #ffffff;
+  --surface:    #F9FAFB; /* slate-50 */
+  --border:     #e2e8f0; /* slate-200 */
+  --muted:      #94a3b8; /* slate-400 */
+  --text:       #1e293b; /* slate-800 */
+  --text-light: #64748b; /* slate-500 */
 
-  --speaker-0: var(--green);
-  --speaker-1: var(--orange);
-  --speaker-2: var(--pink);
-  --speaker-3: var(--purple);
+  /* ── Semantic ───────────────────────────────────────────── */
+  --red:        #ef4444;
+  --amber:      #f59e0b;
+  --green:      #22c55e;
 
-  font-family:
-    var(--font-satoshi),
-    system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 500;
-  font-size: 1.35rem;
+  /* ── Speaker colors (transcription) ────────────────────── */
+  --speaker-0:  var(--teal);
+  --speaker-1:  #8b5cf6; /* violet */
+  --speaker-2:  #f59e0b; /* amber  */
+  --speaker-3:  #ec4899; /* pink   */
 
-  color-scheme: dark;
-  color: var(--offwhite);
-  background-color: var(--background);
+  /* ── Typography ─────────────────────────────────────────── */
+  font-family: "DM Sans", "Helvetica Neue", system-ui, Arial, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  font-size: 1rem;
+
+  color-scheme: light;
+  color: var(--text);
+  background-color: var(--surface);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -40,41 +41,45 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-/* TODO(vv): better place for the highlighted-word stuff? */
+/* ── Highlighted word (transcription) ───────────────────── */
 .highlighted-word {
-  color: black;
+  color: var(--white);
+  position: relative;
 }
 
-/* Create a pseudo-element for the background */
 .highlighted-word::after {
   content: "";
   position: absolute;
-  background-color: var(--speaker-color, white);
-  left: -0.25rem;
-  right: -0.25rem;
-  top: -0.25rem;
-  bottom: -0.25rem;
+  background-color: var(--speaker-color, var(--teal));
+  left: -0.2rem;
+  right: -0.2rem;
+  top: -0.15rem;
+  bottom: -0.15rem;
   border-radius: 0.25rem;
   z-index: -1;
 }
 
 @theme {
-  /* TODO: deduplicate */
-  --color-green: var(--green);
-  --color-offwhite: var(--offwhite);
-  --color-textgray: var(--textgray);
-  --color-lightgray: var(--lightgray);
-  --color-gray: var(--gray);
-  --color-darkgray: var(--darkgray);
-  --color-orange: var(--orange);
-  --color-pink: var(--pink);
-  --color-purple: var(--purple);
-  --color-red: var(--red);
-  --color-background: var(--background);
-  /* sometimes it's useful to have these as variables too */
-  --color-white: #ffffff;
-  --color-black: #000000;
+  /* Brand */
+  --color-teal:       var(--teal);
+  --color-teal-light: var(--teal-light);
+  --color-teal-dark:  var(--teal-dark);
 
-  --font-family-satoshi: var(--font-satoshi);
+  /* Neutrals */
+  --color-white:      var(--white);
+  --color-surface:    var(--surface);
+  --color-border:     var(--border);
+  --color-muted:      var(--muted);
+  --color-text:       var(--text);
+  --color-text-light: var(--text-light);
+
+  /* Semantic */
+  --color-red:        var(--red);
+  --color-amber:      var(--amber);
+  --color-green:      var(--green);
+
+  /* Legacy aliases — gardés pour ne pas casser les usages existants */
+  --color-background: var(--surface);
+  --color-offwhite:   var(--surface);
+  --color-black:      #000000;
 }

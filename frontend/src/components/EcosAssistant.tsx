@@ -5,7 +5,7 @@ import { useEcosWebSocket } from "../hooks/useEcosWebSocket";
 import { useCallback, useEffect, useState } from "react";
 import { useMicrophoneAccess } from "../hooks/useMicrophoneAccess";
 import EcosControlsBar from "./EcosControlsBar";
-
+import SessionStartOverlay from "./SessionStartOverlay";
 import CouldNotConnect, { HealthStatus } from "./CouldNotConnect";
 import { ChatMessage, compressChatHistory } from "../utils/chatHistory";
 import useWakeLock from "../hooks/useWakeLock";
@@ -29,7 +29,7 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
   const { getScenarioDetail } = useEcosApi();
   const [scenarioDetails, setScenarioDetails] = useState<ScenarioDetail>();
   const { microphoneAccess, askMicrophoneAccess } = useMicrophoneAccess();
-
+  const [showOverlay, setShowOverlay] = useState(false);
   const [shouldConnect, setShouldConnect] = useState(false);
   const backendServerUrl = useBackendServerUrl();
   const [webSocketUrl, setWebSocketUrl] = useState<string | null>(null);
@@ -37,26 +37,20 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
   const [errors, setErrors] = useState<ErrorItem[]>([]);
   const [scenarioReady, setScenarioReady] = useState(false);
 
-  // Gestion du mode de scène (patient, exam, intervention)
-  const [sceneMode, setSceneMode] = useState<'patient' | 'exam' | 'intervention'>('patient');
+  const [sceneMode, setSceneMode] = useState<"patient" | "exam" | "intervention">("patient");
 
   useWakeLock(shouldConnect);
 
-useEffect(() => {
+  useEffect(() => {
     async function recoverFullContext() {
       if (!id) return;
-
       try {
         const scenarioInfo = await getScenarioDetail(id);
         setScenarioDetails(scenarioInfo);
         const masterPrompt = buildMasterPrompt(scenarioInfo, getScenarioDifficultyLabel);
-
         setUnmuteConfig((prev) => ({
           ...prev,
-          instructions: {
-            type: "constant",
-            text: masterPrompt,
-          },
+          instructions: { type: "constant", text: masterPrompt },
           voice: scenarioInfo.voice,
         }));
         setScenarioReady(true);
@@ -64,98 +58,65 @@ useEffect(() => {
         console.error("Erreur lors de la récupération du scénario:", err);
       }
     }
-
     recoverFullContext();
   }, [id]);
-  // Check if the backend server is healthy. If we setHealthStatus to null,
-  // a "server is down" screen will be shown.
+
   useEffect(() => {
     if (!backendServerUrl) return;
-
     setWebSocketUrl(backendServerUrl.toString() + "/v1/realtime");
 
     const checkHealth = async () => {
       try {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 3000);
-
-        const response = await fetch(`${backendServerUrl}/v1/health`, {
-          signal: controller.signal,
-        });
-
+        const response = await fetch(`${backendServerUrl}/v1/health`, { signal: controller.signal });
         clearTimeout(timeoutId);
         if (!response.ok) {
-          setHealthStatus({
-            connected: "yes_request_fail",
-            ok: false,
-          });
+          setHealthStatus({ connected: "yes_request_fail", ok: false });
         }
         const data = await response.json();
         data["connected"] = "yes_request_ok";
-
-        if (data.ok && !data.voice_cloning_up) {
-          console.debug("Voice cloning not available, hiding upload button.");
-        }
         setHealthStatus(data);
       } catch {
-        setHealthStatus({
-          connected: "no",
-          ok: false,
-        });
+        setHealthStatus({ connected: "no", ok: false });
       }
     };
-
     checkHealth();
   }, [backendServerUrl]);
 
-
   const onError = useCallback((msg: string, isWarning?: boolean) => {
-  if (isWarning) {
-    console.warn(`Warning from server: ${msg}`);
-  } else {
-    console.error(`Error from server: ${msg}`);
-    setErrors((prev) => [...prev, makeErrorItem(msg)]);
-  }
-}, []);
-const onUserTranscription = useCallback((text: string) => {
-  setRawChatHistory((prev) => [...prev, { role: "user", content: text }]);
-}, []);
+    if (isWarning) {
+      console.warn(`Warning from server: ${msg}`);
+    } else {
+      console.error(`Error from server: ${msg}`);
+      setErrors((prev) => [...prev, makeErrorItem(msg)]);
+    }
+  }, []);
 
-const onAssistantText = useCallback((text: string) => {
-  setRawChatHistory((prev) => [...prev, { role: "assistant", content: " " + text }]);
-}, []);
+  const onUserTranscription = useCallback((text: string) => {
+    setRawChatHistory((prev) => [...prev, { role: "user", content: text }]);
+  }, []);
 
-  const {
-    setupAudio,
-    shutdownAudio,
-    audioProcessor,
-    recordingCanvasRef,
-  } = useEcosAudio({
+  const onAssistantText = useCallback((text: string) => {
+    setRawChatHistory((prev) => [...prev, { role: "assistant", content: " " + text }]);
+  }, []);
+
+  const { setupAudio, shutdownAudio, audioProcessor, recordingCanvasRef } = useEcosAudio({
     shouldRecord: shouldConnect,
     chatHistory: rawChatHistory,
     onSendAudio: (audio: string) => {
-      sendMessage(
-        JSON.stringify({
-          type: "input_audio_buffer.append",
-          audio,
-        })
-      );
+      sendMessage(JSON.stringify({ type: "input_audio_buffer.append", audio }));
     },
   });
 
-  const onAudioDelta = useCallback((opus: Uint8Array) => {
-    const audioProc = audioProcessor.current;
-    if (!audioProc) return;
-    audioProc.decoder.postMessage(
-      {
-      command: "decode",
-      pages: opus,
-      },
-      [opus.buffer],
-    );
-    }, [audioProcessor]);
-
-  // Gestion audio centralisée via le hook dédié
+  const onAudioDelta = useCallback(
+    (opus: Uint8Array) => {
+      const audioProc = audioProcessor.current;
+      if (!audioProc) return;
+      audioProc.decoder.postMessage({ command: "decode", pages: opus }, [opus.buffer]);
+    },
+    [audioProcessor]
+  );
 
   const { sendMessage, readyState } = useEcosWebSocket({
     url: webSocketUrl,
@@ -168,14 +129,13 @@ const onAssistantText = useCallback((text: string) => {
 
   const onConnectButtonPress = async () => {
     if (!scenarioReady) return;
-    // If we're not connected yet
     if (!shouldConnect) {
       const mediaStream = await askMicrophoneAccess();
-      // If we have access to the microphone:
       if (mediaStream) {
         await setupAudio(mediaStream);
         setShouldConnect(true);
-        startTimer(); // ← démarrer le timer au moment où la session commence
+        startTimer();
+        setShowOverlay(true);
       }
     } else {
       setShouldConnect(false);
@@ -184,18 +144,14 @@ const onAssistantText = useCallback((text: string) => {
     }
   };
 
-  // Timer et gestion de la fin de session
   const handleTimerExpire = useCallback(() => {
     setShouldConnect(false);
     shutdownAudio();
-    // TODO phase évaluation : sauvegarder rawChatHistory ici
-    // await saveTranscript(id, rawChatHistory);
   }, [shutdownAudio]);
 
   const { formatted, status, progressPct, start: startTimer, reset: resetTimer } =
     useEcosTimer(handleTimerExpire);
 
-  // If the websocket connection is closed, shut down the audio processing
   useEffect(() => {
     if (readyState === ReadyState.CLOSING || readyState === ReadyState.CLOSED) {
       setShouldConnect(false);
@@ -203,14 +159,10 @@ const onAssistantText = useCallback((text: string) => {
     }
   }, [readyState, shutdownAudio]);
 
-  // When we connect, we send the initial config (voice and instructions) to the server.
-  // Also clear the chat history.
   useEffect(() => {
     if (readyState !== ReadyState.OPEN) return;
-
     const recordingConsent = getRecordingConsent();
     setRawChatHistory([]);
-
     sendMessage(
       JSON.stringify({
         type: "session.update",
@@ -219,7 +171,7 @@ const onAssistantText = useCallback((text: string) => {
           voice: unmuteConfig.voice,
           allow_recording: recordingConsent,
         },
-      }),
+      })
     );
   }, [unmuteConfig, readyState, sendMessage]);
 
@@ -228,10 +180,22 @@ const onAssistantText = useCallback((text: string) => {
     shutdownAudio();
   }, [shutdownAudio, unmuteConfig.voice, unmuteConfig.instructions]);
 
+  // ── Loading ────────────────────────────────────────────────────────────────
   if (!healthStatus || !backendServerUrl) {
     return (
-      <div className="flex flex-col gap-4 items-center">
-        <h1 className="text-xl mb-4">Loading...</h1>
+      <div
+        className=" min-h-screen flex items-center justify-center"
+        style={{ fontFamily: "'DM Sans', 'Helvetica Neue', sans-serif" }}
+      >
+        <div className="text-center space-y-4">
+          <div className="relative mx-auto w-10 h-10">
+            <div className="absolute inset-0 rounded-full border-2 border-teal-100" />
+            <div className="absolute inset-0 rounded-full border-2 border-teal-500 border-t-transparent animate-spin" />
+          </div>
+          <p className="text-sm font-medium text-slate-400 tracking-wide uppercase">
+            Connexion en cours…
+          </p>
+        </div>
       </div>
     );
   }
@@ -240,52 +204,79 @@ const onAssistantText = useCallback((text: string) => {
     return <CouldNotConnect healthStatus={healthStatus} />;
   }
 
+  // ── Scene mode labels ──────────────────────────────────────────────────────
 
+  // ── Render ─────────────────────────────────────────────────────────────────
   return (
-    <div className="flex w-full ">
-      {/* SCENE (60%) */}
-      <div className="w-3/5 relative flex flex-col items-center justify-center p-8 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
-        {/* Portrait ou Exam/Intervention selon sceneMode */}
-        {sceneMode === 'patient' && (
-          <div className="relative group w-full h-screen flex items-end">
-            {/* Image patient */}
-            <img src="/public/models/patient.jpg" alt="Patient" className="w-full h-full object-cover rounded-[2rem] shadow-[0_0_50px_-12px_rgba(0,0,0,0.8)] border border-slate-800/50" />
-            {/* Ring Pulse (indicateur vocal) */}
-            <div className="absolute inset-0 rounded-[2rem] ring-4 ring-blue-500/50 opacity-0 group-data-[speaking=true]:opacity-100 pointer-events-none" />
-            {/* Overlay Patient */}
-            <div className="absolute bottom-6 left-6 right-6 p-4 bg-slate-900/80 backdrop-blur-md rounded-2xl border border-white/10 flex flex-col gap-2 shadow-blue-500/10">
-              <span className="font-bold text-lg">{scenarioDetails?.firstname} {scenarioDetails?.lastname} {scenarioDetails?.age} ans</span>
-              <span className="font-bold text-l">{scenarioDetails?.category} - {scenarioDetails?.domain}</span>
+    <div
+      className="flex w-full h-screen bg-slate-50 overflow-hidden"
+      style={{ fontFamily: "'DM Sans', 'Helvetica Neue', sans-serif" }}
+    >
+      {/* ── LEFT PANEL: scene (60%) ─────────────────────────────────────── */}
+      <div className="w-3/5 relative flex flex-col overflow-hidden bg-slate-100 border-r border-slate-200">
 
-              <span className="text-blue-400 text-xs font-mono uppercase">{scenarioDetails?.description}</span>
+
+        {/* Scene image */}
+        <div className="flex-1 relative overflow-hidden">
+          {sceneMode === "patient" && (
+            <img
+              src="/patient.png"
+              alt="Patient"
+              className="w-full h-full object-cover"
+            />
+          )}
+       
+
+          {/* Speaking ring indicator */}
+          {shouldConnect && (
+            <div className="absolute inset-0 ring-inset ring-4 ring-teal-400/40 animate-pulse pointer-events-none" />
+          )}
+        </div>
+
+        {/* Patient info card — pinned to the bottom */}
+        {scenarioDetails && (
+          <div className="absolute bottom-0 left-0 right-0 p-4">
+            <div className="bg-white/95 backdrop-blur-sm border border-slate-200 rounded-2xl px-5 py-4 shadow-sm flex items-center gap-4">
+              {/* Avatar placeholder */}
+              <div className="w-10 h-10 rounded-full bg-teal-50 border border-teal-200 flex items-center justify-center flex-shrink-0">
+                <svg className="w-5 h-5 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-semibold text-slate-900 truncate">
+                  {scenarioDetails.firstname} {scenarioDetails.lastname},{" "}
+                  <span className="font-normal text-slate-500">{scenarioDetails.age} ans</span>
+                </p>
+                <p className="text-xs font-semibold text-slate-900 truncate mt-0.5">
+                  {scenarioDetails.title}
+                </p>
+                <p className="text-xs text-slate-400 truncate mt-0.5">
+                  {scenarioDetails.category}
+                  {scenarioDetails.domain ? ` · ${scenarioDetails.domain}` : ""}
+                </p>
+              </div>
+              {scenarioDetails.description && (
+                <span className="text-xs text-teal-600 bg-teal-50 border border-teal-100 px-2.5 py-1 font-medium min-w-0">
+                  {scenarioDetails.description}
+                </span>
+              )}
             </div>
           </div>
         )}
-        {sceneMode === 'exam' && (
-          <div className="w-full w-full h-screen flex items-center justify-center rounded-[2rem] bg-slate-900/80 border border-slate-800/50 shadow-blue-500/10">
-            <img src="/public/models/ecg.png" alt="ECG" className="w-full h-full object-contain rounded-[2rem]" />
-          </div>
-        )}
-        {sceneMode === 'intervention' && (
-          <div className="w-full w-full h-screen flex items-center justify-center rounded-[2rem] bg-slate-900/80 border border-slate-800/50 shadow-blue-500/10">
-            <img src="/public/models/hospital-room.jpg" alt="Chambre d'hôpital" className="w-full h-full object-cover rounded-[2rem]" />
-          </div>
-        )}
-        {/* Bar d'action pour changer de mode (dev only) */}
-        <div className="absolute top-4 right-4 flex gap-2 z-10">
-          <button onClick={() => setSceneMode('patient')} className={`px-3 py-1 rounded-xl text-xs font-mono ${sceneMode==='patient'?'bg-blue-500 text-white':'bg-slate-800 text-blue-300'}`}>Patient</button>
-          <button onClick={() => setSceneMode('exam')} className={`px-3 py-1 rounded-xl text-xs font-mono ${sceneMode==='exam'?'bg-blue-500 text-white':'bg-slate-800 text-blue-300'}`}>Exam</button>
-          <button onClick={() => setSceneMode('intervention')} className={`px-3 py-1 rounded-xl text-xs font-mono ${sceneMode==='intervention'?'bg-blue-500 text-white':'bg-slate-800 text-blue-300'}`}>Intervention</button>
-        </div>
       </div>
-      {/* DASHBOARD (40%) */}
-      <div className="w-2/5 flex flex-col bg-slate-900 border-l border-slate-800/50 shadow-[-20px_0_50px_rgba(0,0,0,0.3)] h-full">
-        {/* Transcription (haut) */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-4 scrollbar-thin scrollbar-thumb-slate-800">
+
+      <div className="w-2/5 flex flex-col bg-white h-full">
+
+
+
+        {/* Transcription / chat */}
+        <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4 scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
           <ChatPanel chatHistory={chatHistory} isConnected={shouldConnect} />
         </div>
-        {/* Zone d'action (bas) */}
-        <div className="border-t border-slate-800 flex-1 flex flex-col bg-slate-900/80 backdrop-blur-md rounded-b-3xl">
+
+        {/* Controls bar */}
+        <div className="flex-shrink-0 border-t border-slate-100 bg-slate-50/80 backdrop-blur-sm">
           <EcosControlsBar
             formatted={formatted}
             status={status}
@@ -296,9 +287,13 @@ const onAssistantText = useCallback((text: string) => {
           />
         </div>
       </div>
-      {/* Error messages et canvas caché */}
+
       <ErrorMessages errors={errors} setErrors={setErrors} />
       <canvas ref={recordingCanvasRef} className="hidden" />
+      <SessionStartOverlay
+        visible={showOverlay}
+        onReady={() => setShowOverlay(false)}
+      />
     </div>
   );
 };
