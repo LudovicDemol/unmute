@@ -73,6 +73,11 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
     addEntry,
     completeAttempt,
   } = useAttempt(authUserId)
+  const attemptIdRef = useRef<string | null>(null)
+
+  useEffect(() => {
+  attemptIdRef.current = attemptId
+  }, [attemptId])
 
   const { results: evaluationResult, timedOut } = usePollResults(attemptId, evaluationStarted)
 
@@ -107,12 +112,23 @@ const EcosAssistant = ({ id }: EcosAssistantProps) => {
     isSessionActive.current = false
     setShouldConnect(false)
     shutdownAudio()
-    if (attemptId) {
-      await completeAttempt()
-      await triggerEvaluation(attemptId)
-    }
-  }, [attemptId, completeAttempt, triggerEvaluation])
+    const currentAttemptId = attemptIdRef.current
+      if (currentAttemptId) {
+        await completeAttempt()
+        await triggerEvaluation(currentAttemptId)
+      }
+    }, [completeAttempt, triggerEvaluation])
 
+    useEffect(() => {
+      const handleUnload = () => {
+        if (!attemptIdRef.current) return
+        navigator.sendBeacon(
+          `${process.env.NEXT_PUBLIC_URL_API_ECOS}/attempts/${attemptIdRef.current}/abandon`
+        )
+      }
+      window.addEventListener('beforeunload', handleUnload)
+      return () => window.removeEventListener('beforeunload', handleUnload)
+    }, [backendServerUrl])
 
 
   const { formatted, status, progressPct, start: startTimer, reset: resetTimer, getElapsedSeconds } =

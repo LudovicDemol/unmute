@@ -52,6 +52,11 @@ const STATUS_CONFIG = {
     icon: <Loader2 className="w-3.5 h-3.5 animate-spin" />,
     className: "bg-yellow-50 text-yellow-700 border-yellow-200",
   },
+  abandoned: {
+    label: "Abandonné",
+    icon: <XCircle className="w-3.5 h-3.5" />,
+    className: "bg-red-50 text-red-700 border-red-200",
+  },
 }
 
 const GLOBAL_EVAL_CONFIG: Record<string, { label: string; color: string }> = {
@@ -72,7 +77,7 @@ function scoreColor(score: number) {
 // ─── Item ─────────────────────────────────────────────────────────────────────
 
 function AttemptItem({ attempt, onClick }: { attempt: AttemptSummary; onClick: () => void }) {
-  const status   = STATUS_CONFIG[attempt.status] ?? STATUS_CONFIG.in_progress
+  const status   = STATUS_CONFIG[attempt.status as keyof typeof STATUS_CONFIG] ?? STATUS_CONFIG.in_progress
   const evalConf = attempt.global_evaluation ? GLOBAL_EVAL_CONFIG[attempt.global_evaluation] : null
   const duration = formatDuration(attempt.started_at, attempt.ended_at)
   const isClickable = attempt.status === "evaluated"

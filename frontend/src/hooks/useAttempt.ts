@@ -9,7 +9,7 @@ export type TranscriptEntry = {
   timestamp: string
 }
 
-export type AttemptStatus = 'idle' | 'in_progress' | 'completed' | 'evaluated' | 'error'
+export type AttemptStatus = 'idle' | 'in_progress' | 'completed' | 'evaluated' | 'error' | 'abandoned'
 
 const startAttemptApi = (studentId: string, scenarioId: string) =>
   fetchWithAuth('/attempts', {

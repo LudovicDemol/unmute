@@ -1,12 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 import { useAuthStore } from '@/stores/authStore'
 import { fetchWithAuth } from '@/lib/api'
+import { AttemptStatus } from './useAttempt'
 
 export interface AttemptSummary {
   id: string
   started_at: string
   ended_at: string | null
-  status: 'in_progress' | 'completed' | 'evaluated'
+  status: AttemptStatus
   score_total: number | null
   global_evaluation: string | null
   scenario: {
