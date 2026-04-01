@@ -35,3 +35,6 @@ pkill -9 uvicorn
 
 
    fuser -k 8000/tcp
+
+
+   cloudflared tunnel --url http://localhost:8000
