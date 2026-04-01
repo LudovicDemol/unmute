@@ -54,15 +54,6 @@ pkill -f uvicorn || true
 nohup ./dockerless/start_tts.sh > /tmp/tts.log 2>&1 &
 nohup ./dockerless/start_stt.sh > /tmp/stt.log 2>&1 &
 
-echo "Waiting for TTS on 8089..."
-until nc -z localhost 8089; do sleep 5; done
-
-echo "Waiting for STT on 8090..."
-until nc -z localhost 8090; do sleep 5; done
-
 nohup ./dockerless/start_backend.sh > /tmp/backend.log 2>&1 &
-
-echo "Waiting for backend on 8000..."
-until nc -z localhost 8000; do sleep 5; done
 
 echo "=== BOOT DONE $(date) ==="
