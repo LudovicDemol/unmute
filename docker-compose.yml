@@ -15,20 +15,6 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
-  frontend:
-    image: unmute-frontend:latest
-    build:
-      context: frontend/
-      dockerfile: hot-reloading.Dockerfile
-    volumes:
-      - ./frontend/src:/app/src
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.frontend.rule=PathPrefix(`/`)"
-      - "traefik.http.routers.frontend.entrypoints=web"
-      - "traefik.http.services.frontend.loadbalancer.server.port=3000"
-      - "traefik.http.routers.frontend.priority=10" # lowest priority
-
   backend:
     image: unmute-backend:latest
     build:

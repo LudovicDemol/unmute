@@ -8,10 +8,10 @@ HEADERS = {"kyutai-api-key": "public_token"}
 # The defaults are already ws://, but make the env vars support http:// and https://
 STT_SERVER = http_to_ws(os.environ.get("KYUTAI_STT_URL", "ws://localhost:8090"))
 TTS_SERVER = http_to_ws(os.environ.get("KYUTAI_TTS_URL", "ws://localhost:8089"))
-LLM_SERVER = "https://api.groq.com/openai"
-KYUTAI_LLM_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct"
+LLM_SERVER = os.environ.get("KYUTAI_LLM_URL")
+KYUTAI_LLM_MODEL = os.environ.get("LLM_MODEL")
 # llama-3.3-70b-versatile c'est le plus efficace
-KYUTAI_LLM_API_KEY = "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"
+KYUTAI_LLM_API_KEY = os.environ.get("LLM_API_KEY")
 VOICE_CLONING_SERVER = os.environ.get(
     "KYUTAI_VOICE_CLONING_URL", "http://localhost:8092"
 )
