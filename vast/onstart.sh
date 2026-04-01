@@ -48,8 +48,6 @@ export KYUTAI_LLM_URL="${KYUTAI_LLM_URL}"
 export KYUTAI_LLM_MODEL="${LLM_MODEL}"
 export KYUTAI_LLM_API_KEY="${LLM_API_KEY}"
 
-pkill -f moshi-server || true
-pkill -f uvicorn || true
 
 nohup ./dockerless/start_tts.sh > /tmp/tts.log 2>&1 &
 nohup ./dockerless/start_stt.sh > /tmp/stt.log 2>&1 &
