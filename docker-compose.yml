@@ -26,8 +26,6 @@ services:
       - KYUTAI_STT_URL=ws://stt:8080
       - KYUTAI_TTS_URL=ws://tts:8080
       - KYUTAI_LLM_URL=https://api.openai.com
-      - KYUTAI_LLM_MODEL=gpt-4o-mini
-      - KYUTAI_LLM_API_KEY=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
       - NEWSAPI_API_KEY=af0f020086be4d1ca1b7236145ecb91e
     labels:
       - "traefik.enable=true"
@@ -47,7 +45,6 @@ services:
       context: services/moshi-server
       dockerfile: public.Dockerfile
     environment:
-      - HUGGING_FACE_HUB_TOKEN=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
     volumes:
       - ./volumes/hf-cache:/root/.cache/huggingface
       - ./volumes/cargo-registry-tts:/root/.cargo/registry
@@ -70,7 +67,6 @@ services:
       context: services/moshi-server
       dockerfile: public.Dockerfile
     environment:
-      - HUGGING_FACE_HUB_TOKEN=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
     volumes:
       - ./volumes/hf-cache:/root/.cache/huggingface
       - ./volumes/cargo-registry-stt:/root/.cargo/registry
